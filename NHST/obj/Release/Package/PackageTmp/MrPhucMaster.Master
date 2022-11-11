@@ -1,0 +1,386 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="MrPhucMaster.master.cs" Inherits="NHST.MrPhucMaster" %>
+
+<%@ Register Assembly="Telerik.Web.UI" Namespace="Telerik.Web.UI" TagPrefix="telerik" %>
+<!DOCTYPE html>
+<html lang="en">
+<head runat="server">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, user-scalable=yes">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="description" content="">
+    <meta name="keywords" content="">
+    <meta property="og:title" content="">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="">
+    <meta property="og:image" content="">
+    <meta property="og:site_name" content="">
+    <meta property="og:description" content="">
+
+    <title>NHAPSICHINA.COM</title>
+    <link rel="stylesheet" href="/App_Themes/MrPhuc/fonts/Font-awesome-4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/App_Themes/MrPhuc/js/WOW-master/animate.css">
+    <link rel="stylesheet" href="/App_Themes/MrPhuc/css/reset.css" />
+    <link rel="stylesheet" href="/App_Themes/MrPhuc/css/style.css" />
+    <link rel="stylesheet" href="/App_Themes/MrPhuc/css/responsive.css" />
+    <script src="/App_Themes/MrPhuc/js/jquery-3.4.1.min.js"></script>
+    <link href="/App_Themes/NewUI/js/sweet/sweet-alert.css" rel="stylesheet" type="text/css" />
+    <asp:Literal runat="server" ID="ltrHeader"></asp:Literal>
+    <asp:Literal ID="ltrSEO" runat="server"></asp:Literal>
+    <asp:ContentPlaceHolder ID="head" runat="server"></asp:ContentPlaceHolder>
+</head>
+<body>
+    <form id="form1" runat="server">
+        <asp:Literal ID="ltr_infor" runat="server"></asp:Literal>
+        <telerik:RadScriptManager ID="rsm" runat="server" EnablePageMethods="true" EnablePartialRendering="true">
+        </telerik:RadScriptManager>
+        <div class="header">
+            <div class="header-context">
+                <div class="container">
+                    <div class="header-context-form-text">
+                        <asp:Literal runat="server" ID="ltrTopLeft"></asp:Literal>
+                    </div>
+                    <div class="header-sign">
+                        <%--    <div class="forget-pass">
+                            <a href="/quen-mat-khau"><i class="fa fa-unlock-alt" aria-hidden="true"></i>Quên mật khẩu</a>
+                        </div>--%>
+                        <div class="user-box">
+                            <asp:Literal runat="server" ID="ltrLogin"></asp:Literal>
+                        </div>
+                        <%--        <div class="header-search">
+                        <input type="text" placeholder="Tìm kiếm" /><i class="fa fa-search"></i>
+                    </div>--%>
+                    </div>
+                </div>
+            </div>
+            <div class="slide-logo">
+                <div class="container">
+                    <%-- <a href=""> <img class="nav-menu-img" src="/App_Themes/nhapsichina/images/logo.png" alt="" /></a>--%>
+                    <asp:Literal runat="server" ID="ltrLogo"></asp:Literal>
+                </div>
+            </div>
+            <div class="menu">
+                <div class="container">
+                    <div class="header-nav-menu">
+                        <asp:Literal runat="server" ID="ltrMenu"></asp:Literal>
+                        <%--<ul class="nav-menu-ul">
+                        <li>
+                            <a href="#">Trang chủ</a>
+                        </li>
+                        <li>
+                            <a href="#">GIỚI THIỆU</a>
+                        </li>
+                        <li>
+                            <a href="#">Chính sách</a>
+                        </li>
+                        <li>
+                            <a href="#">Công cụ</a>
+                        </li>
+                        <li>
+                            <a href="#">Hướng dẫn</a>
+                        </li>
+                        <li>
+                            <a href="#">Biểu phí</a>
+                        </li>
+                        <li>
+                            <a href="#">Tin tức</a>
+                        </li>
+                        <li>
+                            <a href="#">Tuyển dụng</a>
+                        </li>
+                    </ul>--%>
+                        <input type="checkbox" name="" id="check-nav-mobile" class="nav-input" hidden />
+                        <label for="check-nav-mobile" class="nav-overplay"></label>
+                        <nav class="nav-mobile-menu">
+                            <div class="top-nav-menu-mobile">
+                                <a href="">
+                                    <img class="nav-menu-img-mobi" src="/App_Themes/nhapsichina/images/logo.png" alt="" /></a>
+                                <asp:Literal runat="server" ID="ltrMenuMobile"></asp:Literal>
+                                <%-- <ul class="nav-mobile-menu-item">
+                                <li>
+                                    <a href="#">Trang chủ</a>
+                                </li>
+                                <li>
+                                    <a href="#">GIỚI THIỆU</a>
+                                </li>
+                                <li>
+                                    <a href="#">Chính sách</a>
+                                </li>
+                                <li>
+                                    <a href="#">Công cụ</a>
+                                </li>
+                                <li>
+                                    <a href="#">Hướng dẫn</a>
+                                </li>
+                                <li>
+                                    <a href="#">Biểu phí</a>
+                                </li>
+                                <li>
+                                    <a href="#">Tin tức</a>
+                                </li>
+                                <li>
+                                    <a href="#">Tuyển dụng</a>
+                                </li>
+                            </ul>--%>
+                            </div>
+                            <div class="social-icon">
+                                <i class="fa fa-facebook-square"></i>
+                                <i class="fa fa-google-plus-square"></i>
+                                <i class="fa fa-twitter-square"></i>
+                            </div>
+                        </nav>
+                        <div class="toggle-sign">
+                            <label for="check-nav-mobile" id="navbar-toggle">
+                                <span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">
+        </asp:ContentPlaceHolder>
+        <footer>
+            <div class="container">
+                <div class="footer">
+                    <div class="footer-menu">
+                        <%-- <img src="/App_Themes/nhapsichina/images/logo.png" alt="" class="logo-cus" width="100px" />--%>
+                        <asp:Literal runat="server" ID="ltrLogofooter"></asp:Literal>
+                        <div class="footer-menu-text">
+                            <p>
+                                NHAPSICHINA.COM - Nhập hàng từ A đến Z. Kết nối công xưởng China với những Thương Nhân và Người Tiêu Dùng Việt Nam.
+                            </p>
+                        </div>
+                        <h3 class="texth3">TRAO NIỀM TIN-NHẬN UY TÍN.</h3>
+                    </div>
+                    <div class="footer-menu">
+                        <h4 class="texth3">Thông tin liên hệ</h4>
+                        <div class="footer-menu-item">
+                            <h5>Hotline</h5>
+                            <asp:Literal runat="server" ID="ltrHotLine"></asp:Literal>
+                        </div>
+                        <div class="footer-menu-item">
+                            <h5>Email</h5>
+                            <asp:Literal runat="server" ID="ltrEmail"></asp:Literal>
+                        </div>
+                        <div class="footer-menu-item">
+                            <h5>Kho hàng</h5>
+                            <p>Kho Hà Khẩu – Vân Nam : Mễ Trì – Hà Nội</p>
+                        </div>
+                    </div>
+                    <%-- <div class="footer-img">
+                    <img src="/App_Themes/MrPhuc/img/Fanpage.png" alt="" />
+                </div>--%>
+                    <div class="footer-img">
+                        <div class="fb-page fb_iframe_widget" data-href="https://www.facebook.com/VanchuyenhanghoaTrungQuoc/"
+                            data-tabs="timeline" data-small-header="true" data-adapt-container-width="true"
+                            data-hide-cover="true" data-show-facepile="true" fb-xfbml-state="rendered"
+                            fb-iframe-plugin-query="adapt_container_width=true&amp;app_id=1916689885307106&amp;container_width=293&amp;hide_cover=true&amp;href=https%3A%2F%2Fwww.facebook.com%2Fthietkewebsitemonamedia%2F&amp;locale=vi_VN&amp;sdk=joey&amp;show_facepile=true&amp;small_header=true&amp;tabs=timeline">
+                            <span style="vertical-align: top; width: 0px; height: 0px; overflow: hidden;">
+                                <iframe
+                                    name="f27701494e21e84" frameborder="0"
+                                    allowtransparency="true" allowfullscreen="true" scrolling="no" allow="encrypted-media"
+                                    title="fb:page Facebook Social Plugin"
+                                    src="https://www.facebook.com/v3.2/plugins/page.php?adapt_container_width=true&amp;app_id=1916689885307106&amp;channel=https%3A%2F%2Fstaticxx.facebook.com%2Fconnect%2Fxd_arbiter%2Fr%2Fvy-MhgbfL4v.js%3Fversion%3D44%23cb%3Df1932ab48bc2d68%26domain%3D%26origin%3Dfile%253A%252F%252F%252Ff3109b65c732ecc%26relation%3Dparent.parent&amp;container_width=293&amp;hide_cover=true&amp;href=https%3A%2F%2Fwww.facebook.com%2Fthietkewebsitemonamedia%2F&amp;locale=vi_VN&amp;sdk=joey&amp;show_facepile=true&amp;small_header=true&amp;tabs=timeline"
+                                    style="border: none; visibility: visible; width: 0px; height: 0px;"></iframe>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="last-text">
+                <p>Designed and developed by Mona Media</p>
+            </div>
+            <div class="m-backtotop active" aria-hidden="true">
+                <div class="arrow">
+                    <i class="fa fa-caret-up" aria-hidden="true"></i>
+                </div>
+                <div class="text">
+                    Back to top
+                </div>
+            </div>
+        </footer>
+        <!-- Load Facebook SDK for JavaScript -->
+        <div id="fb-root"></div>
+        <script>
+            window.fbAsyncInit = function () {
+                FB.init({
+                    xfbml: true,
+                    version: 'v8.0'
+                });
+            };
+
+            (function (d, s, id) {
+                var js, fjs = d.getElementsByTagName(s)[0];
+                if (d.getElementById(id)) return;
+                js = d.createElement(s); js.id = id;
+                js.src = 'https://connect.facebook.net/vi_VN/sdk/xfbml.customerchat.js';
+                fjs.parentNode.insertBefore(js, fjs);
+            }(document, 'script', 'facebook-jssdk'));</script>
+
+        <!-- Your Chat Plugin code -->
+        <div class="fb-customerchat"
+            attribution="setup_tool"
+            page_id="196021427414405"
+            logged_in_greeting="NHAPSICHINA.COM chào bạn,"
+            logged_out_greeting="NHAPSICHINA.COM chào bạn,">
+        </div>
+
+
+        <script src="/App_Themes/NewUI/js/sweet/sweet-alert.js" type="text/javascript"></script>
+        <script src="/App_Themes/MrPhuc/js/WOW-master/wow.min.js"></script>
+        <script src="/App_Themes/MrPhuc/js/jquery-3.4.1.min.js"></script>
+        <script src="/App_Themes/MrPhuc/js/countUp.js-master/dist/countUp.umd.js"></script>
+        <script src="/App_Themes/MrPhuc/js/waypoint.min.js"></script>
+        <script src="/App_Themes/MrPhuc/js/myscript.js"></script>
+        <asp:Literal runat="server" ID="ltrFooterScript"></asp:Literal>
+        <script>
+            new WOW().init();
+            $("#brand-source").msDropdown();
+        </script>
+        <script>
+            jQuery(document).ready(function () {
+                jQuery(".chat_fb").click(function () {
+                    jQuery('.fchat').toggle('slow');
+                });
+            });
+            (function (d, s, id) {
+                var js, fjs = d.getElementsByTagName(s)[0];
+                if (d.getElementById(id)) return;
+                js = d.createElement(s); js.id = id;
+                js.src = 'https://connect.facebook.net/vi_VN/sdk.js#xfbml=1&version=v3.2&appId=1916689885307106&autoLogAppEvents=1';
+                fjs.parentNode.insertBefore(js, fjs);
+            }(document, 'script', 'facebook-jssdk'));
+
+            new WOW().init();
+
+            function isEmpty(str) {
+                return !str.replace(/^\s+/g, '').length; // boolean (`true` if field is empty)
+            }
+            function closewebinfo() {
+                $.ajax({
+                    type: "POST",
+                    url: "/Default.aspx/closewebinfo",
+                    //data: "{ID:'" + id + "',UserName:'" + username + "'}",
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "json",
+                    success: function (msg) {
+                        if (msg.d == "ok") {
+                            $(".webinfo").remove();
+                        }
+                    },
+                    error: function (xmlhttprequest, textstatus, errorthrow) {
+                        alert('lỗi');
+                    }
+                });
+            }
+
+        </script>
+        <style>
+            .slick-dots li button {
+                display: none;
+            }
+
+            .webinfo {
+                background: #ff5017;
+                color: #fff;
+                padding: 20px 0;
+                float: left;
+                width: 100%;
+                clear: both;
+                display: block;
+            }
+
+                .webinfo .textcontent {
+                    float: left;
+                    width: 100%;
+                    position: relative;
+                }
+
+            .icon-close-info {
+                position: absolute;
+                right: 0;
+                top: 0px;
+                width: 25px;
+                height: 25px;
+                color: #fff;
+                font-size: 16px;
+            }
+
+                .icon-close-info:hover {
+                    color: #ffcd38;
+                    font-size: 16px;
+                }
+
+            .all-info {
+                width: 100%;
+            }
+
+            .main-info {
+                float: left;
+                width: 100%;
+                padding: 0 15px;
+            }
+        </style>
+        <style>
+            #cfacebook {
+                position: fixed;
+                bottom: 0px;
+                right: 20px;
+                z-index: 999999999999999;
+                width: 250px;
+                height: auto;
+                box-shadow: 6px 6px 6px 10px rgba(0,0,0,0.2);
+                border-top-left-radius: 5px;
+                border-top-right-radius: 5px;
+                overflow: hidden;
+            }
+
+                #cfacebook .fchat {
+                    float: left;
+                    width: 100%;
+                    height: 270px;
+                    overflow: hidden;
+                    display: none;
+                    background-color: #fff;
+                }
+
+                    #cfacebook .fchat .fb-page {
+                        margin-top: -130px;
+                        float: left;
+                    }
+
+                #cfacebook a.chat_fb {
+                    float: left;
+                    padding: 0 25px;
+                    width: 250px;
+                    color: #fff;
+                    text-decoration: none;
+                    height: 40px;
+                    line-height: 40px;
+                    text-shadow: 0 1px 0 rgba(0,0,0,0.1);
+                    background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAAqCAMAAABFoMFOAAAAWlBMV…8/UxBxQDQuFwlpqgBZBq6+P+unVY1GnDgwqbD2zGz5e1lBdwvGGPE6OgAAAABJRU5ErkJggg==);
+                    background-repeat: repeat-x;
+                    background-size: auto;
+                    background-position: 0 0;
+                    background-color: #3a5795;
+                    border: 0;
+                    border-bottom: 1px solid #133783;
+                    z-index: 9999999;
+                    margin-right: 12px;
+                    font-size: 18px;
+                }
+
+                    #cfacebook a.chat_fb:hover {
+                        color: yellow;
+                        text-decoration: none;
+                    }
+
+            .zalo-icon {
+                width: auto !important;
+                height: auto !important;
+            }
+        </style>
+
+    </form>
+</body>
+</html>

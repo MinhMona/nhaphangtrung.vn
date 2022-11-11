@@ -1,0 +1,276 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="NHAPHANGTRUNGMASTER.master.cs" Inherits="NHST.NHAPHANGTRUNGMASTER" %>
+
+<%@ Register Assembly="Telerik.Web.UI" Namespace="Telerik.Web.UI" TagPrefix="telerik" %>
+<!DOCTYPE html>
+<html>
+<head runat="server">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <link rel="shortcut icon" href="" type="image/x-icon" />
+    <link rel="stylesheet" href="/App_Themes/NHAPHANGTRUNG/js/Magnific-Popup-master/magnific-popup.css" />
+    <link rel="stylesheet" href="/App_Themes/NHAPHANGTRUNG/js/Font-awesome-4.7.0/css/font-awesome.min.css" />
+    <link rel="stylesheet" href="/App_Themes/NHAPHANGTRUNG/js/ms-Dropdown-master/css/msdropdown/dd.css">
+    <link rel="stylesheet" href="/App_Themes/NHAPHANGTRUNG/css/style.css" />
+    <script src="/App_Themes/NHAPHANGTRUNG/js/jquery-3.4.1.min.js"></script>
+    <title>Trang chủ</title>
+    <asp:ContentPlaceHolder ID="head" runat="server">
+    </asp:ContentPlaceHolder>  
+    <asp:Literal ID="ltrSEO" runat="server">
+    </asp:Literal>   
+</head>
+<body>
+    <form id="form1" runat="server">
+         <telerik:RadScriptManager ID="rsm" runat="server" EnablePageMethods="true" EnablePartialRendering="true">
+        </telerik:RadScriptManager>
+         <asp:Literal ID="ltr_infor" runat="server"></asp:Literal>
+        <header>
+            <div class="header">
+                <div class="header-top">
+                    <div class="container isner">
+                        <div class="header-top-left">
+                            <asp:Literal runat="server" ID="ltrCurrency"></asp:Literal>
+                            <asp:Literal runat="server" ID="ltrHotline"></asp:Literal>
+                        </div>
+                        <div class="header-top-right">
+                            <div class="user-box">
+                                <asp:Literal runat="server" ID="ltrLogin"></asp:Literal>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="header-bottom">
+                    <div class="container isner">
+                        <div class="main-logo">
+                            <asp:Literal runat="server" ID="ltrLogo"></asp:Literal>
+                        </div>
+                        <div class="main-menu">
+                            <ul class="main-menu-nav">
+                                <asp:Literal runat="server" ID="ltrMenu"></asp:Literal>
+                            </ul>
+                            <div class="main-menu-overlay"></div>
+                        </div>
+                    </div>
+                    <div class="overplay"></div>
+                    <div class="hamburger-btn main-menu-btn">
+                        <div class="bar"></div>
+                    </div>
+                </div>
+            </div>
+        </header>
+        <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">
+        </asp:ContentPlaceHolder>
+        <footer>
+            <div class="footer-top">
+                <div class="container">
+                    <div class="footer-both">
+                        <div class="cols">
+                            <div class="col-3">
+                                <div class="foot-info">
+                                    <div class="title-foot">
+                                        <h3>Thông tin liên hệ</h3>
+                                    </div>
+                                    <div class="content-foot">
+                                        <div class="name-hanoi">
+                                            <h3>Khu vực miền Bắc</h3>
+                                        </div>
+                                        <div class="box-info">
+                                            <div class="info">
+                                                <div class="text-info-foot">
+                                                    Địa chỉ:
+                                                    <asp:Literal runat="server" ID="ltrAddHaNoi"></asp:Literal>
+                                                </div>
+                                            </div>
+                                            <div class="info">
+                                                <%-- <div class="img-info">
+                                                    <img src="/App_Themes/NHAPHANGTRUNG/images/ic-call.png" alt="">
+                                                </div>--%>
+                                                <div class="text-info-foot">
+                                                    Điện thoại:
+                                                    <asp:Literal runat="server" ID="ltrPhoneHaNoi"></asp:Literal>
+                                                </div>
+                                            </div>
+                                            <div class="info">
+                                                <%--<div class="img-info">
+                                                    <img src="/App_Themes/NHAPHANGTRUNG/images/ic-mail.png" alt="">
+                                                </div>--%>
+                                                <div class="text-info-foot">
+                                                    Email:
+                                                    <asp:Literal runat="server" ID="ltrEmailHaNoi"></asp:Literal>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="name-hanoi mt-10">
+                                            <h3>Khu vực miền Nam</h3>
+                                        </div>
+                                        <div class="box-info">
+                                            <div class="info">
+                                                <%-- <div class="img-info">
+                                                    <img src="/App_Themes/CSSDAIAN/images/ic-home.png" alt="">
+                                                </div>--%>
+                                                <div class="text-info-foot">
+                                                    Địa chỉ: 
+                                                    <asp:Literal runat="server" ID="ltrAddHCM"></asp:Literal>
+                                                </div>
+                                            </div>
+                                            <div class="info">
+                                                <%-- <div class="img-info">
+                                                    <img src="/App_Themes/CSSDAIAN/images/ic-call.png" alt="">
+                                                </div>--%>
+                                                <div class="text-info-foot">
+                                                    Điện thoại:
+                                                    <asp:Literal runat="server" ID="ltrPhoneHCM"></asp:Literal>
+                                                </div>
+                                            </div>
+                                            <div class="info">
+                                                <%--<div class="img-info">
+                                                    <img src="/App_Themes/CSSDAIAN/images/ic-mail.png" alt="">
+                                                </div>--%>
+                                                <div class="text-info-foot">
+                                                    Email:
+                                                    <asp:Literal runat="server" ID="ltrEmailHCM"></asp:Literal>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-3">
+                                <div class="foot-info">
+                                    <div class="title-foot">
+                                        <h3>Về chúng tôi</h3>
+                                    </div>
+                                    <div class="content-foot">
+                                        <div class="box-info">
+                                            <div class="info">
+                                                <div class="text-info-foot">
+                                                    <p>Giới thiệu</p>
+                                                </div>
+                                            </div>
+                                            <div class="info">
+                                                <div class="text-info-foot">
+                                                    <p>Bảng giá</p>
+                                                </div>
+                                            </div>
+                                            <div class="info">
+                                                <div class="text-info-foot">
+                                                    <p>Hướng dẫn</p>
+                                                </div>
+                                            </div>
+                                            <div class="info">
+                                                <div class="text-info-foot">
+                                                    <p>Chính sách</p>
+                                                </div>
+                                            </div>
+                                            <div class="info">
+                                                <div class="text-info-foot">
+                                                    <p>Tin tức</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-3">
+                                <div class="foot-info">
+                                    <div class="title-foot">
+                                        <h3>Dịch vụ</h3>
+                                    </div>
+                                    <div class="content-foot">
+                                        <div class="box-info">
+                                            <div class="info">
+                                                <div class="text-info-foot">
+                                                    <p>Nhập hàng Trung Quốc</p>
+                                                </div>
+                                            </div>
+                                            <div class="info">
+                                                <div class="text-info-foot">
+                                                    <p>Đặt hàng taobao</p>
+                                                </div>
+                                            </div>
+                                            <div class="info">
+                                                <div class="text-info-foot">
+                                                    <p>Đặt hàng tmall</p>
+                                                </div>
+                                            </div>
+                                            <div class="info">
+                                                <div class="text-info-foot">
+                                                    <p>Đặt hàng 1688</p>
+                                                </div>
+                                            </div>
+                                            <div class="info">
+                                                <div class="text-info-foot">
+                                                    <p>Ủy thác nhập khẩu chính ngạch</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-3">
+                                <%-- <div class="fanpage">
+                                    <p>Link FB</p>
+                                </div>--%>
+                                <div class="box-plg">
+                                    <a href="#" class="browser-down">
+                                        <img src="/App_Themes/NHAPHANGTRUNG/images/gg-ic.png" alt="">
+                                        <div class="text-browser">
+                                            <p>Tải về cho trình duyệt</p>
+                                            <span>Google Chrome</span>
+                                        </div>
+                                    </a>
+                                    <a href="#" class="browser-down">
+                                        <img src="/App_Themes/NHAPHANGTRUNG/images/coc-ic.png" alt="">
+                                        <div class="text-browser">
+                                            <p>Tải về cho trình duyệt</p>
+                                            <span>Cốc Cốc</span>
+                                        </div>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <div class="copyright">
+                    <p>Copyright by NHẬP HÀNG TRUNG © 2013 - 2022</p>
+                </div>
+            </div>
+            <div class="m-backtotop" aria-hidden="true">
+                <div class="arrow">
+                    <i class="fa fa-caret-up" aria-hidden="true"></i>
+                </div>
+                <div class="text">
+                    Back to top
+                </div>
+            </div>
+        </footer>
+        <script src="/App_Themes/NHAPHANGTRUNG/js/WOW-master/wow.min.js"></script>
+        <script src="/App_Themes/NHAPHANGTRUNG/js/Magnific-Popup-master/jquery.magnific-popup.min.js"></script>
+        <script src="/App_Themes/NHAPHANGTRUNG/js/ms-Dropdown-master/js/msdropdown/jquery.dd.min.js"></script>
+        <script src="/App_Themes/NHAPHANGTRUNG/js/main.js"></script>
+        <script>
+            new WOW().init();
+            $("#brand-source").msDropdown();
+
+            function closewebinfo() {
+                $.ajax({
+                    type: "POST",
+                    url: "/Default.aspx/closewebinfo",
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "json",
+                    success: function (msg) {
+                        if (msg.d == "ok") {
+                            $(".webinfo").remove();
+                        }
+                    },
+                    error: function (xmlhttprequest, textstatus, errorthrow) {
+                        alert('lỗi');
+                    }
+                });
+            }
+        </script>
+    </form>
+</body>
+</html>

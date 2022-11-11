@@ -1,0 +1,875 @@
+@media screen and (min-width: 3800px) {
+    .new-customer::before {
+        content: '';
+        background-image: url(../img/newcus.png);
+        background-repeat: no-repeat;
+        background-size: cover;
+        position: absolute;
+        width: calc(100% / 12 * 7);
+        height: 512px;
+    }
+
+    .slide-logo {
+        width: 38%;
+    }
+}
+
+@media screen and (max-width: 1200px) {
+    .service-detail-form-text .texth2 {
+        color: #155263;
+        font-size: 20px;
+    }
+
+    .tab-serivce-maintext {
+        text-align: center;
+    }
+
+    .new-customer .new-customer-form-text {
+        width: 100%;
+        margin: 20px auto;
+    }
+
+    .new-customer .container {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .service-detail .img {
+        display: none;
+    }
+
+    main .main-search .search {
+        width: 70%;
+    }
+
+    .service-detail .service-detail-form-sum {
+        width: 100%;
+    }
+
+    .service-detail-form-sum {
+        padding: 0 70px;
+    }
+
+    .benifit-form-main {
+        display: grid;
+        grid-template-columns: 100%;
+
+        grid-row-gap: 20px;
+        width: 100%;
+    }
+
+    .tab-serivce-maintext-ul {
+        display: flex;
+    }
+
+    .service-detail .tab-serivce {
+        position: relative;
+        width: 100%;
+    }
+
+    .service-detail {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .fixed {
+        width: 100vw;
+        margin: 0;
+    }
+
+    .swiper-container {
+        display: none;
+    }
+}
+
+@media screen and (max-width: 1024px) {
+    .new-customer-form {
+        width: 100%;
+        padding: 0;
+    }
+
+    .new-customer::before {
+        display: none;
+    }
+
+    main .main-search .search {
+        width: 80%;
+    }
+
+    .swiper-container {
+        display: block;
+        padding-bottom: 10px;
+    }
+
+    .service-img-plane {
+        top: 15%;
+        left: 0;
+    }
+
+    .benifit-maintext {
+        padding: 0;
+    }
+
+    .fixed {
+        width: 100vw;
+        margin: 0;
+    }
+
+    .nav-guide-form {
+        width: 50%;
+    }
+
+    .create-account a.btn {
+        padding: 10px 5px;
+    }
+
+    main .main-search-overplay {
+        display: none;
+    }
+
+    .nav-menu .nav-menu-ul a {
+        padding: 12px;
+    }
+
+    .create-form .btn-search {
+        width: 40%;
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .slide-logo .nav-menu-img {
+        width: 130px;
+    }
+
+    .slide-logo::after {
+        border-width: 80px 60px 0 60px;
+    }
+
+    .slide-logo .nav-menu-img {
+        padding: 32px 0;
+    }
+
+    .tab-order-hotline {
+        padding: 15px;
+        text-align: center;
+    }
+
+    .tab-order-hotline .texth3 {
+        margin-bottom: 15px;
+    }
+
+    .tab-order {
+        padding: 15px;
+        text-align: center;
+    }
+
+    .tab-order .texth3 {
+        font-size: 10px;
+    }
+
+    .tab-order-hotline .texth3 {
+        font-size: 10px;
+    }
+
+    .img {
+        display: none;
+    }
+
+    .swiper-container-vertical>.swiper-wrapper {
+        flex-direction: row;
+    }
+
+    .guide .nav-guide-form img {
+        filter: none;
+    }
+
+    .guide .nav-guide-form.active {
+        background: #155263;
+    }
+
+    .guide .nav-guide-form.active a {
+        color: white;
+    }
+
+    .guide .nav-guide-form.active img {
+        filter: brightness(0) invert(1);
+    }
+
+    .active::after {
+        display: none;
+    }
+
+    .active::before {
+        display: none;
+    }
+
+    .bold-text {
+        margin-right: 0;
+        margin-bottom: 20px;
+    }
+
+    .service-detail-form-text-flex {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .new-customer .new-customer-form-text {
+        margin: 0;
+        padding: 20px 0;
+    }
+
+    .new-customer .new-customer-form-cus {
+        padding: 20px 10px;
+    }
+
+    .sologan {
+        padding: 20px 0;
+        margin: 20px;
+        font-size: 15px;
+    }
+
+    .benifit-form .texth2 {
+        font-size: 20px;
+        margin-bottom: 20px;
+    }
+
+    .benifit-form-item :nth-child(1) {
+        margin-top: 20px;
+    }
+
+    .benifit-form-item {
+        width: 100%;
+        padding: 20px 10px;
+    }
+
+    .benifit-form {
+        padding: 0;
+    }
+
+    .bg-full {
+        padding: 20px 0;
+        height: auto;
+    }
+
+    .bg-full .container {
+        display: block;
+    }
+
+    .toggle-sign {
+        margin-left: auto;
+    }
+
+    .nav-menu-ul {
+        display: none;
+    }
+
+    .service p {
+        padding: 10px 0;
+    }
+
+    .swiper-button-prev {
+        font-size: 3px;
+    }
+
+    .swiper-button-next {
+        font-size: 3px;
+    }
+
+    .swiper-slide a {
+        font-size: 13px;
+        padding: 20px;
+    }
+
+    .service-detail-form-text-flex-detail a {
+        padding: 10px 0;
+    }
+
+    .create h3 {
+        text-align: center;
+    }
+
+    #map {
+        height: 200px;
+        width: 100%;
+    }
+
+    .header .menu .header-nav-menu {
+        justify-content: space-between;
+    }
+
+    .swiper-container {
+        display: block;
+    }
+
+    .swiper-container img {
+        height: 40px;
+        width: auto;
+    }
+
+    .texth2 {
+        font-size: 15px;
+    }
+
+    .texth1 {
+        font-size: 30px;
+    }
+
+    .sec {
+        margin-bottom: 40px;
+    }
+
+    html {
+        overflow-x: hidden;
+    }
+
+    body {
+        overflow-x: hidden;
+    }
+
+    p {
+        font-size: 12px;
+    }
+
+    main {
+        margin-top: 94px;
+    }
+
+    .btn-install {
+        padding: 5px 25px;
+    }
+
+    .fas.fa-times {
+        margin-right: 30px;
+    }
+
+    .value-truck {
+        justify-content: space-between;
+    }
+
+    .value-truck-item p.counter {
+        font-size: 30px;
+        margin: auto;
+    }
+
+    strong {
+        font-size: 15px;
+    }
+
+    .value-truck-item {
+        width: 100%;
+        display: flex;
+        margin-right: 10px;
+    }
+
+    .value-truck-item-cus {
+        display: flex;
+        justify-content: center;
+        width: 100%;
+    }
+
+    .value-truck-item-cus img {
+        height: auto;
+        padding: 10px 5px;
+    }
+
+    .service-img-plane {
+        display: none;
+    }
+
+    .benifit-img {
+        display: none;
+    }
+
+
+    .nav-menu.fixed {
+        position: fixed;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        background-color: white;
+        height: fit-content;
+        z-index: 2;
+        padding: 18px;
+        margin: 0;
+        width: 100vw;
+        box-shadow: 0 2px 10px 0 rgba(0, 0, 0, 0.3);
+    }
+
+    .benifit-img {
+        width: 30%;
+    }
+
+    .benifit-maintext {
+        padding-left: 30px;
+    }
+
+    #navbar-toggle {
+        display: block;
+        margin: auto 0;
+    }
+
+    .img-nav-menu {
+        display: block !important;
+        width: 30%;
+    }
+
+    .nav-menu {
+        margin: auto 0;
+        display: flex;
+    }
+
+    .nav-mobile-menu a img {
+        width: 200px;
+    }
+
+    .nav-mobile-menu .social-icon {
+        padding: 15px;
+    }
+
+    .nav-menu-img {
+        width: 100%;
+        margin: auto 0;
+    }
+
+    .menu li {
+        margin: 0;
+    }
+
+    .nav-menu li {
+        display: none;
+    }
+
+    .header-main-img {
+        display: none;
+    }
+
+    .header-main-form {
+        display: none;
+    }
+
+    .header-main {
+        display: none;
+    }
+
+    .header-context {
+        justify-content: flex-end;
+    }
+
+    .menu {
+        flex-direction: column;
+        border: none;
+    }
+
+    .main {
+        padding-bottom: 20px;
+        display: flex;
+        flex-wrap: wrap;
+        flex-direction: column-reverse;
+        background-image: none;
+    }
+
+    .main-truck-img {
+        display: none;
+    }
+
+    main .main-search {
+        width: 100%;
+    }
+
+    main .main-search .search {
+        width: 100%;
+        margin-top: 60px;
+    }
+
+    .texth3 {
+        font-size: 16px;
+    }
+
+    .create-form p {
+        font-size: 13px;
+        padding: 10px 0;
+        text-align: center;
+    }
+
+    .service-detail .tab-serivce-maintext {
+        padding: 10px 0;
+        border: none;
+    }
+
+    .new-customer-form h2 {
+        color: #155263;
+        font-size: 22px;
+    }
+
+    .service-detail .tab-serivce ul li {
+        padding: 15px;
+        border: none;
+    }
+
+    .btn #coccoc {
+        margin: 10px 0 0 0;
+    }
+
+    p {
+        font-size: 13px;
+        padding: 0;
+    }
+
+    .main-text h1 {
+        font-size: 24px;
+        padding: 5px;
+    }
+
+    .main-text p {
+        margin: 5px;
+        padding: 0 10px;
+    }
+
+    .main-text-install {
+        display: flex;
+        flex-direction: column;
+        padding-top: 10px;
+    }
+
+    .guide {
+        color: white;
+        padding-top: 20px;
+    }
+
+    .guide-form {
+        width: 100%;
+    }
+
+    .guide .nav-guide-form {
+        width: 50%;
+        padding: 10px;
+    }
+
+    .main-text {
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+        margin: 0;
+        align-items: center;
+        text-align: center;
+        padding: 60px 0;
+    }
+
+    .main-value {
+        margin: 0;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .sign {
+        padding: 15px;
+        font-size: 10px;
+    }
+
+    #tracking {
+        flex-direction: column;
+    }
+
+    #tracking input {
+        width: 100%;
+        font-size: 13px;
+    }
+
+    main .main-search .search .search-text .form-search-sel-inp {
+        flex-direction: column;
+    }
+
+    .form-search-sel-inp-item {
+        display: flex;
+        width: 100%;
+        flex-direction: column;
+    }
+
+    .value-truck {
+        width: 95vw;
+        flex-wrap: wrap;
+    }
+
+    .header-main img {
+        width: 15%;
+    }
+
+    .value-truck-item p {
+        font-size: 13px;
+        width: auto;
+        margin: auto;
+        width: max-content;
+    }
+
+    .service .service-form {
+        padding: 0;
+        display: none;
+    }
+
+    .benifit-maintext {
+        padding: 0;
+        margin: 0;
+        width: 100%;
+    }
+
+    .benifit-maintext p {
+        padding: 15px 0;
+    }
+
+    .benifit-maintext h2 {
+        text-align: center;
+    }
+
+    .benifit-maintext h2::after {
+        width: 40px;
+    }
+
+    .main-contact h2 {
+        text-align: center;
+    }
+
+    .main-contact h2::before {
+        display: inline;
+
+        margin-left: -50px;
+    }
+
+    .nav-guide {
+        flex-wrap: wrap;
+    }
+
+    .nav-guide-form {
+        width: 49%;
+    }
+
+    .service .service-form-item {
+        padding: 10px;
+        margin: 0;
+        width: 50%;
+    }
+
+    .main-contact {
+        width: 100%;
+    }
+
+    .contact {
+        position: relative;
+        display: flex;
+        flex-wrap: wrap;
+    }
+
+    .contact-form {
+        padding: 15px 5px;
+        width: 100%;
+    }
+
+    .contact-form-address {
+        width: 100%;
+    }
+
+    .main-contact-img {
+        width: 100%;
+        height: 100%;
+        position: absolute;
+    }
+
+    .value-truck {
+        position: sticky;
+        bottom: 0;
+        background-color: #2eb872;
+    }
+
+    .service-form-item img {
+        display: inline;
+    }
+
+    .create-account-text a.btn {
+        margin: 0;
+        margin-left: auto;
+        font-size: 13px;
+    }
+
+    .service-form-item h4,
+    .service-form-item p {
+        padding: 5px;
+    }
+
+    .create-account-text img {
+        width: 40%;
+        padding: 5px;
+    }
+
+    .create-account {
+        padding: 0;
+        display: flex;
+        padding: 20px 0;
+        flex-direction: column;
+    }
+
+    .create-form {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .create-account img {
+        width: 50%;
+        height: auto;
+        margin: 0 auto;
+    }
+
+    .create-form .btn-search {
+        width: 40%;
+    }
+
+    .benifit-maintext .customer {
+        flex-wrap: wrap;
+        display: none;
+    }
+
+    .customer-benefit-text {
+        margin: 10px;
+    }
+
+    .customer-benefit-text p {
+        margin: 5px 5px 5px 0;
+    }
+
+    .main-contact-img img {
+        display: none;
+    }
+
+    .footer {
+        flex-direction: column;
+        padding: 0 0 20px 0;
+    }
+
+    .footer-menu {
+        padding: 20px 0;
+    }
+
+    .footer-menu-text {
+        margin-top: 20px;
+    }
+
+    .footer-img {
+        width: 50%;
+        padding: 0;
+    }
+
+    .footer-img img {
+        width: 100%;
+    }
+
+    .logo-cus {
+        width: 30%;
+    }
+
+    .main-search-overplay {
+        display: none;
+    }
+
+    .tab-serivce-maintext-ul {
+        display: flex;
+        flex-wrap: wrap;
+    }
+
+    .tab-menu-ul {
+        width: 100%;
+    }
+
+    .service-detail-form-sum {
+        padding: 0;
+    }
+
+    .texh2 {
+        font-size: 20px;
+    }
+
+    .texth3 {
+        font-size: 16px;
+    }
+
+    .biggertext {
+        font-size: 15px;
+    }
+
+    .header-context-form-text {
+        display: none;
+    }
+
+    .header-context .header-sign {
+        width: 100%;
+        justify-content: space-between;
+    }
+
+    .login-register {
+        display: flex;
+    }
+
+    .header-context .header-search input {
+        width: 100px;
+    }
+
+    .nav-mobile-menu .social-icon {
+        display: none;
+    }
+
+    .slide-logo {
+        height: 80px;
+    }
+
+    .main-text .texth1 {
+        margin-bottom: 30px;
+    }
+
+    .tab {
+        position: relative;
+        bottom: 0;
+        margin-bottom: 30px;
+    }
+
+    .service-tab-nav li {
+        width: 50%;
+    }
+
+    .service-tab-nav {
+        padding-bottom: 20px;
+    }
+
+    .current::before {
+        display: none;
+    }
+
+    .service-tab-content .box-img img {
+        width: 100%;
+    }
+    .nav-mobile-menu-item li a:hover {
+      color: #fff;
+      background: #df2718;
+      display: block;
+    }
+}
+
+@media screen and (max-width: 450px) {
+    .slide-logo .nav-menu-img {
+        width: 100px;
+    }
+
+    .header-context .header-search input {
+        width: 52px;
+        font-size: 10px;
+    }
+
+    main {
+        margin-top: 103px;
+    }
+}
+
+@media screen and (max-width: 375px) {
+    .slide-logo .nav-menu-img {
+        width: 100px;
+    }
+
+}
