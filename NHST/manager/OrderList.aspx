@@ -203,6 +203,21 @@
                 margin-right: 3px
             }
         }
+
+        
+        .fix-status {
+            display: flex;
+            justify-content: center;
+        }
+
+        .warning {
+            min-width: 200px;
+            margin: 10px 20px;
+            border:1px solid #33333340 !important;
+            background-color: var(--color);
+            padding: 10px;
+            color: #fff;
+        }
     </style>
     <div id="main" class="main-full">
         <div class="row">
@@ -435,6 +450,12 @@
                                 <asp:Button ID="btn10" UseSubmitBehavior="false" runat="server" style="--color: blue" CssClass="order-status btn10" OnClick="btn10_Click" />
                                 <asp:Button ID="btn12" UseSubmitBehavior="false" runat="server" style="--color: SaddleBrown" CssClass="order-status btn12" OnClick="btn12_Click" />                                
                             </div>
+                        </div>
+                        <div class="fix-status">
+                            <asp:Button ID="btn13" UseSubmitBehavior="false" runat="server" Style="--color: #fdba24" CssClass="warning" OnClick="btn13_Click" />
+                            <asp:Button ID="btn14" UseSubmitBehavior="false" runat="server" Style="--color: #fdba24" CssClass="warning" OnClick="btn14_Click" />
+                            <asp:Button ID="btn15" UseSubmitBehavior="false" runat="server" Style="--color: #fdba24" CssClass="warning" OnClick="btn15_Click" />
+                            <asp:Button ID="btn16" UseSubmitBehavior="false" runat="server" Style="--color: #fdba24" CssClass="warning" OnClick="btn16_Click" />
                         </div>
                         <table class="table bordered highlight striped ">
                             <thead>

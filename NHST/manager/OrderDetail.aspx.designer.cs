@@ -681,6 +681,24 @@ namespace NHST.manager
         protected global::System.Web.UI.WebControls.TextBox txtOrderWeight;
 
         /// <summary>
+        /// pWeightNDT control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox pWeightNDT;
+
+        /// <summary>
+        /// pVolume control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox pVolume;
+
+        /// <summary>
         /// lblCKFeeWeight control.
         /// </summary>
         /// <remarks>
@@ -697,15 +715,6 @@ namespace NHST.manager
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label lblCKFeeweightPrice;
-
-        /// <summary>
-        /// pWeightNDT control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox pWeightNDT;
 
         /// <summary>
         /// pWeight control.

@@ -97,9 +97,9 @@ namespace NHST.manager
                                                 {
                                                     isShowButton = false;
                                                 }
-                                                double weight = 0;
+                                                double weight = Convert.ToDouble(sm.Weight);
                                                 double weightCN = Convert.ToDouble(sm.Weight);
-                                                double weightKT = 0;
+                                                double volume = 0;
                                                 double dai = 0;
                                                 double rong = 0;
                                                 double cao = 0;
@@ -111,22 +111,8 @@ namespace NHST.manager
                                                     cao = Convert.ToDouble(sm.Height);
 
                                                 if (dai > 0 && rong > 0 && cao > 0)
-                                                    weightKT = dai * rong * cao / 6000;
-                                                if (weightKT > 0)
-                                                {
-                                                    if (weightKT > weightCN)
-                                                    {
-                                                        weight = weightKT;
-                                                    }
-                                                    else
-                                                    {
-                                                        weight = weightCN;
-                                                    }
-                                                }
-                                                else
-                                                {
-                                                    weight = weightCN;
-                                                }
+                                                    volume = dai * rong * cao / 1000000;
+
                                                 weight = Math.Round(weight, 1);
 
                                                 string packagecode = sm.OrderTransactionCode;
@@ -135,6 +121,7 @@ namespace NHST.manager
 
                                                 pg.ID = sm.ID;
                                                 pg.weight = weight;
+                                                pg.volume = volume;
 
                                                 pg.packagecode = packagecode;
                                                 pg.Status = Status;
@@ -406,6 +393,7 @@ namespace NHST.manager
                                 html.Append("<tr class=\"teal darken-4\">");
                                 html.Append("<th>Mã kiện</th>");
                                 html.Append("<th>Cân nặng (kg)</th>");
+                                html.Append("<th>Số khối</th>");
                                 html.Append("<th>Ngày lưu kho (Ngày)</th>");
                                 html.Append("<th>Trạng thái</th>");
                                 html.Append("<th>Tiền lưu kho</th>");
@@ -427,6 +415,7 @@ namespace NHST.manager
                                     html.Append("<tr>");
                                     html.Append("<td><span>" + p.packagecode + "</span></td>");
                                     html.Append("<td><span>" + p.weight + "</span></td>");
+                                    html.Append("<td><span>" + p.volume + "</span></td>");
                                     html.Append("<td><span>" + p.DateInWare + "</span></td>");
                                     html.Append("<td>" + PJUtils.IntToStringStatusSmallPackageNew(p.Status) + "</td>");
                                     html.Append("<td>" + string.Format("{0:N0}", p.payInWarehouse) + " VND</td>");
@@ -440,15 +429,15 @@ namespace NHST.manager
                                     //html.Append("           </tr>");
                                 }
                                 html.Append("<tr>");
-                                html.Append("<td colspan=\"4\"><span class=\"black-text font-weight-500\">Tổng tiền lưu kho</span></td>");
+                                html.Append("<td colspan=\"5\"><span class=\"black-text font-weight-500\">Tổng tiền lưu kho</span></td>");
                                 html.Append("<td><span class=\"black-text font-weight-600\">" + string.Format("{0:N0}", o.totalPrice) + " VND</span></td>");
                                 html.Append("</tr>");
                                 html.Append("<tr>");
-                                html.Append("<td colspan=\"4\"><span class=\"black-text font-weight-500\">Trạng thái</span></td>");
+                                html.Append("<td colspan=\"5\"><span class=\"black-text font-weight-500\">Trạng thái</span></td>");
                                 html.Append("<td>" + status + "</td>");
                                 html.Append("</tr>");
                                 html.Append("<tr>");
-                                html.Append("<td colspan=\"4\"><span class=\"black-text font-weight-500\">Tiền cần thanh toán</span></td>");
+                                html.Append("<td colspan=\"5\"><span class=\"black-text font-weight-500\">Tiền cần thanh toán</span></td>");
                                 if (o.isPay == false)
                                 {
                                     html.Append("<td><span class=\"red-text font-weight-700\">" + string.Format("{0:N0}", o.totalMustPay) + " VND</span></td>");
@@ -493,6 +482,7 @@ namespace NHST.manager
                                 htmlPrint.Append("           <tr>");
                                 htmlPrint.Append("               <th style=\"color:#000\">Mã kiện</th>");
                                 htmlPrint.Append("               <th style=\"color:#000\">Cân nặng (kg)</th>");
+                                htmlPrint.Append("               <th style=\"color:#000\">Số khối</th>");
                                 htmlPrint.Append("               <th style=\"color:#000\">Kích thước</th>");
                                 htmlPrint.Append("               <th style=\"color:#000\">Ngày lưu kho (ngày)</th>");
                                 //htmlPrint.Append("               <th style=\"color:#000\">Thành tiền</th>");
@@ -519,6 +509,7 @@ namespace NHST.manager
                                     htmlPrint.Append("           <tr>");
                                     htmlPrint.Append("               <td>" + p.packagecode + "</td>");
                                     htmlPrint.Append("               <td>" + p.weight + "</td>");
+                                    htmlPrint.Append("               <td>" + p.volume + "</td>");
                                     htmlPrint.Append("               <td><p><span>d: " + dai + "</span> <b>x</b> <span>r: " + rong + "</span><b>x</b> <span>c: " + cao + "</span></p></td>");
                                     htmlPrint.Append("               <td>" + p.DateInWare + "</td>");
                                     htmlPrint.Append("               <td style=\"display:none\"><span>" + string.Format("{0:N0}", p.payInWarehouse) + " vnđ</span></td>");
@@ -527,19 +518,19 @@ namespace NHST.manager
 
                                 var mo = MainOrderController.GetByID(o.OrderID);
                                 htmlPrint.Append("           <tr style=\"font-size: 15px;display:none;\">");
-                                htmlPrint.Append("               <td colspan=\"4\"><span style=\"font-weight: 500;\">Tổng tiền lưu kho</span></td>");
+                                htmlPrint.Append("               <td colspan=\"5\"><span style=\"font-weight: 500;\">Tổng tiền lưu kho</span></td>");
                                 htmlPrint.Append("               <td><span style=\"font-weight: 500;\">" + string.Format("{0:N0}", o.totalPrice) + " vnđ</span></td>");
                                 htmlPrint.Append("           </tr>");
                                 htmlPrint.Append("           <tr style=\"font-size: 15px;\">");
-                                htmlPrint.Append("               <td colspan=\"3\"><span style=\"font-weight: 500;\">Phí mua hàng</span></td>");
+                                htmlPrint.Append("               <td colspan=\"4\"><span style=\"font-weight: 500;\">Phí mua hàng</span></td>");
                                 htmlPrint.Append("               <td><span style=\"font-weight: 500;\">" + string.Format("{0:N0}", Convert.ToDouble(mo.FeeBuyPro)) + " vnđ</span></td>");
                                 htmlPrint.Append("           </tr>");
                                 htmlPrint.Append("           <tr style=\"font-size: 15px;\">");
-                                htmlPrint.Append("               <td colspan=\"3\"><span style=\"font-weight: 500;\">Phí vận chuyển</span></td>");
+                                htmlPrint.Append("               <td colspan=\"4\"><span style=\"font-weight: 500;\">Phí vận chuyển</span></td>");
                                 htmlPrint.Append("               <td><span style=\"font-weight: 500;\">" + string.Format("{0:N0}", Convert.ToDouble(mo.FeeWeight)) + " vnđ</span></td>");
                                 htmlPrint.Append("           </tr>");
                                 htmlPrint.Append("           <tr style=\"font-size: 15px; \">");
-                                htmlPrint.Append("               <td colspan=\"3\"><span style=\"font-weight: 500;\">Phí ship Trung Quốc</span></td>");
+                                htmlPrint.Append("               <td colspan=\"4\"><span style=\"font-weight: 500;\">Phí ship Trung Quốc</span></td>");
                                 htmlPrint.Append("               <td><span style=\"font-weight: 500;\">" + string.Format("{0:N0}", Convert.ToDouble(mo.FeeShipCN)) + " vnđ</span></td>");
                                 htmlPrint.Append("           </tr>");
                                 htmlPrint.Append("       </table>");
@@ -1049,6 +1040,7 @@ namespace NHST.manager
             public int ID { get; set; }
             public string packagecode { get; set; }
             public double weight { get; set; }
+            public double volume { get; set; }
             public double DateInWare { get; set; }
             public int Status { get; set; }
             public double payInWarehouse { get; set; }

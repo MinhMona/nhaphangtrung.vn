@@ -289,7 +289,7 @@ namespace NHST
                 var id = RouteData.Values["id"].ToString().ToInt(0);
                 if (id > 0)
                 {
-                  
+
                     var o = MainOrderController.GetAllByUIDAndID(uid, id);
                     if (o != null)
                     {
@@ -620,13 +620,13 @@ namespace NHST
                             foreach (var s in smallpackages)
                             {
                                 double WeightChange = 0;
-                                if (s.Height > 0 && s.Width > 0 && s.Length > 0)                               
+                                if (s.Height > 0 && s.Width > 0 && s.Length > 0)
                                     WeightChange = Convert.ToDouble(s.Height) * Convert.ToDouble(s.Width) * Convert.ToDouble(s.Length) / 6000;
-                                
+
                                 ltrSmallPackages.Text += "<tr class=\"slide-up\">";
                                 ltrSmallPackages.Text += "<td>" + s.OrderTransactionCode + "</td>";
-                                ltrSmallPackages.Text += "<td>" + s.Length + " x " + s.Width + " x " + s.Height +"</td>";
-                                ltrSmallPackages.Text += "<td>" + Math.Round(WeightChange, 1) + "</td>";                              
+                                ltrSmallPackages.Text += "<td>" + s.Length + " x " + s.Width + " x " + s.Height + "</td>";
+                                ltrSmallPackages.Text += "<td>" + Math.Round(s.Volume ?? 0, 3) + "</td>";
                                 ltrSmallPackages.Text += "<td>" + Math.Round(Convert.ToDouble(s.Weight), 1) + "</td>";
                                 ltrSmallPackages.Text += "<td><span>" + s.Description + "</span></td>";
                                 ltrSmallPackages.Text += "<td>" + PJUtils.IntToStringStatusSmallPackageWithBGNew(Convert.ToInt32(s.Status)) + "</td>";
@@ -723,7 +723,7 @@ namespace NHST
                                 ltrProducts.Text += "</div>";
                                 ltrProducts.Text += "<div class=\"note\"><span class=\"black-text font-weight-500\">Ghi chú: </span>";
                                 ltrProducts.Text += "<div class=\"input-field inline\"><input type=\"text\" value=\"" + item.brand + "\" class=\"validate\" id=\"note_" + item.ID + "\"></div>";
-                                ltrProducts.Text += "</div>";                                
+                                ltrProducts.Text += "</div>";
                                 //if (o.Status > 1)
                                 //{
                                 //    ltrProducts.Text += "<div class=\"capnhat\" style=\"display: flex; justify-content: center;\">";
@@ -801,14 +801,18 @@ namespace NHST
                         else
                             ltrService.Text += "<li><span class=\"lbl\">Phí ship nội địa TQ</span><span class=\"value\">Đang cập nhật</span></li>";
 
-                        if (UL_CKFeeWeight > 0)
-                        {
-                            ltrService.Text += "<li><span class=\"lbl\">Phí cân nặng (Đã CK " + UL_CKFeeWeight + "% : " + string.Format("{0:N0}", o.FeeWeightCK.ToFloat(0) > 0 ? Convert.ToDouble(o.FeeWeightCK) : 0) + " VNĐ)</span><span class=\"value\">" + o.TQVNWeight + " kg - " + string.Format("{0:N0}", o.FeeWeight.ToFloat(0)) + " VNĐ</span></li>";
-                        }
-                        else
-                        {
-                            ltrService.Text += "<li><span class=\"lbl\">Phí cân nặng</span><span class=\"value\">" + o.TQVNWeight + " kg - " + string.Format("{0:N0}", o.FeeWeight.ToFloat(0)) + " VNĐ</span></li>";
-                        }
+                        ltrService.Text += "<li><span class=\"lbl\">Cân nặng</span><span class=\"value\">" + o.TQVNWeight + " kg</span></li>";
+                        ltrService.Text += "<li><span class=\"lbl\">Số khối</span><span class=\"value\">" + o.TQVNVolume + " khối</span></li>";
+
+                        //if (UL_CKFeeWeight > 0)
+                        //{
+                        //    ltrService.Text += "<li><span class=\"lbl\">Phí cân nặng (Đã CK " + UL_CKFeeWeight + "% : " + string.Format("{0:N0}", o.FeeWeightCK.ToFloat(0) > 0 ? Convert.ToDouble(o.FeeWeightCK) : 0) + " VNĐ)</span><span class=\"value\">" + o.TQVNWeight + " kg - " + string.Format("{0:N0}", o.FeeWeight.ToFloat(0)) + " VNĐ</span></li>";
+                        //}
+                        //else
+                        //{
+                        //    ltrService.Text += "<li><span class=\"lbl\">Phí cân nặng</span><span class=\"value\">" + o.TQVNWeight + " kg - " + string.Format("{0:N0}", o.FeeWeight.ToFloat(0)) + " VNĐ</span></li>";
+                        //}
+                        ltrService.Text += "<li><span class=\"lbl\">Phí vận chuyển TQVN</span><span class=\"value\">" + string.Format("{0:N0}", o.FeeWeight.ToFloat(0)) + " VNĐ</span></li>";
 
                         double feeinwarehouse = 0;
                         if (o.FeeInWareHouse != null)

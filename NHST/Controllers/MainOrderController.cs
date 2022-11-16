@@ -1727,6 +1727,23 @@ namespace NHST.Controllers
                     return null;
             }
         }
+
+        public static string UpdateVolume(int ID, string TongKhoi)
+        {
+            using (var dbe = new NHSTEntities())
+            {
+                var or = dbe.tbl_MainOder.Where(o => o.ID == ID).FirstOrDefault();
+                if (or != null)
+                {
+                    or.TQVNVolume = TongKhoi;
+                    dbe.Configuration.ValidateOnSaveEnabled = false;
+                    dbe.SaveChanges();
+                    return "ok";
+                }
+                else
+                    return null;
+            }
+        }
         public static string UpdateWeightStatusTQ(int ID, string TotalWeight, string OrderWeight, int Status, DateTime DateTQ)
         {
             using (var dbe = new NHSTEntities())
@@ -7494,7 +7511,28 @@ namespace NHST.Controllers
             if (!string.IsNullOrEmpty(st))
             {
                 if (st != "-1")
-                    sql += " AND mo.Status in (" + st + ")";
+                {
+                    if (st == "13")
+                    {
+                        sql += " AND mo.Status=5 AND DATEDIFF(day,mo.DateBuy,getdate()) > 3 ";
+                    }
+                    else if (st == "14")
+                    {
+                        sql += " AND mo.Status=3 AND DATEDIFF(day,mo.DateShipper,getdate()) > 6 ";
+                    }
+                    else if (st == "15")
+                    {
+                        sql += " AND mo.Status=6 AND DATEDIFF(day,mo.DateTQ,getdate()) > 3 ";
+                    }
+                    else if (st == "16")
+                    {
+                        sql += " AND mo.Status=7 AND DATEDIFF(day,mo.DateToVN,getdate()) > 6 ";
+                    }
+                    else
+                    {
+                        sql += " AND mo.Status in (" + st + ")";
+                    }
+                }
             }
             if (!string.IsNullOrEmpty(mvd))
             {
@@ -9043,6 +9081,108 @@ namespace NHST.Controllers
             }
             reader.Close();
             return list;
+        }
+
+
+        public static int CountOrderSlow(int OrderType, int RoleID, int StaffID)
+        {
+            int Count = 0;
+            var sql = @" SELECT COUNT(*) as Total from tbl_MainOder ";
+            sql += " WHERE OrderType = '" + OrderType + "' AND IsHidden=0 AND Status=5 AND DATEDIFF(day,DateBuy,getdate()) > 3 ";
+            if (RoleID == 3)
+            {
+                sql += "    AND DathangID = " + StaffID + "";
+            }
+            else if (RoleID == 6)
+            {
+                sql += "    AND SalerID = " + StaffID + "";
+            }
+            else if (RoleID == 9)
+            {
+                sql += "    AND CSID = " + StaffID + "";
+            }
+            var reader = (IDataReader)SqlHelper.ExecuteDataReader(sql);
+            while (reader.Read())
+            {
+                Count = reader["Total"].ToString().ToInt();
+            }
+            reader.Close();
+            return Count;
+        }
+        public static int CountOrderSlowChina(int OrderType, int RoleID, int StaffID)
+        {
+            int Count = 0;
+            var sql = @" SELECT COUNT(*) as Total from tbl_MainOder ";
+            sql += " WHERE OrderType = '" + OrderType + "' AND IsHidden=0 AND Status=3 AND DATEDIFF(day,DateShipper,getdate()) > 6 ";
+            if (RoleID == 3)
+            {
+                sql += "    AND DathangID = " + StaffID + "";
+            }
+            else if (RoleID == 6)
+            {
+                sql += "    AND SalerID = " + StaffID + "";
+            }
+            else if (RoleID == 9)
+            {
+                sql += "    AND CSID = " + StaffID + "";
+            }
+            var reader = (IDataReader)SqlHelper.ExecuteDataReader(sql);
+            while (reader.Read())
+            {
+                Count = reader["Total"].ToString().ToInt();
+            }
+            reader.Close();
+            return Count;
+        }
+        public static int CountOrderSlowOutChina(int OrderType, int RoleID, int StaffID)
+        {
+            int Count = 0;
+            var sql = @" SELECT COUNT(*) as Total from tbl_MainOder ";
+            sql += " WHERE OrderType = '" + OrderType + "' AND IsHidden=0 AND Status=6 AND DATEDIFF(day,DateTQ,getdate()) > 3 ";
+            if (RoleID == 3)
+            {
+                sql += "    AND DathangID = " + StaffID + "";
+            }
+            else if (RoleID == 6)
+            {
+                sql += "    AND SalerID = " + StaffID + "";
+            }
+            else if (RoleID == 9)
+            {
+                sql += "    AND CSID = " + StaffID + "";
+            }
+            var reader = (IDataReader)SqlHelper.ExecuteDataReader(sql);
+            while (reader.Read())
+            {
+                Count = reader["Total"].ToString().ToInt();
+            }
+            reader.Close();
+            return Count;
+        }
+        public static int CountOrderSlowVN(int OrderType, int RoleID, int StaffID)
+        {
+            int Count = 0;
+            var sql = @" SELECT COUNT(*) as Total from tbl_MainOder ";
+            sql += " WHERE OrderType = '" + OrderType + "' AND IsHidden=0 AND Status=7 AND DATEDIFF(day,DateToVN,getdate()) > 6 ";
+            if (RoleID == 3)
+            {
+                sql += "    AND DathangID = " + StaffID + "";
+            }
+            else if (RoleID == 6)
+            {
+                sql += "    AND SalerID = " + StaffID + "";
+            }
+            else if (RoleID == 9)
+            {
+                sql += "    AND CSID = " + StaffID + "";
+            }
+            var reader = (IDataReader)SqlHelper.ExecuteDataReader(sql);
+            while (reader.Read())
+            {
+                Count = reader["Total"].ToString().ToInt();
+            }
+            reader.Close();
+            return Count;
         }
     }
 }

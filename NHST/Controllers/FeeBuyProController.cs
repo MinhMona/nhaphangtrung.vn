@@ -140,7 +140,7 @@ namespace NHST.Controllers
                     return null;
             }
         }
-        public static string UpdateFeeOrder(int ID, double PercentService, double PercentDeposit, double FeeWeightHN, double FeeWeightSG, DateTime ModifiedDate, string ModifiedBy)
+        public static string UpdateFeeOrder(int ID, double PercentService, double PercentDeposit, double FeeWeightHN, double FeeWeightSG,double FeeVolumeHN, double FeeVolumeSG, DateTime ModifiedDate, string ModifiedBy)
         {
             using (var dbe = new NHSTEntities())
             {
@@ -151,7 +151,9 @@ namespace NHST.Controllers
                     a.PercentService = PercentService;
                     a.PercentDeposit = PercentDeposit;
                     a.FeeWeightHN = FeeWeightHN;
-                    a.FeeWeightSG = FeeWeightSG;                    
+                    a.FeeWeightSG = FeeWeightSG;
+                    a.FeeVolumeHN = FeeVolumeHN;
+                    a.FeeVolumeSG = FeeVolumeSG;                    
                     a.ModifiedDate = ModifiedDate;
                     a.ModifiedBy = ModifiedBy;
                     string kq = dbe.SaveChanges().ToString();

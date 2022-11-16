@@ -498,6 +498,8 @@
           <Property Name="ModifiedBy" Type="nvarchar(max)" />
           <Property Name="ModifiedDate" Type="datetime" />
           <Property Name="PercentDeposit" Type="float" />
+          <Property Name="FeeVolumeHN" Type="float" />
+          <Property Name="FeeVolumeSG" Type="float" />
         </EntityType>
         <EntityType Name="tbl_FeePackaged">
           <Key>
@@ -3371,6 +3373,8 @@ warning 6002: The table/view 'nhaphangtrung_vn.dbo.View_UserListWithWallet' does
           <Property Name="ModifiedBy" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="ModifiedDate" Type="DateTime" Precision="3" />
           <Property Name="PercentDeposit" Type="Double" />
+          <Property Name="FeeVolumeHN" Type="Double" />
+          <Property Name="FeeVolumeSG" Type="Double" />
         </EntityType>
         <EntityType Name="tbl_FeePackaged">
           <Key>
@@ -5709,6 +5713,8 @@ warning 6002: The table/view 'nhaphangtrung_vn.dbo.View_UserListWithWallet' does
           <EntitySetMapping Name="tbl_FeeOrder">
             <EntityTypeMapping TypeName="NHSTModel.tbl_FeeOrder">
               <MappingFragment StoreEntitySet="tbl_FeeOrder">
+                <ScalarProperty Name="FeeVolumeSG" ColumnName="FeeVolumeSG" />
+                <ScalarProperty Name="FeeVolumeHN" ColumnName="FeeVolumeHN" />
                 <ScalarProperty Name="PercentDeposit" ColumnName="PercentDeposit" />
                 <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
                 <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />

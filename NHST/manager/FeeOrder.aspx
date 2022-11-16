@@ -27,6 +27,8 @@
                                     <th>Phần trăm cọc (%)</th>
                                     <th>Hà Nội (đ/kg)</th>
                                     <th>TP.HCM (đ/kg)</th>
+                                    <th>Hà Nội (đ/khối)</th>
+                                    <th>TP.HCM (đ/khối)</th>
                                     <th>Thao tác</th>
                                 </tr>
                             </thead>
@@ -65,11 +67,19 @@
                 </div>
                 <div class="input-field col s12 m6">
                     <asp:TextBox value="0" runat="server" ID="txtFeeWeightHN" type="number" class="validate"></asp:TextBox>
-                    <label class="active" for="txtFeeWeightHN">Phí vận chuyển kho HN</label>                   
+                    <label class="active" for="txtFeeWeightHN">Phí vận chuyển kho HN (kg)</label>                   
                 </div>
                 <div class="input-field col s12 m6">
                     <asp:TextBox value="0" runat="server" ID="txtFeeWeightSG" type="number" class="validate"></asp:TextBox>
-                    <label class="active" for="txtFeeWeightSG">Phí vận chuyển kho SG</label>                   
+                    <label class="active" for="txtFeeWeightSG">Phí vận chuyển kho SG (kg)</label>                   
+                </div>  
+                <div class="input-field col s12 m6">
+                    <asp:TextBox value="0" runat="server" ID="txtFeeVolumeHN" type="number" class="validate"></asp:TextBox>
+                    <label class="active" for="txtFeeWeightHN">Phí vận chuyển kho HN (khối)</label>                   
+                </div>
+                <div class="input-field col s12 m6">
+                    <asp:TextBox value="0" runat="server" ID="txtFeeVolumeSG" type="number" class="validate"></asp:TextBox>
+                    <label class="active" for="txtFeeWeightSG">Phí vận chuyển kho SG (khối)</label>                   
                 </div>               
             </div>
         </div>
@@ -98,7 +108,9 @@
                         $('#<%=txtFeeService.ClientID%>').val(data.PercentService);
                         $('#<%=txtFeeDeposit.ClientID%>').val(data.PercentDeposit);
                         $('#<%=txtFeeWeightHN.ClientID%>').val(data.FeeWeightHN);
-                        $('#<%=txtFeeWeightSG.ClientID%>').val(data.FeeWeightSG);                      
+                        $('#<%=txtFeeWeightSG.ClientID%>').val(data.FeeWeightSG); 
+                        $('#<%=txtFeeVolumeHN.ClientID%>').val(data.FeeVolumeHN);
+                        $('#<%=txtFeeVolumeSG.ClientID%>').val(data.FeeVolumeSG);                      
                         $('select').formSelect();
                     }
                     else

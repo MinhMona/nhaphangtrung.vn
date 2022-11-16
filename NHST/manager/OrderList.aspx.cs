@@ -214,6 +214,46 @@ namespace NHST.manager
             Response.Redirect("orderlist?ot=" + uID + "&st=" + st + "");
         }
 
+        protected void btn13_Click(object sender, EventArgs e)
+        {
+            int uID = 1;
+            if (Request.QueryString["ot"] != null)
+            {
+                uID = Request.QueryString["ot"].ToInt(1);
+            }
+            int st = 13;
+            Response.Redirect("orderlist?ot=" + uID + "&st=" + st + "");
+        }
+        protected void btn14_Click(object sender, EventArgs e)
+        {
+            int uID = 1;
+            if (Request.QueryString["ot"] != null)
+            {
+                uID = Request.QueryString["ot"].ToInt(1);
+            }
+            int st = 14;
+            Response.Redirect("orderlist?ot=" + uID + "&st=" + st + "");
+        }
+        protected void btn15_Click(object sender, EventArgs e)
+        {
+            int uID = 1;
+            if (Request.QueryString["ot"] != null)
+            {
+                uID = Request.QueryString["ot"].ToInt(1);
+            }
+            int st = 15;
+            Response.Redirect("orderlist?ot=" + uID + "&st=" + st + "");
+        }
+        protected void btn16_Click(object sender, EventArgs e)
+        {
+            int uID = 1;
+            if (Request.QueryString["ot"] != null)
+            {
+                uID = Request.QueryString["ot"].ToInt(1);
+            }
+            int st = 16;
+            Response.Redirect("orderlist?ot=" + uID + "&st=" + st + "");
+        }
         #endregion
 
         public void loadDateMain()
@@ -401,6 +441,17 @@ namespace NHST.manager
                     if (la.Count > 0)
                         total = la[0].totalrow;
                     pagingall(la, total);
+
+                    var custom = MainOrderController.CountOrderSlow(OrderType, Convert.ToInt32(ac.RoleID), Convert.ToInt32(ac.ID));
+                    var custom2 = MainOrderController.CountOrderSlowChina(OrderType, Convert.ToInt32(ac.RoleID), Convert.ToInt32(ac.ID));
+                    var custom3 = MainOrderController.CountOrderSlowOutChina(OrderType, Convert.ToInt32(ac.RoleID), Convert.ToInt32(ac.ID));
+                    var custom4 = MainOrderController.CountOrderSlowVN(OrderType, Convert.ToInt32(ac.RoleID), Convert.ToInt32(ac.ID));
+
+                    var stt13 = custom.ToString();
+                    var stt14 = custom2.ToString();
+                    var stt15 = custom3.ToString();
+                    var stt16 = custom4.ToString();
+
                     var os = MainOrderController.GetAllByOrderType(OrderType);
                     if (ac.RoleID == 3)
                     {
@@ -433,6 +484,11 @@ namespace NHST.manager
                         btn10.Text = "Đã hoàn thành (" + stt10.Count + ")";
                         btn11.Text = "Đang giao hàng (" + stt11.Count + ")";
                         btn12.Text = "Đơn khiếu nại (" + stt12.Count + ")";
+
+                        btn13.Text = "3 ngày shop chưa giao (" + stt13 + ")";
+                        btn14.Text = "6 ngày hàng chưa về kho Trung (" + stt14 + ")";
+                        btn15.Text = "3 ngày hàng chưa xuất kho Trung (" + stt15 + ")";
+                        btn16.Text = "6 ngày hàng chưa về kho Hà Nội (" + stt16 + ")";
                     }
                     else if (ac.RoleID == 6)
                     {
@@ -497,6 +553,11 @@ namespace NHST.manager
                         btn10.Text = "Đã hoàn thành (" + stt10.Count + ")";
                         btn11.Text = "Đang giao hàng (" + stt11.Count + ")";
                         btn12.Text = "Đơn khiếu nại (" + stt12.Count + ")";
+
+                        btn13.Text = "3 ngày shop chưa giao (" + stt13 + ")";
+                        btn14.Text = "6 ngày hàng chưa về kho Trung (" + stt14 + ")";
+                        btn15.Text = "3 ngày hàng chưa xuất kho Trung (" + stt15 + ")";
+                        btn16.Text = "6 ngày hàng chưa về kho Hà Nội (" + stt16 + ")";
                     }
                     else
                     {
@@ -529,6 +590,11 @@ namespace NHST.manager
                         btn10.Text = "Đã hoàn thành (" + stt10.Count + ")";
                         btn11.Text = "Đang giao hàng (" + stt11.Count + ")";
                         btn12.Text = "Đơn khiếu nại (" + stt12.Count + ")";
+
+                        btn13.Text = "3 ngày shop chưa giao (" + stt13 + ")";
+                        btn14.Text = "6 ngày hàng chưa về kho Trung (" + stt14 + ")";
+                        btn15.Text = "3 ngày hàng chưa xuất kho Trung (" + stt15 + ")";
+                        btn16.Text = "6 ngày hàng chưa về kho Hà Nội (" + stt16 + ")";
                     }
                     if (ac.RoleID == 0)
                     {

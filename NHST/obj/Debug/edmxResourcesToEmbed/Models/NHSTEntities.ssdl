@@ -493,6 +493,8 @@
     <Property Name="ModifiedBy" Type="nvarchar(max)" />
     <Property Name="ModifiedDate" Type="datetime" />
     <Property Name="PercentDeposit" Type="float" />
+    <Property Name="FeeVolumeHN" Type="float" />
+    <Property Name="FeeVolumeSG" Type="float" />
   </EntityType>
   <EntityType Name="tbl_FeePackaged">
     <Key>

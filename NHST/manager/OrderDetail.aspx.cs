@@ -1397,6 +1397,7 @@ namespace NHST.manager
                             pCNShipFeeNDT.Visible = false;
                             ////pBuyNDT.Visible = false;
                             pWeightNDT.Visible = false;
+                            pVolume.Enabled = false;
                             pCheckNDT.Visible = false;
                             pPackedNDT.Visible = false;
                             pnOrderPrice.Enabled = true;
@@ -1465,7 +1466,7 @@ namespace NHST.manager
                                 pBuyNDT.Enabled = false;
                                 pBuy.Enabled = false;
                                 pWeightNDT.Enabled = false;
-
+                                pVolume.Enabled = false;
                                 pWeight.Enabled = false;
                                 tbCurrentCNYVN.Enabled = false;
                                 pAmountDeposit.Enabled = false;
@@ -1499,6 +1500,7 @@ namespace NHST.manager
                             //pricereal.Enabled = true;
                             pBuy.Enabled = false;
                             pWeightNDT.Enabled = false;
+                            pVolume.Enabled = false;
                             pWeight.Enabled = false;
                             phituychon.Enabled = false;
                             pDeposit.Enabled = false;
@@ -1538,6 +1540,7 @@ namespace NHST.manager
                                 pPackedNDT.Enabled = false;
                                 pPacked.Enabled = false;
                                 pWeightNDT.Enabled = false;
+                                pVolume.Enabled = false;
                                 pWeight.Enabled = false;
                             }
                             else if (o.Status >= 5 && o.Status < 6)
@@ -1548,6 +1551,7 @@ namespace NHST.manager
 
                                 pWeightNDT.Enabled = true;
                                 pWeight.Enabled = true;
+                                pVolume.Enabled = true;
 
 
                                 ////ltraddordercode.Text = "<div class=\"ordercode addordercode\"><a href=\"javascript:;\" onclick=\"addordercode()\">Thêm mã vận đơn</a></div>";
@@ -1571,6 +1575,7 @@ namespace NHST.manager
                                 pPackedNDT.Enabled = false;
                                 pPacked.Enabled = false;
                                 pWeightNDT.Enabled = false;
+                                pVolume.Enabled = false;
                                 pWeight.Enabled = false;
                             }
                             ////pDepositNDT.Visible = false;                            
@@ -1619,6 +1624,7 @@ namespace NHST.manager
                                 pPackedNDT.Enabled = false;
                                 pPacked.Enabled = false;
                                 pWeightNDT.Enabled = false;
+                                pVolume.Enabled = false;
                                 pWeight.Enabled = false;
                             }
                             else if (o.Status >= 5)
@@ -1635,6 +1641,7 @@ namespace NHST.manager
                                 pPacked.Enabled = false;
 
                                 pWeightNDT.Enabled = false;
+                                pVolume.Enabled = false;
                                 pWeight.Enabled = false;
                             }
                             ////if (o.Status >= 7)
@@ -1739,6 +1746,7 @@ namespace NHST.manager
                             pBuy.Enabled = false;
                             pWeightNDT.Enabled = false;
                             pWeight.Enabled = false;
+                            pVolume.Enabled = false;
                             pCheckNDT.Enabled = false;
                             pCheck.Enabled = false;
                             pCNShipFeeReal.Enabled = true;
@@ -1777,6 +1785,7 @@ namespace NHST.manager
                             pBuyNDT.Enabled = false;
                             pBuy.Enabled = false;
                             pWeightNDT.Enabled = false;
+                            pVolume.Enabled = false;
                             pWeight.Enabled = false;
                             pCheckNDT.Enabled = false;
                             pnCurrentCNYVN.Visible = false;
@@ -1838,6 +1847,7 @@ namespace NHST.manager
                             pricereal.Enabled = false;
                             pBuy.Enabled = false;
                             pWeightNDT.Enabled = false;
+                            pVolume.Enabled = false;
                             pWeight.Enabled = false;
                             pCNShipFeeReal.Enabled = false;
                             phituychon.Enabled = false;
@@ -1870,6 +1880,7 @@ namespace NHST.manager
                             pBuyNDT.Enabled = false;
                             pBuy.Enabled = false;
                             pWeightNDT.Enabled = false;
+                            pVolume.Enabled = false;
                             pWeight.Enabled = false;
                             pCheckNDT.Enabled = false;
                             pCheck.Enabled = false;
@@ -2260,6 +2271,14 @@ namespace NHST.manager
                         else
                         {
                             pWeightNDT.Text = "0";
+                        }
+                        if (!string.IsNullOrEmpty(o.TQVNVolume))
+                        {
+                            pVolume.Text = Convert.ToDouble(o.TQVNVolume).ToString();
+                        }
+                        else
+                        {
+                            pVolume.Text = "0";
                         }
 
 
@@ -2792,7 +2811,7 @@ namespace NHST.manager
                                 double canquydoi = 0;
                                 if (s.Height > 0 && s.Width > 0 && s.Length > 0)
                                 {
-                                    canquydoi = Convert.ToDouble(s.Height) * Convert.ToDouble(s.Width) * Convert.ToDouble(s.Length) / 6000;
+                                    canquydoi = Convert.ToDouble(s.Height) * Convert.ToDouble(s.Width) * Convert.ToDouble(s.Length) / 1000000;
                                 }
                                 int status = Convert.ToInt32(s.Status);
                                 ltrMavandon.Text += "<tr>";

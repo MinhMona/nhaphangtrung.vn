@@ -517,6 +517,7 @@ namespace NHST.Controllers
                     a.Length = Length;
                     a.Width = Width;
                     a.Height = Height;
+                    a.Volume = Math.Round((Length * Width * Height) / 1000000, 3);
                     dbe.Configuration.ValidateOnSaveEnabled = false;
                     string kq = dbe.SaveChanges().ToString();
                     return kq;
@@ -641,6 +642,7 @@ namespace NHST.Controllers
                     a.Length = Length;
                     a.Width = Width;
                     a.Height = Height;
+                    a.Volume = Math.Round((Length * Width * Height) / 1000000, 3);
                     dbe.Configuration.ValidateOnSaveEnabled = false;
                     string kq = dbe.SaveChanges().ToString();
                     return kq;
@@ -1150,7 +1152,7 @@ namespace NHST.Controllers
             sql += "Case Status when 0 then N'<span class=\"white-text badge red darken-2\">Đã hủy</span>' ";
             sql += "when 1 then N'<span class=\"white-text badge yellow darken-2\">Mới đặt - chưa về kho TQ</span>' ";
             sql += "when 2 then N'<span class=\"white-text badge orange darken-2\">Đã về kho TQ</span>' ";
-            sql += "when 3 then N'<span class=\"white-text badge green darken-2\">Đã về kho VN</span>' ";           
+            sql += "when 3 then N'<span class=\"white-text badge green darken-2\">Đã về kho VN</span>' ";
             sql += "When 4 then N'<span class=\"white-text badge blue darken-2\">Đã thanh toán</span>' ";
             sql += "when 5 then N'<span class=\"white-text badge teal darken-2\">Đang về kho VN</span>' ";
             sql += "When 6 then N'<span class=\"white-text badge blue darken-2\">Đã giao cho khách</span>' ";
@@ -1200,7 +1202,7 @@ namespace NHST.Controllers
                     entity.CreatedDateString = Convert.ToDateTime(reader["CreatedDate"]).ToString("dd/MM/yyyy HH:mm");
 
                 if (reader["Status"] != DBNull.Value)
-                    entity.Status = reader["Status"].ToString().ToInt(0);                
+                    entity.Status = reader["Status"].ToString().ToInt(0);
 
                 if (reader["StatusString"] != DBNull.Value)
                     entity.StatusString = reader["StatusString"].ToString();
@@ -1342,12 +1344,12 @@ namespace NHST.Controllers
         public static int GetTotalBy_DK(int searchtype, string searchtext, string status, string fd, string td, string ware, bool isNotCode)
         {
             var sql = @"SELECT Total=Count(*) from tbl_SmallPackage ";
-            sql += " Where OrderTransactionCode like N'%" + searchtext + "%' ";            
+            sql += " Where OrderTransactionCode like N'%" + searchtext + "%' ";
             if (searchtype == 1)
                 sql += " OR MainOrderID Like N'%" + searchtext + "%'";
             else if (searchtype == 2)
                 sql += " OR ID Like N'%" + searchtext + "%' ";
-            else if(searchtype == 3)
+            else if (searchtype == 3)
             {
                 if (!string.IsNullOrEmpty(fd))
                 {
@@ -1919,7 +1921,7 @@ namespace NHST.Controllers
             public int ID { get; set; }
             public int WorkingSessionID { get; set; }
             public int MainOrderID { get; set; }
-            public string OrderTransactionCode { get; set; }           
+            public string OrderTransactionCode { get; set; }
             public double Weight { get; set; }
             public double Length { get; set; }
             public double Height { get; set; }
@@ -1946,7 +1948,7 @@ namespace NHST.Controllers
             public string ProductType { get; set; }
             public string UserNote { get; set; }
             public double FeeShip { get; set; }
-            public double Weight { get; set; }            
+            public double Weight { get; set; }
             public double Volume { get; set; }
             public int Status { get; set; }
             public string StatusString { get; set; }

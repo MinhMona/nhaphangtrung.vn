@@ -54,6 +54,8 @@ namespace NHST.manager
                 l.PercentDeposit = f.PercentDeposit;
                 l.FeeWeightHN = f.FeeWeightHN;
                 l.FeeWeightSG = f.FeeWeightSG;
+                l.FeeVolumeHN = f.FeeVolumeHN;
+                l.FeeVolumeSG = f.FeeVolumeSG;
                 return serializer.Serialize(l);
             }
 
@@ -76,8 +78,10 @@ namespace NHST.manager
                         double FeeDeposit = Convert.ToDouble(txtFeeDeposit.Text);
                         double FeeWeightHN = Convert.ToDouble(txtFeeWeightHN.Text);
                         double FeeWeightSG = Convert.ToDouble(txtFeeWeightSG.Text);
+                        double FeeVolumeHN = Convert.ToDouble(txtFeeVolumeHN.Text);
+                        double FeeVolumeSG = Convert.ToDouble(txtFeeVolumeSG.Text);
 
-                        string kq = FeeBuyProController.UpdateFeeOrder(ID, FeeService, FeeDeposit, FeeWeightHN, FeeWeightSG, DateTime.Now, ac.Username);
+                        string kq = FeeBuyProController.UpdateFeeOrder(ID, FeeService, FeeDeposit, FeeWeightHN, FeeWeightSG, FeeVolumeHN, FeeVolumeSG ,DateTime.Now, ac.Username);
                         if (kq.ToInt(0) > 0)
                             PJUtils.ShowMessageBoxSwAlert("Chỉnh sửa chi phí thành công", "s", true, Page);
                     }
@@ -134,6 +138,8 @@ namespace NHST.manager
                     hcm.Append("<td>" + item.PercentDeposit + "</td>");
                     hcm.Append("<td>" + string.Format("{0:N0}", Convert.ToDouble(item.FeeWeightHN)) + "</td>");
                     hcm.Append("<td>" + string.Format("{0:N0}", Convert.ToDouble(item.FeeWeightSG)) + "</td>");
+                    hcm.Append("<td>" + string.Format("{0:N0}", Convert.ToDouble(item.FeeVolumeHN)) + "</td>");
+                    hcm.Append("<td>" + string.Format("{0:N0}", Convert.ToDouble(item.FeeVolumeSG)) + "</td>");
                     hcm.Append("<td>");
                     hcm.Append("<div class=\"action-table\">");
                     hcm.Append("<a href=\"#modalEditFee\" onclick=\"EditFunction(" + item.ID + ")\" class=\" modal-trigger\" data-position=\"top\"> ");

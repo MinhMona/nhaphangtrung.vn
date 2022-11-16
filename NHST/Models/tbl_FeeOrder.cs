@@ -27,5 +27,7 @@ namespace NHST.Models
         public string ModifiedBy { get; set; }
         public Nullable<System.DateTime> ModifiedDate { get; set; }
         public Nullable<double> PercentDeposit { get; set; }
+        public Nullable<double> FeeVolumeHN { get; set; }
+        public Nullable<double> FeeVolumeSG { get; set; }
     }
 }

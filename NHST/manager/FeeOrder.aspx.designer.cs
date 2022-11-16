@@ -78,6 +78,24 @@ namespace NHST.manager
         protected global::System.Web.UI.WebControls.TextBox txtFeeWeightSG;
 
         /// <summary>
+        /// txtFeeVolumeHN control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtFeeVolumeHN;
+
+        /// <summary>
+        /// txtFeeVolumeSG control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtFeeVolumeSG;
+
+        /// <summary>
         /// btnUpdate control.
         /// </summary>
         /// <remarks>

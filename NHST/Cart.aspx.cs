@@ -219,7 +219,7 @@ namespace NHST
                                     html.Append("<div class=\"up-downControl form-style form-control\" data-step=\"1\" data-min=\"0\">");
                                     html.Append("<a href=\"javascript:;\" class=\"btn minus\" onclick=\"minus_plus('" + ID + "','" + shop.ID + "',1)\">-</a>");
                                     html.Append("<div class=\"value-group fcontrol\" style=\"max-width: 60px;\">");
-                                    html.Append("<input style=\"width: 100%;\" type=\"number\"  placeholder=\"0\" value=\"" + quantity + "\" min=\"1\" onkeyup=\"minus_plus('" + ID + "','" + shop.ID + "',0)\" class=\"value quantitiofpro quantityCount" + ID + "-" + shop.ID + "\">");
+                                    html.Append("<input style=\"width: 100%;\" type=\"number\"  placeholder=\"0\" value=\"" + quantity + "\" min=\"1\" onBlur=\"minus_plus('" + ID + "','" + shop.ID + "',0)\" class=\"value quantitiofpro quantityCount" + ID + "-" + shop.ID + "\">");
                                     html.Append("</div>");
                                     html.Append("<a href=\"javascript:;\" class=\"btn plus\" onclick=\"minus_plus('" + ID + "','" + shop.ID + "',2)\">+</a>");
                                     html.Append("</div>");

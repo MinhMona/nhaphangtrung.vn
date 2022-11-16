@@ -606,6 +606,8 @@
     <Property Name="ModifiedBy" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
     <Property Name="ModifiedDate" Type="DateTime" Precision="3" />
     <Property Name="PercentDeposit" Type="Double" />
+    <Property Name="FeeVolumeHN" Type="Double" />
+    <Property Name="FeeVolumeSG" Type="Double" />
   </EntityType>
   <EntityType Name="tbl_FeePackaged">
     <Key>

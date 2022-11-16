@@ -171,16 +171,16 @@ namespace NHST.manager
                                         if (mainorder.DateShipper != null)
                                         {
                                             si.DateShop = string.Format("{0:dd/MM/yyyy HH:mm}", mainorder.DateShipper);
-                                        }    
+                                        }
 
                                         if (Convert.ToInt32(mainorder.ReceivePlace) == 1)
                                         {
                                             si.NameReceivePlace = "Kho Hà Nội";
-                                        }   
+                                        }
                                         else if (Convert.ToInt32(mainorder.ReceivePlace) == 3)
                                         {
                                             si.NameReceivePlace = "Kho Hồ Chí Minh";
-                                        }    
+                                        }
                                         else
                                         {
                                             si.NameReceivePlace = "Không xác định";
@@ -349,7 +349,7 @@ namespace NHST.manager
         double dai, double rong, double cao, string base64, string note, string nvkiemdem, string khachghichu, string loaisanpham, int sessionID)
         {
             string username_current = HttpContext.Current.Session["userLoginSystem"].ToString();
-            DateTime currentDate = DateTime.Now;            
+            DateTime currentDate = DateTime.Now;
 
             var package = SmallPackageController.GetByID(packageID);
             if (package != null)
@@ -404,98 +404,49 @@ namespace NHST.manager
                             LevelID = 4;
                         else
                             LevelID = Convert.ToInt32(usercreate.LevelID);
-                        
+
                         double totalweight = weight;
                         double FeeWeight = 0;
                         double FeeWeightDiscount = 0;
                         double returnprice = 0;
                         double pricePerWeight = 0;
+                        double pricePerVolume = 0;
+                        double finalPriceOfPackage = 0;
                         double cannangdonggo = 0;
                         double TongCanNang = 0;
+                        double TongKhoi = 0;
 
                         var smallpackage = SmallPackageController.GetByMainOrderID(orderID);
                         if (smallpackage.Count > 0)
                         {
+
+                            //Tính tổng cân nặng
                             double totalWeight = 0;
+                            double totalVolume = 0;
                             foreach (var item in smallpackage)
                             {
-                                double compareSize = 0;
-                                double weightcn = Convert.ToDouble(item.Weight);
-
+                                double smWeight = Math.Round(Convert.ToDouble(item.Weight), 5);
+                                totalWeight += smWeight;
                                 double pDai = Convert.ToDouble(item.Length);
                                 double pRong = Convert.ToDouble(item.Width);
                                 double pCao = Convert.ToDouble(item.Height);
+                                double smVolume = 0;
                                 if (pDai > 0 && pRong > 0 && pCao > 0)
                                 {
-                                    compareSize = (pDai * pRong * pCao) / 6000;
+                                    smVolume = (pDai * pRong * pCao) / 1000000;
+                                    totalVolume += smVolume;
                                 }
-
-                                if (weightcn >= compareSize)
-                                {
-                                    totalWeight += Math.Round(weightcn, 5);
-                                }
-                                else
-                                {
-                                    totalWeight += Math.Round(compareSize, 5);
-                                }
-                            }
-                            totalweight = Math.Round(totalWeight, 5);
-                            if (!string.IsNullOrEmpty(usercreate.FeeTQVNPerWeight))
-                            {
-                                double feetqvn = 0;
-                                if (usercreate.FeeTQVNPerWeight.ToFloat(0) > 0)
-                                {
-                                    feetqvn = Convert.ToDouble(usercreate.FeeTQVNPerWeight);
-                                    pricePerWeight = feetqvn;
-                                }
-                                returnprice = totalweight * feetqvn;
-                            }
-                            else
-                            {
-                                var fee = FeeBuyProController.GetFeeLevelID(LevelID);
-                                if (fee != null)
-                                {
-                                    if (warehouse == 1)
-                                    {
-                                        pricePerWeight = Convert.ToDouble(fee.FeeWeightHN);
-                                    }
-                                    else
-                                    {
-                                        pricePerWeight = Convert.ToDouble(fee.FeeWeightSG);
-                                    }
-                                    returnprice = totalWeight * pricePerWeight;
-                                }
+                                double smPriceWeight = smWeight * pricePerWeight;
+                                double smPriceVolume = smVolume * pricePerVolume;
+                                double smPriceTT = smPriceWeight < smPriceVolume ? smPriceVolume : smPriceWeight;
+                                smPriceTT = Math.Round(smPriceTT, 5);
+                                SmallPackageController.UpdateTotalPrice(item.ID, smPriceTT);
+                                finalPriceOfPackage += smPriceTT;
                             }
 
                             cannangdonggo = totalWeight;
                             TongCanNang = totalWeight;
-                          
-                            foreach (var item in smallpackage)
-                            {
-
-                                double compareSize = 0;
-                                double weightcn = Convert.ToDouble(item.Weight);
-
-                                double pDai = Convert.ToDouble(item.Length);
-                                double pRong = Convert.ToDouble(item.Width);
-                                double pCao = Convert.ToDouble(item.Height);
-                                if (pDai > 0 && pRong > 0 && pCao > 0)
-                                {
-                                    compareSize = (pDai * pRong * pCao) / 6000;
-                                }
-                                if (weight >= compareSize)
-                                {
-                                    double TotalPriceCN = weightcn * pricePerWeight;
-                                    TotalPriceCN = Math.Round(TotalPriceCN, 0);
-                                    SmallPackageController.UpdateTotalPrice(item.ID, TotalPriceCN);
-                                }
-                                else
-                                {
-                                    double TotalPriceTT = compareSize * pricePerWeight;
-                                    TotalPriceTT = Math.Round(TotalPriceTT, 0);
-                                    SmallPackageController.UpdateTotalPrice(item.ID, TotalPriceTT);
-                                }
-                            }
+                            TongKhoi = totalVolume;
                         }
 
                         FeeWeight = Math.Round(returnprice, 0);
@@ -514,6 +465,8 @@ namespace NHST.manager
                         var conf = ConfigurationController.GetByTop1();
                         cannangdonggo = Math.Round(cannangdonggo, 5);
                         TongCanNang = Math.Round(TongCanNang, 5);
+                        TongKhoi = Math.Round(TongKhoi, 5);
+
                         if (mainorder.IsPacked == true)
                         {
                             if (cannangdonggo > 0)
@@ -574,6 +527,7 @@ namespace NHST.manager
                         IsCheckProductPrice.ToString(), IsPackedPrice.ToString(), IsFastDeliveryPrice.ToString(), TotalPriceVND.ToString(), IsPriceSepcial.ToString());
                         MainOrderController.UpdateFeeWeightCK(mainorder.ID, FeeWeightDiscount.ToString());
                         MainOrderController.UpdateTotalWeightandTongCanNang(mainorder.ID, totalweight.ToString(), totalweight.ToString(), TongCanNang.ToString());
+                        MainOrderController.UpdateVolume(mainorder.ID, TongKhoi.ToString());
                         var accChangeData = AccountController.GetByUsername(username_current);
                         if (accChangeData != null)
                         {
@@ -594,8 +548,8 @@ namespace NHST.manager
                             int MainorderID = mainorder.ID;
                             if (mainorder.Status < 9)
                             {
-                                if (mainorder.DateVN == null)                                
-                                    MainOrderController.UpdateDateVN(mainorder.ID, currentDate);                                
+                                if (mainorder.DateVN == null)
+                                    MainOrderController.UpdateDateVN(mainorder.ID, currentDate);
                                 MainOrderController.UpdateStatus(MainorderID, Convert.ToInt32(mainorder.UID), 8);
 
                                 var setNoti = SendNotiEmailController.GetByID(9);
@@ -652,11 +606,11 @@ namespace NHST.manager
                     var ss = WorkingSessionController.GetByID(sessionID);
                     if (ss != null)
                     {
-                        string kq = WorkingSessionController.UpdateStatus(sessionID, 2, DateTime.Now, obj_user.Username);                         
+                        string kq = WorkingSessionController.UpdateStatus(sessionID, 2, DateTime.Now, obj_user.Username);
                         Response.Redirect("/manager/WorkingSession.aspx");
-                    }    
-                }    
-            }    
+                    }
+                }
+            }
         }
 
     }

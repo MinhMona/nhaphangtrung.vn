@@ -339,6 +339,42 @@ namespace NHST.manager
         protected global::System.Web.UI.WebControls.Button btn12;
 
         /// <summary>
+        /// btn13 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btn13;
+
+        /// <summary>
+        /// btn14 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btn14;
+
+        /// <summary>
+        /// btn15 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btn15;
+
+        /// <summary>
+        /// btn16 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btn16;
+
+        /// <summary>
         /// txtSearchMDH control.
         /// </summary>
         /// <remarks>
