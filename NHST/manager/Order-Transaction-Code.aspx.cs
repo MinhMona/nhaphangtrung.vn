@@ -441,7 +441,7 @@ namespace NHST.manager
             StrExport.Append("      <th><strong>ID mua hộ</strong></th>");
             StrExport.Append("      <th><strong>ID ký gửi</strong></th>");            
             StrExport.Append("      <th><strong>Cân thực tế</strong></th>");
-            StrExport.Append("      <th><strong>Cân qui đổi</strong></th>");
+            StrExport.Append("      <th><strong>Số khối</strong></th>");
             StrExport.Append("      <th><strong>Trạng thái</strong></th>");
             StrExport.Append("      <th><strong>Ngày về kho VN</strong></th>");
             StrExport.Append("      <th><strong>Ngày tạo</strong></th>");

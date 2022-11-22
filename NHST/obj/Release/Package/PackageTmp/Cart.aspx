@@ -422,7 +422,9 @@
     </script>
     <script>
         function minus_plus(id, shopid, check) {
+            console.log("helo");
             var sl = Number($(".quantityCount" + id + "-" + shopid).val());
+            console.log("sl", sl);
             if (check == 1) {
                 if (sl < 1) {
                     return;

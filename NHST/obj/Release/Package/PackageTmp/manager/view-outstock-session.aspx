@@ -196,6 +196,7 @@
                                     <tr class="teal darken-4">
                                         <th>Mã kiện</th>
                                         <th>Cân nặng (kg)</th>
+                                        <th>Số khối</th>
                                         <th>Ngày lưu kho (Ngày)</th>
                                         <th>Trạng thái</th>
                                         <th>Tiền lưu kho</th>

@@ -27,12 +27,12 @@ namespace NHST.manager
                 {
                     string username_current = Session["userLoginSystem"].ToString();
                     tbl_Account ac = AccountController.GetByUsername(username_current);
-                    if (ac.RoleID != 0 && ac.RoleID != 2)
+                    if (ac.RoleID != 0 && ac.RoleID != 2 && ac.RoleID != 9)
                         Response.Redirect("/trang-chu");
 
-                    if (ac.ID == 1)                   
+                    if (ac.ID == 1)
                         ltrExcel.Text = "<a href=\"javascript:;\" class=\"btn btn-excel\">Xuất Excel</a>";
-                     
+
                     LoadData();
                     LoadPrefix();
                 }
@@ -154,6 +154,11 @@ namespace NHST.manager
 
         public void LoadData()
         {
+            ltrAddStaff.Text = "<a href=\"#addStaff\" class=\"btn modal-trigger waves-effect\">Thêm khách hàng</a>";
+            string username_current = Session["userLoginSystem"].ToString();
+            tbl_Account ac = AccountController.GetByUsername(username_current);
+            if (ac.RoleID == 9)
+                ltrAddStaff.Visible = false;
             string search = "";
             if (!string.IsNullOrEmpty(Request.QueryString["s"]))
             {
@@ -166,15 +171,27 @@ namespace NHST.manager
             {
                 page = Page - 1;
             }
-            var la = AccountController.GetListUserBySQL_Thien(search, page, 20);
-            int total = AccountController.GetTotalUser_Thien(search);
-            pagingall(la, total);
+            if (ac.RoleID == 9)
+            {
+                var la = AccountController.GetListUserForCSKHBySQL(search, page, 20, ac.ID);
+                int total = AccountController.GetTotalUserForCSHK(search, ac.ID);
+                pagingall(la, total);
+            }
+            else
+            {
+                var la = AccountController.GetListUserBySQL_Thien(search, page, 20);
+                int total = AccountController.GetTotalUser_Thien(search);
+                pagingall(la, total);
+            }
         }
 
 
         #region Pagging
         public void pagingall(List<View_UserList> acs, int total)
         {
+            string username_current = Session["userLoginSystem"].ToString();
+            tbl_Account ac = AccountController.GetByUsername(username_current);
+
             int PageSize = 20;
             if (total > 0)
             {
@@ -254,51 +271,64 @@ namespace NHST.manager
 
                     hcm.Append("<td>" + string.Format("{0:dd/MM/yyyy}", item.CreatedDate) + "</td>");
 
-                    hcm.Append("<td class=\"no-wrap\">");
-                    hcm.Append("<div class=\"action-table\">");
-                    hcm.Append("<a href=\"UserInfo.aspx?i=" + item.ID + "\" class=\"tooltipped\" data-position=\"top\"");
-                    hcm.Append(" data-tooltip=\"Cập nhật\"><i class=\"material-icons\">edit</i></a>");
+                    if (ac.RoleID == 9)
+                    {
+                        hcm.Append("<td class=\"no-wrap\">");
+                        hcm.Append("<div class=\"action-table\">");
+                        hcm.Append("<a href=\"UserInfo.aspx?i=" + item.ID + "\" class=\"tooltipped\" data-position=\"top\"");
+                        hcm.Append(" data-tooltip=\"Cập nhật\"><i class=\"material-icons\">edit</i></a>");
+                        hcm.Append("</div>");
+                        hcm.Append("</td>");
+                    }
+                    else
+                    {
+                        hcm.Append("<td class=\"no-wrap\">");
+                        hcm.Append("<div class=\"action-table\">");
+                        hcm.Append("<a href=\"UserInfo.aspx?i=" + item.ID + "\" class=\"tooltipped\" data-position=\"top\"");
+                        hcm.Append(" data-tooltip=\"Cập nhật\"><i class=\"material-icons\">edit</i></a>");
 
-                    hcm.Append("<a href=\"UserWallet.aspx?i=" + item.ID + "\" class=\"tooltipped\" data-position=\"top\"");
-                    hcm.Append(" data-tooltip=\"Nạp tiền\"><i class=\"material-icons\">monetization_on</i></a>");
+                        hcm.Append("<a href=\"UserWallet.aspx?i=" + item.ID + "\" class=\"tooltipped\" data-position=\"top\"");
+                        hcm.Append(" data-tooltip=\"Nạp tiền\"><i class=\"material-icons\">monetization_on</i></a>");
 
-                    hcm.Append("<a href=\"add-withdraw.aspx?u=" + item.Username + "\" class=\"tooltipped\" data-position=\"top\"");
-                    hcm.Append(" data-tooltip=\"Rút tiền\"><span class=\"bg-draw\"></span></a>");
+                        hcm.Append("<a href=\"add-withdraw.aspx?u=" + item.Username + "\" class=\"tooltipped\" data-position=\"top\"");
+                        hcm.Append(" data-tooltip=\"Rút tiền\"><span class=\"bg-draw\"></span></a>");
 
 
-                    //hcm.Append("<a href=\"javascript:; \" class=\"tooltipped dropdown-trigger\" data-target=\"drop-" + item.ID + "\"");
-                    //hcm.Append(" data-position=\"top\" data-tooltip=\"\"><i");
-                    //hcm.Append(" class=\"material-icons\">monetization_on</i></a>");
-                    //hcm.Append("<ul id='drop-" + item.ID + "' class='dropdown-content'>");
-                    //hcm.Append("<li><a href=\"UserWallet.aspx?i=" + item.ID + "&pre=" + Page + "\">Nạp VNĐ</a></li>");
-                    //hcm.Append("</ul>");
-                    //hcm.Append("<a href=\"javascript:; \" class=\"tooltipped dropdown-trigger\" data-target=\"draw-" + item.ID + "\"");
-                    //hcm.Append(" data-position=\"top\" data-tooltip=\"Rút tiền\"><span");
-                    //hcm.Append(" class=\"bg-draw\"></span></a>");
-                    //hcm.Append("<ul id='draw-" + item.ID + "' class='dropdown-content'>");
-                    //hcm.Append("<li><a href=\"add-withdraw.aspx?u=" + item.Username + "&pre=" + Page + "\">Rút VNĐ</a></li>");
-                    //hcm.Append("<li><a href=\"addRefund.aspx?i=" + item.ID.ToString() + "&pre=" + Page + "\">Rút tệ</a></li>");
-                    //hcm.Append("</ul>");
-                    hcm.Append("<a href=\"user-order?uid=" + item.ID + "\" class=\"tooltipped\" data-position=\"top\"");
-                    hcm.Append(" data-tooltip=\"Danh sách đơn hàng\"><span class=\"list-order\"></span></a>");
-                    hcm.Append("<a href=\"tao-don-hang-khac.aspx?i=" + item.ID + "\" class=\"tooltipped\" data-position=\"top\"");
-                    hcm.Append(" data-tooltip=\"Tạo đơn hàng khác\"><span class=\"add-order\"></span></a>");
+                        //hcm.Append("<a href=\"javascript:; \" class=\"tooltipped dropdown-trigger\" data-target=\"drop-" + item.ID + "\"");
+                        //hcm.Append(" data-position=\"top\" data-tooltip=\"\"><i");
+                        //hcm.Append(" class=\"material-icons\">monetization_on</i></a>");
+                        //hcm.Append("<ul id='drop-" + item.ID + "' class='dropdown-content'>");
+                        //hcm.Append("<li><a href=\"UserWallet.aspx?i=" + item.ID + "&pre=" + Page + "\">Nạp VNĐ</a></li>");
+                        //hcm.Append("</ul>");
+                        //hcm.Append("<a href=\"javascript:; \" class=\"tooltipped dropdown-trigger\" data-target=\"draw-" + item.ID + "\"");
+                        //hcm.Append(" data-position=\"top\" data-tooltip=\"Rút tiền\"><span");
+                        //hcm.Append(" class=\"bg-draw\"></span></a>");
+                        //hcm.Append("<ul id='draw-" + item.ID + "' class='dropdown-content'>");
+                        //hcm.Append("<li><a href=\"add-withdraw.aspx?u=" + item.Username + "&pre=" + Page + "\">Rút VNĐ</a></li>");
+                        //hcm.Append("<li><a href=\"addRefund.aspx?i=" + item.ID.ToString() + "&pre=" + Page + "\">Rút tệ</a></li>");
+                        //hcm.Append("</ul>");
+                        hcm.Append("<a href=\"user-order?uid=" + item.ID + "\" class=\"tooltipped\" data-position=\"top\"");
+                        hcm.Append(" data-tooltip=\"Danh sách đơn hàng\"><span class=\"list-order\"></span></a>");
+                        hcm.Append("<a href=\"tao-don-hang-khac.aspx?i=" + item.ID + "\" class=\"tooltipped\" data-position=\"top\"");
+                        hcm.Append(" data-tooltip=\"Tạo đơn hàng khác\"><span class=\"add-order\"></span></a>");
 
-                    //hcm.Append("<a href=\"cart.aspx?i=" + item.ID + "\" class=\"tooltipped\" data-position=\"top\"");
-                    //hcm.Append(" data-tooltip=\"Giỏ hàng\"><i");
-                    //hcm.Append(" class=\"material-icons\">shopping_cart</i></a>");
+                        //hcm.Append("<a href=\"cart.aspx?i=" + item.ID + "\" class=\"tooltipped\" data-position=\"top\"");
+                        //hcm.Append(" data-tooltip=\"Giỏ hàng\"><i");
+                        //hcm.Append(" class=\"material-icons\">shopping_cart</i></a>");
 
-                    hcm.Append("<a href=\"User-Transaction.aspx?i=" + item.ID + "\" class=\"tooltipped\" data-position=\"top\"");
-                    hcm.Append(" data-tooltip=\"Xem lịch sử giao dịch\"><i");
-                    hcm.Append(" class=\"material-icons\">view_list</i></a>");
+                        hcm.Append("<a href=\"User-Transaction.aspx?i=" + item.ID + "\" class=\"tooltipped\" data-position=\"top\"");
+                        hcm.Append(" data-tooltip=\"Xem lịch sử giao dịch\"><i");
+                        hcm.Append(" class=\"material-icons\">view_list</i></a>");
 
-                    hcm.Append("<a href=\"Cart-Customer.aspx?id=" + item.ID + "\" class=\"tooltipped\" data-position=\"top\"");
-                    hcm.Append(" data-tooltip=\"Giỏ hàng\"><i");
-                    hcm.Append(" class=\"material-icons\">shopping_cart</i></a>");
+                        hcm.Append("<a href=\"Cart-Customer.aspx?id=" + item.ID + "\" class=\"tooltipped\" data-position=\"top\"");
+                        hcm.Append(" data-tooltip=\"Giỏ hàng\"><i");
+                        hcm.Append(" class=\"material-icons\">shopping_cart</i></a>");
 
-                    hcm.Append("</div>");
-                    hcm.Append("</td>");
+                        hcm.Append("</div>");
+                        hcm.Append("</td>");
+                    }
                     hcm.Append("</tr>");
+
                 }
                 ltr.Text = hcm.ToString();
             }
@@ -507,7 +537,7 @@ namespace NHST.manager
                 int UID = Convert.ToInt32(id);
                 if (UID > 0)
                 {
-                    string idai = AccountInfoController.Insert(UID, txtFirstName.Text.Trim(), txtLastName.Text.Trim(), "", txtPhone.Text.Trim(), Email, txtPhone.Text.Trim(), "" , "", "",
+                    string idai = AccountInfoController.Insert(UID, txtFirstName.Text.Trim(), txtLastName.Text.Trim(), "", txtPhone.Text.Trim(), Email, txtPhone.Text.Trim(), "", "", "",
                         DateTime.ParseExact(rBirthday.Text, "dd/MM/yyyy HH:mm", null), gender.Value.ToInt(1), DateTime.Now, "", DateTime.Now, "");
                     if (idai == "1")
                     {

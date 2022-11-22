@@ -40,8 +40,8 @@ namespace NHST.manager
             }
         }
         public void loadFilter()
-        {          
-            var dathangs = AccountController.GetAllByRoleID(3);         
+        {
+            var dathangs = AccountController.GetAllByRoleID(3);
             searchNVDH.Items.Clear();
             searchNVDH.Items.Insert(0, new ListItem("Chọn nhân viên đặt hàng", "0"));
             if (dathangs.Count > 0)
@@ -56,7 +56,7 @@ namespace NHST.manager
             {
                 searchCSKH.DataSource = cskhs;
                 searchCSKH.DataBind();
-            }          
+            }
         }
         protected void btnSearch_Click(object sender, EventArgs e)
         {
@@ -68,7 +68,7 @@ namespace NHST.manager
             if (!string.IsNullOrEmpty(searchNVDH.SelectedValue))
             {
                 nvdh = searchNVDH.SelectedValue.ToInt(0);
-            }            
+            }
             int nvcs = 0;
             if (!string.IsNullOrEmpty(searchCSKH.SelectedValue))
             {
@@ -94,6 +94,17 @@ namespace NHST.manager
         }
         private void LoadData()
         {
+            string username_current = Session["userLoginSystem"].ToString();
+            tbl_Account ac = AccountController.GetByUsername(username_current);
+            if (ac.RoleID == 9)
+            {
+                searchCSKH.Enabled = false;
+                lbStatus.Items.RemoveAt(4);
+            }
+            else if (ac.RoleID == 2)
+            {
+                lbStatus.Items.RemoveAt(4);
+            }
             string search = "";
             if (!string.IsNullOrEmpty(Request.QueryString["s"]))
             {
@@ -107,10 +118,10 @@ namespace NHST.manager
 
             ddlStatus.SelectedValue = status.ToString();
 
-            if (!string.IsNullOrEmpty(Request.QueryString["fd"]))            
-                rdatefrom.Text = fd;           
+            if (!string.IsNullOrEmpty(Request.QueryString["fd"]))
+                rdatefrom.Text = fd;
             if (!string.IsNullOrEmpty(Request.QueryString["td"]))
-                rdateto.Text = td;           
+                rdateto.Text = td;
 
             int nvdh = 0;
             if (!string.IsNullOrEmpty(Request.QueryString["nvdh"]))
@@ -119,12 +130,12 @@ namespace NHST.manager
                 searchNVDH.SelectedValue = nvdh.ToString();
             }
 
-            int nvcs = 0; 
+            int nvcs = 0;
             if (!string.IsNullOrEmpty(Request.QueryString["nvcs"]))
             {
                 nvcs = Convert.ToInt32(Request.QueryString["nvcs"]);
                 searchCSKH.SelectedValue = nvcs.ToString();
-            }                   
+            }
 
             int page = 0;
             Int32 Page = GetIntFromQueryString("Page");
@@ -132,9 +143,19 @@ namespace NHST.manager
             {
                 page = Page - 1;
             }
-            var total = ComplainController.GetTotal(search, fd, td, status, nvdh, nvcs);
-            var la = ComplainController.GetAllBySQL(search, page, 20, fd, td, status, nvdh, nvcs);
-            pagingall(la, total);
+
+            if (ac.RoleID == 9)
+            {
+                var total = ComplainController.GetTotalForCSKH(search, fd, td, status, nvdh, ac.ID);
+                var la = ComplainController.GetAllBySQLForCSHK(search, page, 20, fd, td, status, nvdh, ac.ID);
+                pagingall(la, total);
+            }
+            else
+            {
+                var total = ComplainController.GetTotal(search, fd, td, status, nvdh, nvcs);
+                var la = ComplainController.GetAllBySQL(search, page, 20, fd, td, status, nvdh, nvcs);
+                pagingall(la, total);
+            }
         }
 
         [WebMethod]
@@ -240,7 +261,7 @@ namespace NHST.manager
                 StringBuilder hcm = new StringBuilder();
                 for (int i = 0; i < acs.Count; i++)
                 {
-                    var item = acs[i];    
+                    var item = acs[i];
 
                     hcm.Append("<tr>");
                     hcm.Append("<td>" + item.ID + "</td>");
@@ -681,7 +702,7 @@ namespace NHST.manager
                             }
                         }
 
-                        string kq = ComplainController.Insert(UID, MainOrderID, Amount.ToString(), link, Content, 1, DateTime.Now, Username, Type);
+                        string kq = ComplainController.InsertCSKH(UID, MainOrderID, Amount.ToString(), link, Content, 1, DateTime.Now, Username, Type, ac.ID);
 
                         PJUtils.ShowMessageBoxSwAlert("Tạo khiếu nại thành công", "s", true, Page);
                     }
@@ -692,7 +713,6 @@ namespace NHST.manager
 
                 }
             }
-
         }
     }
 }

@@ -380,7 +380,7 @@
                                                                     <tr>
                                                                         <th>Mã vận đơn</th>
                                                                         <th>Kích thước (cm)</th>
-                                                                        <th>Cân qui đổi (kg)</th>
+                                                                        <th>Số khối</th>
                                                                         <th>Cân nặng (kg)</th>
                                                                         <th>Ghi chú</th>
                                                                         <th>Trạng thái</th>

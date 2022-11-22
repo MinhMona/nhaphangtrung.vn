@@ -253,6 +253,7 @@
           <Property Name="OrderShopCode" Type="nvarchar(max)" />
           <Property Name="TypeComplain" Type="int" />
           <Property Name="AdminStatus" Type="int" />
+          <Property Name="CSKHID" Type="int" />
         </EntityType>
         <EntityType Name="tbl_Configuration">
           <Key>
@@ -3128,6 +3129,7 @@ warning 6002: The table/view 'nhaphangtrung_vn.dbo.View_UserListWithWallet' does
           <Property Name="OrderShopCode" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="TypeComplain" Type="Int32" />
           <Property Name="AdminStatus" Type="Int32" />
+          <Property Name="CSKHID" Type="Int32" />
         </EntityType>
         <EntityType Name="tbl_Configuration">
           <Key>
@@ -5454,6 +5456,7 @@ warning 6002: The table/view 'nhaphangtrung_vn.dbo.View_UserListWithWallet' does
           <EntitySetMapping Name="tbl_Complain">
             <EntityTypeMapping TypeName="NHSTModel.tbl_Complain">
               <MappingFragment StoreEntitySet="tbl_Complain">
+                <ScalarProperty Name="CSKHID" ColumnName="CSKHID" />
                 <ScalarProperty Name="AdminStatus" ColumnName="AdminStatus" />
                 <ScalarProperty Name="TypeComplain" ColumnName="TypeComplain" />
                 <ScalarProperty Name="OrderShopCode" ColumnName="OrderShopCode" />

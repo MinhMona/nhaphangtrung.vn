@@ -287,7 +287,7 @@ namespace NHST.manager
                                     }
                                 }
                             }
-                        }                            
+                        }
                     }
                 }
             }
@@ -821,10 +821,10 @@ namespace NHST.manager
                                 double TotalPriceVND = FeeShipCN + FeeBuyPro + FeeWeight + IsCheckProductPrice + IsPackedPrice
                                                     + IsFastDeliveryPrice + isfastprice + pricenvd + TotalFeeSupport + IsPriceSepcial;
                                 TotalPriceVND = Math.Round(TotalPriceVND, 0);
-                               
+
                                 MainOrderController.UpdateFee_OrderDetail(o.ID, Deposit.ToString(), FeeShipCN.ToString(), FeeBuyPro.ToString(), FeeWeight.ToString(), IsCheckProductPrice.ToString(),
                                                             IsPackedPrice.ToString(), IsFastDeliveryPrice.ToString(), TotalPriceVND.ToString(), FeeShipCNReal.ToString(), IsPriceSepcial.ToString());
-                                MainOrderController.UpdateCYN(o.ID, FeeShipCNRealCYN.ToString(), FeeShipCNCYN.ToString(), IsCheckProductPriceCYN.ToString(), IsPackedPriceCYN.ToString());                                
+                                MainOrderController.UpdateCYN(o.ID, FeeShipCNRealCYN.ToString(), FeeShipCNCYN.ToString(), IsCheckProductPriceCYN.ToString(), IsPackedPriceCYN.ToString());
                             }
 
                             string CurrentShippingType = o.ShippingType.ToString();
@@ -837,13 +837,13 @@ namespace NHST.manager
                                 if (shipping != null)
                                 {
                                     CurrentNameLine = shipping.ShippingTypeName;
-                                }    
-                            }    
-                            
+                                }
+                            }
+
                             if (CurrentShippingType != ShippingType)
                             {
                                 HistoryOrderChangeController.Insert(o.ID, obj_user.ID, obj_user.Username, obj_user.Username + " đã thay đổi Line từ: " + CurrentNameLine + ", sang: " + ShippingType + "", 8, currentDate);
-                            }    
+                            }
 
                             //string CurrentReceivePlace = o.ReceivePlace;
                             //string ReceivePlace = ddlReceivePlace.SelectedValue;
@@ -857,7 +857,7 @@ namespace NHST.manager
                             CurrentAmountDeposit = Math.Round(Convert.ToDouble(CurrentAmountDeposit), 0).ToString();
 
                             string AmountDeposit = o.AmountDeposit;
-                            AmountDeposit = Math.Round(Convert.ToDouble(AmountDeposit), 0).ToString();                            
+                            AmountDeposit = Math.Round(Convert.ToDouble(AmountDeposit), 0).ToString();
 
                             bool Currentcheckpro = new bool();
                             bool CurrentOrderDone = new bool();
@@ -1860,6 +1860,10 @@ namespace NHST.manager
                             ddlWarehouseFrom.Enabled = true;
                             ddlReceivePlace.Enabled = true;
                             ddlShippingType.Enabled = true;
+                            pnadminmanager.Visible = true;
+                            //ddlSaler.Enabled = false;
+                            //ddlDatHang.Enabled = false;
+
                             ltrBtnUpdate.Text = "<a href=\"javascript:;\" class=\"btn mt-2\" onclick=\"UpdateOrder()\">CẬP NHẬT</a>";
                         }
                         else if (RoleID == 8)
@@ -1969,60 +1973,60 @@ namespace NHST.manager
                         if (RoleID != 8)
                         {
                             StringBuilder customerInfo = new StringBuilder();
-                            if (RoleID == 9)
+                            //if (RoleID == 9)
+                            //{
+                            //    customerInfo.Append("<span>Tài khoản không đủ quyền xem thông tin này</span>");
+                            //    //ltr_OrderFee_UserInfo.Text += "Tài khoản không đủ quyền xem thông tin này";
+                            //}
+                            //else
+                            //{
+                            var ui = AccountInfoController.GetByUserID(Convert.ToInt32(o.UID));
+                            if (ui != null)
                             {
-                                customerInfo.Append("<span>Tài khoản không đủ quyền xem thông tin này</span>");
-                                //ltr_OrderFee_UserInfo.Text += "Tài khoản không đủ quyền xem thông tin này";
-                            }
-                            else
-                            {
-                                var ui = AccountInfoController.GetByUserID(Convert.ToInt32(o.UID));
-                                if (ui != null)
+                                string phone = ui.Phone;
+
+                                //ltr_OrderFee_UserInfo.Text += "<dt>Tên:</dt>";
+                                //ltr_OrderFee_UserInfo.Text += "<dd>" + ui.FirstName + " " + ui.LastName + "</dd>";
+                                //ltr_OrderFee_UserInfo.Text += "<dt>Địa chỉ:</dt>";
+                                //ltr_OrderFee_UserInfo.Text += "<dd>" + ui.Address + "</dd>";
+                                //ltr_OrderFee_UserInfo.Text += "<dt>Email:</dt>";
+                                //ltr_OrderFee_UserInfo.Text += "<dd><a href=\"" + ui.Email + "\">" + ui.Email + "</a></dd>";
+                                //ltr_OrderFee_UserInfo.Text += "<dt>Số dt:</dt>";
+                                //ltr_OrderFee_UserInfo.Text += "<dd><a href=\"tel:+" + phone + "\">" + phone + "</a></dd>";
+                                //ltr_OrderFee_UserInfo.Text += "<dt>Ghi chú:</dt>";
+                                //ltr_OrderFee_UserInfo.Text += "<dd>" + o.Note + "</dd>";
+
+                                customerInfo.Append("<table class=\"table\">");
+                                customerInfo.Append("    <tbody>");
+                                customerInfo.Append("        <tr>");
+                                customerInfo.Append("            <td>Username</td>");
+                                customerInfo.Append("            <td>" + AccountController.GetByID(Convert.ToInt32(o.UID)).Username + "</td>");
+                                customerInfo.Append("        </tr>");
+                                customerInfo.Append("        <tr>");
+                                customerInfo.Append("            <td>Địa chỉ</td>");
+                                customerInfo.Append("            <td>" + ui.Address + "</td>");
+                                customerInfo.Append("        </tr>");
+                                customerInfo.Append("        <tr>");
+                                customerInfo.Append("            <td>Email</td>");
+                                customerInfo.Append("            <td><a href=\"" + ui.Email + "\">" + ui.Email + "</a></td>");
+                                customerInfo.Append("        </tr>");
+                                if (RoleID != 3)
                                 {
-                                    string phone = ui.Phone;
-
-                                    //ltr_OrderFee_UserInfo.Text += "<dt>Tên:</dt>";
-                                    //ltr_OrderFee_UserInfo.Text += "<dd>" + ui.FirstName + " " + ui.LastName + "</dd>";
-                                    //ltr_OrderFee_UserInfo.Text += "<dt>Địa chỉ:</dt>";
-                                    //ltr_OrderFee_UserInfo.Text += "<dd>" + ui.Address + "</dd>";
-                                    //ltr_OrderFee_UserInfo.Text += "<dt>Email:</dt>";
-                                    //ltr_OrderFee_UserInfo.Text += "<dd><a href=\"" + ui.Email + "\">" + ui.Email + "</a></dd>";
-                                    //ltr_OrderFee_UserInfo.Text += "<dt>Số dt:</dt>";
-                                    //ltr_OrderFee_UserInfo.Text += "<dd><a href=\"tel:+" + phone + "\">" + phone + "</a></dd>";
-                                    //ltr_OrderFee_UserInfo.Text += "<dt>Ghi chú:</dt>";
-                                    //ltr_OrderFee_UserInfo.Text += "<dd>" + o.Note + "</dd>";
-
-                                    customerInfo.Append("<table class=\"table\">");
-                                    customerInfo.Append("    <tbody>");
                                     customerInfo.Append("        <tr>");
-                                    customerInfo.Append("            <td>Username</td>");
-                                    customerInfo.Append("            <td>" + AccountController.GetByID(Convert.ToInt32(o.UID)).Username + "</td>");
+                                    customerInfo.Append("            <td>Số ĐT</td>");
+                                    customerInfo.Append("            <td><a href=\"tel:+" + phone + "\">" + phone + "</a></td>");
                                     customerInfo.Append("        </tr>");
-                                    customerInfo.Append("        <tr>");
-                                    customerInfo.Append("            <td>Địa chỉ</td>");
-                                    customerInfo.Append("            <td>" + ui.Address + "</td>");
-                                    customerInfo.Append("        </tr>");
-                                    customerInfo.Append("        <tr>");
-                                    customerInfo.Append("            <td>Email</td>");
-                                    customerInfo.Append("            <td><a href=\"" + ui.Email + "\">" + ui.Email + "</a></td>");
-                                    customerInfo.Append("        </tr>");
-                                    if (RoleID != 3)
-                                    {
-                                        customerInfo.Append("        <tr>");
-                                        customerInfo.Append("            <td>Số ĐT</td>");
-                                        customerInfo.Append("            <td><a href=\"tel:+" + phone + "\">" + phone + "</a></td>");
-                                        customerInfo.Append("        </tr>");
-                                    }
-                                    customerInfo.Append("        <tr>");
-                                    customerInfo.Append("            <td>Ghi chú</td>");
-                                    customerInfo.Append("            <td>" + o.Note + "</td>");
-                                    customerInfo.Append("        </tr>");
-                                    customerInfo.Append("    </tbody>");
-                                    customerInfo.Append("</table>");
-
-
                                 }
+                                customerInfo.Append("        <tr>");
+                                customerInfo.Append("            <td>Ghi chú</td>");
+                                customerInfo.Append("            <td>" + o.Note + "</td>");
+                                customerInfo.Append("        </tr>");
+                                customerInfo.Append("    </tbody>");
+                                customerInfo.Append("</table>");
+
+
                             }
+                            //}
                             ltr_OrderFee_UserInfo.Text = customerInfo.ToString();
                         }
 
@@ -2808,16 +2812,16 @@ namespace NHST.manager
                         {
                             foreach (var s in smallpackages)
                             {
-                                double canquydoi = 0;
-                                if (s.Height > 0 && s.Width > 0 && s.Length > 0)
-                                {
-                                    canquydoi = Convert.ToDouble(s.Height) * Convert.ToDouble(s.Width) * Convert.ToDouble(s.Length) / 1000000;
-                                }
+                                //double canquydoi = 0;
+                                //if (s.Height > 0 && s.Width > 0 && s.Length > 0)
+                                //{
+                                //    canquydoi = Convert.ToDouble(s.Height) * Convert.ToDouble(s.Width) * Convert.ToDouble(s.Length) / 1000000;
+                                //}
                                 int status = Convert.ToInt32(s.Status);
                                 ltrMavandon.Text += "<tr>";
                                 ltrMavandon.Text += "   <td>" + s.OrderTransactionCode + "</td>";
                                 ltrMavandon.Text += "   <td>" + s.Weight + "</td>";
-                                ltrMavandon.Text += "   <td>" + Math.Round(canquydoi, 5) + "</td>";
+                                ltrMavandon.Text += "   <td>" + Math.Round(s.Volume ?? 0, 5) + "</td>";
                                 if (status == 1)
                                     ltrMavandon.Text += "<td>Chưa về kho TQ</td>";
                                 else if (status == 2)
@@ -2840,13 +2844,13 @@ namespace NHST.manager
 
                                         spsList.Append("                <td>");
                                         spsList.Append("                    <input class=\"transactionWeight\" onkeyup=\"returnWeightFee()\" data-type=\"text\" type=\"text\" value=\"" + s.Weight + "\"></td>");
-                                        spsList.Append("<td style=\"pointer-events: none\"> <input  class=\"transactionWeight\" onkeyup=\"returnWeightFee()\" data-type=\"text\" type=\"text\" value=\"" + Math.Round(canquydoi, 5) + "\"></td>");
+                                        spsList.Append("<td style=\"pointer-events: none\"> <input  class=\"transactionWeight\" onkeyup=\"returnWeightFee()\" data-type=\"text\" type=\"text\" value=\"" + Math.Round(s.Volume ?? 0, 5) + "\"></td>");
                                     }
                                     else
                                     {
                                         spsList.Append("                <td style=\"pointer-events: none;\" >");
                                         spsList.Append("                    <input class=\"transactionWeight\" onkeyup=\"returnWeightFee()\" data-type=\"text\" type=\"text\" value=\"" + s.Weight + "\"></td>");
-                                        spsList.Append("<td style=\"pointer-events: none\"> <input class=\"transactionWeight\" onkeyup=\"returnWeightFee()\" data-type=\"text\" type=\"text\" value=\"" + Math.Round(canquydoi, 5) + "\"></td>");
+                                        spsList.Append("<td style=\"pointer-events: none\"> <input class=\"transactionWeight\" onkeyup=\"returnWeightFee()\" data-type=\"text\" type=\"text\" value=\"" + Math.Round(s.Volume ?? 0, 5) + "\"></td>");
                                     }
 
 
@@ -3164,7 +3168,7 @@ namespace NHST.manager
             if (obj_user != null)
             {
                 int uid = obj_user.ID;
-                int RoleID = obj_user.RoleID.ToString().ToInt();              
+                int RoleID = obj_user.RoleID.ToString().ToInt();
                 var id = Convert.ToInt32(ViewState["ID"]);
                 if (id > 0)
                 {
@@ -3345,7 +3349,7 @@ namespace NHST.manager
 
                                 }
                             }
-                        }                        
+                        }
                         #endregion
                         if (ischeckmvd)
                         {
@@ -3489,7 +3493,7 @@ namespace NHST.manager
                                                 wallet = Math.Round(Convert.ToDouble(user_order.Wallet), 0);
                                             wallet = wallet + Deposit;
                                             HistoryPayWalletController.Insert(user_order.ID, user_order.Username, o.ID, Deposit,
-                                            "Đơn hàng: " + o.ID + " bị hủy và hoàn tiền cọc cho khách.", wallet, 2, 2, currentDate, obj_user.Username);                                           
+                                            "Đơn hàng: " + o.ID + " bị hủy và hoàn tiền cọc cho khách.", wallet, 2, 2, currentDate, obj_user.Username);
                                             AccountController.updateWallet(user_order.ID, wallet, currentDate, obj_user.Username);
                                             MainOrderController.UpdateDeposit(o.ID, "0");
                                             PayOrderHistoryController.Insert(o.ID, user_order.ID, 4, Deposit, 2, currentDate, obj_user.Username);
@@ -3537,7 +3541,7 @@ namespace NHST.manager
 
                                 double OCurrent_TotalPriceRealCYN = 0;
                                 if (o.TotalPriceRealCYN.ToFloat(0) > 0)
-                                    OCurrent_TotalPriceRealCYN = Math.Round(Convert.ToDouble(o.TotalPriceRealCYN), 2);                                
+                                    OCurrent_TotalPriceRealCYN = Math.Round(Convert.ToDouble(o.TotalPriceRealCYN), 2);
 
                                 double Deposit = Math.Round(Convert.ToDouble(pDeposit.Value), 0);
                                 double FeeShipCN = Math.Round(Convert.ToDouble(pCNShipFee.Text), 0);
@@ -3550,7 +3554,7 @@ namespace NHST.manager
                                 double TotalPriceRealCYN = Math.Round(Convert.ToDouble(rTotalPriceRealCYN.Text), 2);
 
                                 if (o.FeeInWareHouse != null)
-                                    feeeinwarehouse = Math.Round(Convert.ToDouble(o.FeeInWareHouse), 0);                                
+                                    feeeinwarehouse = Math.Round(Convert.ToDouble(o.FeeInWareHouse), 0);
 
                                 double IsCheckProductPrice = 0;
                                 if (pCheck.Text.ToString().ToFloat(0) > 0)
@@ -3559,7 +3563,7 @@ namespace NHST.manager
                                 double IsCheckProductPriceCYN = 0;
                                 if (pCheckNDT.Text.ToString().ToFloat(0) > 0)
                                     IsCheckProductPriceCYN = Math.Round(Convert.ToDouble(pCheckNDT.Text), 0);
-                              
+
 
                                 double IsPackedPrice = 0;
                                 if (pPacked.Text.ToString().ToFloat(0) > 0)
@@ -3571,11 +3575,11 @@ namespace NHST.manager
 
                                 double IsPackedPriceCYN = 0;
                                 if (pPackedNDT.Text.ToString().ToFloat(0) > 0)
-                                    IsPackedPriceCYN = Math.Round(Convert.ToDouble(pPackedNDT.Text), 0);                                
+                                    IsPackedPriceCYN = Math.Round(Convert.ToDouble(pPackedNDT.Text), 0);
 
                                 double IsFastDeliveryPrice = 0;
                                 if (pShipHome.Text.ToString().ToFloat(0) > 0)
-                                    IsFastDeliveryPrice = Math.Round(Convert.ToDouble(pShipHome.Text), 0);                            
+                                    IsFastDeliveryPrice = Math.Round(Convert.ToDouble(pShipHome.Text), 0);
 
 
                                 #region Ghi lịch sử chỉnh sửa các loại giá
@@ -3589,15 +3593,15 @@ namespace NHST.manager
 
                                         MainOrderController.UpdateDeposit(o.ID, Deposit.ToString());
                                     }
-                                }   
+                                }
                                 if (OCurrent_FeeShipCN != FeeShipCN)
-                                {                                   
+                                {
                                     HistoryOrderChangeController.Insert(o.ID, obj_user.ID, obj_user.Username, obj_user.Username +
                                             " đã đổi tiền phí ship Trung Quốc từ " + string.Format("{0:N0}", OCurrent_FeeShipCN) + " sang "
                                             + string.Format("{0:N0}", FeeShipCN) + "", 2, currentDate);
                                 }
                                 if (OCurrent_FeeBuyPro < FeeBuyPro || OCurrent_FeeBuyPro > FeeBuyPro)
-                                {                                   
+                                {
                                     HistoryOrderChangeController.Insert(o.ID, obj_user.ID, obj_user.Username, obj_user.Username +
                                     " đã đổi tiền phí mua hàng từ: " + string.Format("{0:N0}", OCurrent_FeeBuyPro) + " sang: "
                                     + string.Format("{0:N0}", FeeBuyPro) + "", 3, currentDate);
@@ -3616,14 +3620,14 @@ namespace NHST.manager
                                 }
                                 if (OCurrent_IsCheckProductPrice != IsCheckProductPrice)
                                 {
-                                    
+
                                     HistoryOrderChangeController.Insert(o.ID, obj_user.ID, obj_user.Username, obj_user.Username +
                                             " đã đổi tiền phí kiểm tra sản phẩm từ: " + string.Format("{0:N0}", OCurrent_IsCheckProductPrice) + " sang: "
                                             + string.Format("{0:N0}", IsCheckProductPrice) + "", 5, currentDate);
                                 }
                                 if (OCurrent_IsPackedPrice != IsPackedPrice)
                                 {
-                                    
+
                                     HistoryOrderChangeController.Insert(o.ID, obj_user.ID, obj_user.Username, obj_user.Username +
                                             " đã đổi tiền phí đóng gỗ của đơn hàng ID là: " + o.ID + ", từ: " + string.Format("{0:N0}", OCurrent_IsPackedPrice) + " sang: "
                                             + string.Format("{0:N0}", IsPackedPrice) + "", 6, currentDate);
@@ -3631,19 +3635,19 @@ namespace NHST.manager
 
                                 if (OCurrent_IsSpecial != IsPriceSepcial)
                                 {
-                                     HistoryOrderChangeController.Insert(o.ID, obj_user.ID, obj_user.Username, obj_user.Username +
-                                            " đã đổi tiền phí đặc biệt từ: " + string.Format("{0:N0}", OCurrent_IsSpecial) + " sang: "
-                                            + string.Format("{0:N0}", IsPriceSepcial) + "", 6, currentDate);
+                                    HistoryOrderChangeController.Insert(o.ID, obj_user.ID, obj_user.Username, obj_user.Username +
+                                           " đã đổi tiền phí đặc biệt từ: " + string.Format("{0:N0}", OCurrent_IsSpecial) + " sang: "
+                                           + string.Format("{0:N0}", IsPriceSepcial) + "", 6, currentDate);
                                 }
 
                                 if (OCurrent_IsFastDeliveryPrice != IsFastDeliveryPrice)
                                 {
-                                   
+
                                     HistoryOrderChangeController.Insert(o.ID, obj_user.ID, obj_user.Username, obj_user.Username +
                                             " đã đổi tiền phí ship giao hàng tận nhà từ: " + string.Format("{0:N0}", OCurrent_IsFastDeliveryPrice) + " sang: "
                                             + string.Format("{0:N0}", IsFastDeliveryPrice) + "", 7, currentDate);
-                                }                               
-                                #endregion                               
+                                }
+                                #endregion
 
                                 double pricenvd = 0;
                                 if (o.PriceVND.ToFloat(0) > 0)
@@ -3700,18 +3704,18 @@ namespace NHST.manager
                                 double TotalPriceVND = FeeShipCN + FeeBuyPro + FeeWeight + IsCheckProductPrice + IsPackedPrice
                                                            + IsFastDeliveryPrice + pricenvd + TotalFeeSupport + IsPriceSepcial;
                                 TotalPriceVND = Math.Round(TotalPriceVND, 0);
-                               
+
                                 MainOrderController.UpdateFee_OrderDetail(o.ID, Deposit.ToString(), FeeShipCN.ToString(), FeeBuyPro.ToString(), FeeWeight.ToString(), IsCheckProductPrice.ToString(),
                                 IsPackedPrice.ToString(), IsFastDeliveryPrice.ToString(), TotalPriceVND.ToString(), FeeShipCNReal.ToString(), IsPriceSepcial.ToString());
                                 MainOrderController.UpdateCYN(o.ID, FeeShipCNRealCYN.ToString(), FeeShipCNCYN.ToString(), IsCheckProductPriceCYN.ToString(), IsPackedPriceCYN.ToString());
-                                
-                            }                           
+
+                            }
                             string OrderWeight = txtOrderWeight.Text.ToString();
                             OrderWeight = Math.Round(Convert.ToDouble(OrderWeight), 1).ToString();
                             if (string.IsNullOrEmpty(CurrentOrderWeight))
                             {
                                 if (CurrentOrderWeight != OrderWeight)
-                                {                                    
+                                {
                                     HistoryOrderChangeController.Insert(o.ID, obj_user.ID, obj_user.Username, obj_user.Username +
                                     " đã đổi cân nặng là: " + OrderWeight + "", 8, currentDate);
                                 }
@@ -3719,11 +3723,11 @@ namespace NHST.manager
                             else
                             {
                                 if (CurrentOrderWeight != OrderWeight)
-                                {                                   
+                                {
                                     HistoryOrderChangeController.Insert(o.ID, obj_user.ID, obj_user.Username, obj_user.Username +
                                     " đã đổi cân nặng từ: " + CurrentOrderWeight + ", sang: " + OrderWeight + "", 9, currentDate);
                                 }
-                            }                           
+                            }
 
                             string CurrentReceivePlace = o.ReceivePlace;
                             string ReceivePlace = ddlReceivePlace.SelectedValue;
@@ -3747,7 +3751,7 @@ namespace NHST.manager
                                 {
                                     CurrentLine = shipping.ShippingTypeName;
                                 }
-                            }                           
+                            }
                             if (newline > 0)
                             {
                                 var shipping = ShippingTypeToWareHouseController.GetByID(newline);
@@ -3776,10 +3780,10 @@ namespace NHST.manager
 
                                     MainOrderController.UpdateAmountDeposit(o.ID, AmountDeposit);
                                 }
-                            }    
-                           
-                          
-                            bool Currentcheckpro = new bool();                           
+                            }
+
+
+                            bool Currentcheckpro = new bool();
                             bool checkpro = new bool();
                             bool Package = new bool();
                             bool MoveIsFastDelivery = new bool();
@@ -3899,17 +3903,17 @@ namespace NHST.manager
                             MainOrderController.UpdateOrderPrice(o.ID, orderPrice);
                             MainOrderController.UpdateIsPacked(o.ID, Package);
                             MainOrderController.UpdateIsSpecial(o.ID, special1, special2);
-                            MainOrderController.UpdateIsFastDelivery(o.ID, MoveIsFastDelivery);                            
-                            MainOrderController.UpdateFeeWarehouse(o.ID, feeeinwarehouse);                           
+                            MainOrderController.UpdateIsFastDelivery(o.ID, MoveIsFastDelivery);
+                            MainOrderController.UpdateFeeWarehouse(o.ID, feeeinwarehouse);
                             double FeeweightPriceDiscount = 0;
                             if (!string.IsNullOrEmpty(hdfFeeweightPriceDiscount.Value))
                             {
                                 FeeweightPriceDiscount = Math.Round(Convert.ToDouble(hdfFeeweightPriceDiscount.Value));
                             }
-                            MainOrderController.UpdateFeeWeightDC(o.ID, FeeweightPriceDiscount.ToString());                           
+                            MainOrderController.UpdateFeeWeightDC(o.ID, FeeweightPriceDiscount.ToString());
                             MainOrderController.UpdateOrderWeightCK(o.ID, FeeweightPriceDiscount.ToString());
                             MainOrderController.UpdateTQVNWeight(o.ID, o.UID.ToString().ToInt(), Math.Round(Convert.ToDouble(pWeightNDT.Text.ToString()), 2).ToString());
-                            MainOrderController.UpdateTotalPriceReal(o.ID, TotalPriceReal1.ToString(), TotalPriceRealCYN1.ToString());                           
+                            MainOrderController.UpdateTotalPriceReal(o.ID, TotalPriceReal1.ToString(), TotalPriceRealCYN1.ToString());
                             MainOrderController.UpdateFTS(o.ID, o.UID.ToString().ToInt(), ddlWarehouseFrom.SelectedValue.ToInt(), ddlReceivePlace.SelectedValue, ddlShippingType.SelectedValue.ToInt());
                             MainOrderController.UpdateDoneSmallPackage(o.ID, smallPackage);
                             MainOrderController.UpdateIsInsurrance(o.ID, baohiem);
@@ -3926,7 +3930,7 @@ namespace NHST.manager
                             if (status != 1)
                             {
                                 if (RoleID == 0)
-                                {                                    
+                                {
                                     if ((status == 4 && orderdone && ddlDatHang.SelectedValue.ToInt(0) > 0) || (orderdone && ddlDatHang.SelectedValue.ToInt(0) > 0))
                                     {
                                         if (o.DateBuy == null)
@@ -4009,7 +4013,7 @@ namespace NHST.manager
                                     }
                                 }
                                 else if (RoleID == 2)
-                                {                                    
+                                {
                                     if ((status == 4 && orderdone && ddlDatHang.SelectedValue.ToInt(0) > 0) || (orderdone && ddlDatHang.SelectedValue.ToInt(0) > 0))
                                     {
                                         if (o.DateBuy == null)
@@ -4195,13 +4199,13 @@ namespace NHST.manager
                             {
                                 if (imo.Status != currentstt)
                                 {
-                                     OrderCommentController.Insert(id, "Đã có cập nhật mới cho đơn hàng #" + id + " của bạn.", true, 1, DateTime.Now, uid);                                    
+                                    OrderCommentController.Insert(id, "Đã có cập nhật mới cho đơn hàng #" + id + " của bạn.", true, 1, DateTime.Now, uid);
                                 }
                             }
                             else if (currentstt > 2 && currentstt < 8)
                             {
                                 if (imo.Status < 3 || imo.Status > 7)
-                                {                                  
+                                {
                                     OrderCommentController.Insert(id, "Đã có cập nhật mới cho đơn hàng #" + id + " của bạn.", true, 1, DateTime.Now, uid);
 
                                     try

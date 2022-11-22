@@ -30,5 +30,6 @@ namespace NHST.Models
         public string OrderShopCode { get; set; }
         public Nullable<int> TypeComplain { get; set; }
         public Nullable<int> AdminStatus { get; set; }
+        public Nullable<int> CSKHID { get; set; }
     }
 }

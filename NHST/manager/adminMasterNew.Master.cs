@@ -577,11 +577,14 @@ namespace NHST.manager
                         html.Append("<li class=\"bold\"><a class=\"waves-effect waves-cyan\" href=\"/manager/Order-Transaction-Code\"><i class=\"material-icons\">library_books</i><span class=\"menu-title\">Danh sách mã vận đơn</span></a>");
                         html.Append("</li>");
 
-                        html.Append("<li class=\"bold\"><a class=\"waves-effect waves-cyan\" href=\"/manager/sale-userlist\"><i class=\"material-icons\">people</i><span class=\"menu-title\">Danh sách khách hàng</span></a>");
+                        html.Append("<li class=\"bold\"><a class=\"waves-effect waves-cyan\" href=\"/manager/userlist\"><i class=\"material-icons\">people</i><span class=\"menu-title\">Danh sách khách hàng</span></a>");
                         html.Append("</li>");
 
                         html.Append("<li class=\"bold\"><a class=\"waves-effect waves-cyan\" href=\"/manager/HistorySendWallet\"><i class=\"material-icons\">attach_money</i><span class=\"menu-title\">Lịch sử nạp tiền</span></a>");
                         html.Append("</li>");
+
+                        html.Append("<li class=\"bold\"><a class=\"waves-effect waves-cyan \" href=\"/manager/ComplainList\"><i class=\"material-icons\">report</i><span class=\"menu-title\">Xử lý khiếu nại</span></a>");
+
                         //html.Append("<li class=\"bold\"><a class=\"collapsible-header waves-effect waves-cyan \" href=\"javascript:;\"><i class=\"material-icons\">library_books</i><span class=\"menu-title\">Đơn hàng</span></a>");
                         //html.Append("<div class=\"collapsible-body\">");
                         //html.Append("<ul class=\"collapsible collapsible-sub\" data-collapsible=\"accordion\">");

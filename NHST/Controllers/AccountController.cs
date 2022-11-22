@@ -373,7 +373,7 @@ namespace NHST.Controllers
                 var a = dbe.tbl_Account.Where(ac => ac.ID == ID).FirstOrDefault();
                 if (a != null)
                 {
-                    a.CSID = CSID;                   
+                    a.CSID = CSID;
                     dbe.Configuration.ValidateOnSaveEnabled = false;
                     string kq = dbe.SaveChanges().ToString();
                     return kq;
@@ -819,11 +819,30 @@ namespace NHST.Controllers
             return a;
         }
 
+        public static int GetTotalUserForCSHK(string searchname, int cskhId)
+        {
+            var sql = @"select Total=COUNT(*) ";
+            sql += "from View_UserList ";
+            sql += $"where  RoleID=1 and (CSID = {cskhId} or CSID IS NULL or CSID = 0)";
+            sql += "and ( concat(FirstName,' ', LastName) Like N'%" + searchname + "%' or Username Like N'%" + searchname + "%' ";
+            sql += "or Email Like N'%" + searchname + "%'";
+            sql += "or Phone Like N'%" + searchname + "%' )";
+            var reader = (IDataReader)SqlHelper.ExecuteDataReader(sql);
+            int a = 0;
+            while (reader.Read())
+            {
+                if (reader["Total"] != DBNull.Value)
+                    a = reader["Total"].ToString().ToInt(0);
+            }
+            reader.Close();
+            return a;
+        }
+
         public static List<View_AdminList> GetListStaffAdmin(string searchname, int pageIndex, int pageSize, string phone, int Status)
         {
             var sql = @"select* ";
             sql += "from View_AdminList ";
-            sql += "where Username Like N'%" + searchname + "%' AND Phone Like N'%" + phone + "%'";  
+            sql += "where Username Like N'%" + searchname + "%' AND Phone Like N'%" + phone + "%'";
             if (Status > -1)
                 sql += " AND Status =" + Status + "";
             sql += "order by ID desc OFFSET " + pageIndex + "*" + pageSize + " ROWS FETCH NEXT " + pageSize + " ROWS ONLY ";
@@ -953,7 +972,7 @@ namespace NHST.Controllers
         {
             var sql = @"select Total=COUNT(*) ";
             sql += "from View_AdminList ";
-            sql += "where Username like N'%" + searchName + "%' AND Phone like N'%" + phone + "%'";           
+            sql += "where Username like N'%" + searchName + "%' AND Phone like N'%" + phone + "%'";
             if (Status > -1)
             {
                 sql += " AND Status =" + Status + "";
@@ -1188,7 +1207,75 @@ namespace NHST.Controllers
 
                 if (reader["LevelID"] != DBNull.Value)
                     entity.LevelID = reader["LevelID"].ToString().ToInt(0);
-                
+
+                if (reader["SaleID"] != DBNull.Value)
+                    entity.SaleID = reader["SaleID"].ToString().ToInt(0);
+
+                if (reader["Email"] != DBNull.Value)
+                    entity.Email = reader["Email"].ToString();
+                if (reader["Status"] != DBNull.Value)
+                    entity.Status = reader["Status"].ToString().ToInt(0);
+                if (reader["Wallet"] != DBNull.Value)
+                    entity.Wallet = reader["Wallet"].ToString().ToFloat(0);
+                if (reader["WalletCYN"] != DBNull.Value)
+                    entity.WalletCYN = reader["WalletCYN"].ToString().ToInt(0);
+                if (reader["CreatedDate"] != DBNull.Value)
+                    entity.CreatedDate = Convert.ToDateTime(reader["CreatedDate"].ToString());
+                if (reader["RoleID"] != DBNull.Value)
+                    entity.RoleID = reader["RoleID"].ToString().ToInt(0);
+                if (reader["RoleName"] != DBNull.Value)
+                    entity.RoleName = reader["RoleName"].ToString();
+                list.Add(entity);
+            }
+            reader.Close();
+            return list;
+        }
+        public static List<View_UserList> GetListUserForCSKHBySQL(string searchname, int pageIndex, int pageSize, int cskhId)
+        {
+            var sql = @"select* ";
+            sql += "from View_UserList ";
+            sql += $"where RoleID=1 and (CSID = {cskhId} or CSID IS NULL or CSID = 0)";
+            if (!string.IsNullOrEmpty(searchname))
+            {
+                sql += "and ( concat(FirstName,' ', LastName) Like N'%" + searchname + "%' or Username Like N'%" + searchname + "%' ";
+                sql += " or Email Like N'%" + searchname + "%'";
+                sql += " or Phone Like N'%" + searchname + "%' ) ";
+            }
+            sql += "order by CSID desc, CreatedDate desc OFFSET " + pageIndex + "*" + pageSize + " ROWS FETCH NEXT " + pageSize + " ROWS ONLY ";
+            List<View_UserList> list = new List<View_UserList>();
+            var reader = (IDataReader)SqlHelper.ExecuteDataReader(sql);
+            while (reader.Read())
+            {
+                var entity = new View_UserList();
+                if (reader["ID"] != DBNull.Value)
+                    entity.ID = reader["ID"].ToString().ToInt(0);
+                if (reader["Username"] != DBNull.Value)
+                    entity.Username = reader["Username"].ToString();
+                if (reader["FirstName"] != DBNull.Value)
+                    entity.FirstName = reader["FirstName"].ToString();
+                if (reader["LastName"] != DBNull.Value)
+                    entity.LastName = reader["LastName"].ToString();
+                if (reader["Phone"] != DBNull.Value)
+                    entity.Phone = reader["Phone"].ToString();
+
+                if (reader["Address"] != DBNull.Value)
+                    entity.Address = reader["Address"].ToString();
+
+                if (reader["FeeBuyPro"] != DBNull.Value)
+                    entity.FeeBuyPro = reader["FeeBuyPro"].ToString();
+
+                if (reader["FeeTQVNPerWeight"] != DBNull.Value)
+                    entity.FeeTQVNPerWeight = reader["FeeTQVNPerWeight"].ToString();
+
+                if (reader["Deposit"] != DBNull.Value)
+                    entity.Deposit = reader["Deposit"].ToString().ToFloat(0);
+
+                if (reader["Currency"] != DBNull.Value)
+                    entity.Currency = reader["Currency"].ToString().ToFloat(0);
+
+                if (reader["LevelID"] != DBNull.Value)
+                    entity.LevelID = reader["LevelID"].ToString().ToInt(0);
+
                 if (reader["SaleID"] != DBNull.Value)
                     entity.SaleID = reader["SaleID"].ToString().ToInt(0);
 
@@ -1244,7 +1331,7 @@ namespace NHST.Controllers
         public static double GetTotalWalletDesc()
         {
             var sql = @"select Total=SUM(Wallet) ";
-            sql += "from View_UserList ";           
+            sql += "from View_UserList ";
             double a = 0;
             var reader = (IDataReader)SqlHelper.ExecuteDataReader(sql);
             while (reader.Read())
@@ -1287,7 +1374,7 @@ namespace NHST.Controllers
         public static int GetTotalOrderByWalletDesc()
         {
             var sql = @"select Total=Count(*) ";
-            sql += "from View_UserList ";           
+            sql += "from View_UserList ";
             int a = 0;
             var reader = (IDataReader)SqlHelper.ExecuteDataReader(sql);
             while (reader.Read())
@@ -1358,7 +1445,7 @@ namespace NHST.Controllers
         public static List<View_UserList> GetAllOrderByWalletDesc(int pageSize, int pageIndex)
         {
             var sql = @"select * ";
-            sql += "from View_UserList ";           
+            sql += "from View_UserList ";
             sql += "order by Wallet desc OFFSET " + pageIndex + "*" + pageSize + " ROWS FETCH NEXT " + pageSize + " ROWS ONLY ";
             List<View_UserList> list = new List<View_UserList>();
             var reader = (IDataReader)SqlHelper.ExecuteDataReader(sql);

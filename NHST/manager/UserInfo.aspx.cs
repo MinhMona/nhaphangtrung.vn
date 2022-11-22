@@ -41,7 +41,7 @@ namespace NHST.manager
             }
         }
         public void loadPrefix()
-        {            
+        {
             var Levels = UserLevelController.GetAll("");
             if (Levels.Count > 0)
             {
@@ -55,6 +55,9 @@ namespace NHST.manager
         }
         public void LoadSaler()
         {
+            string username_current = Session["userLoginSystem"].ToString();
+            tbl_Account ac = AccountController.GetByUsername(username_current);
+
             var salers = AccountController.GetAllByRoleID(6);
             ddlSale.Items.Clear();
             ddlSale.Items.Insert(0, "Chọn nhân viên kinh doanh");
@@ -74,10 +77,18 @@ namespace NHST.manager
             var cskh = AccountController.GetAllByRoleID(9);
             ddlCSKH.Items.Clear();
             ddlCSKH.Items.Insert(0, "Chọn nhân viên chăm sóc khách hàng");
-            if (dathangs.Count > 0)
+            if (ac.RoleID == 9)
             {
-                ddlCSKH.DataSource = cskh;
+                ddlCSKH.DataSource = new List<tbl_Account> { ac };
                 ddlCSKH.DataBind();
+            }
+            else
+            {
+                if (cskh.Count > 0)
+                {
+                    ddlCSKH.DataSource = cskh;
+                    ddlCSKH.DataBind();
+                }
             }
 
             var khotq = WarehouseFromController.GetAllWithIsHidden(false);
@@ -105,13 +116,36 @@ namespace NHST.manager
             {
                 string username_current = Session["userLoginSystem"].ToString();
                 tbl_Account ac = AccountController.GetByUsername(username_current);
-                if (ac.RoleID == 0 || ac.RoleID == 2)
+                if (ac.RoleID == 0 || ac.RoleID == 2 || ac.RoleID == 9)
                 {
                     pnAdmin.Visible = true;
                     if (ac.RoleID == 2)
                     {
                         pnSDT.Enabled = false;
                         pnMana.Enabled = false;
+                    }
+                    else if (ac.RoleID == 9)
+                    {
+                        ddlWareHouseVN.Enabled = false;
+                        ddlWareHouseTQ.Enabled = false;
+                        ddlStatus.Enabled = false;
+                        ddlDathang.Enabled = false;
+                        ddlSale.Enabled = false;
+                        ddlRole.Enabled = false;
+                        //ddlLevelID.Attributes.Add("disabled", "");
+                        rDeposit.Enabled = false;
+                        txtFeeWeight.Enabled = false;
+                        txtFeebuypro.Enabled = false;
+                        rCurrency.Enabled = false;
+                        txtPhone.Enabled = false;
+                        txtconfirmpass.Enabled = false;
+                        txtpass.Enabled = false;
+                        txtEmail.Enabled = false;
+                        ddlGender.Enabled = false;
+                        txtBirthday.Enabled = false;
+                        txtLastName.Enabled = false;
+                        txtFirstName.Enabled = false;
+                        txtAddress.Enabled = false;
                     }
                     else
                     {
@@ -129,7 +163,7 @@ namespace NHST.manager
                 ViewState["UID"] = id;
                 var a = AccountController.GetByID(id);
                 if (a != null)
-                {                   
+                {
                     if (a.RoleID == 4)
                     {
                         pnWareHouseTQ.Visible = true;
@@ -142,7 +176,7 @@ namespace NHST.manager
                     {
                         pnWareHouseTQ.Visible = true;
                         pnWareHouseVN.Visible = true;
-                    }                    
+                    }
                     txtUsername.Text = a.Username;
                     txtEmail.Text = a.Email;
                     var ai = AccountInfoController.GetByUserID(id);
@@ -203,7 +237,7 @@ namespace NHST.manager
             int Status = ddlStatus.SelectedValue.ToString().ToInt();
             int RoleID = ddlRole.SelectedValue.ToString().ToInt();
             int LevelID = ddlLevelID.SelectedValue.ToString().ToInt();
-            int SaleID = ddlSale.SelectedValue.ToString().ToInt(0);           
+            int SaleID = ddlSale.SelectedValue.ToString().ToInt(0);
             int DathangID = ddlDathang.SelectedValue.ToString().ToInt(0);
             int CSKHID = ddlCSKH.SelectedValue.ToString().ToInt(0);
             int WareHouseTQ = ddlWareHouseTQ.SelectedValue.ToString().ToInt(0);
@@ -218,7 +252,7 @@ namespace NHST.manager
                 {
                     if (confirmpass == pass)
                     {
-                        AccountController.updateLevelID(UID, LevelID, currentDate, username_current);                       
+                        AccountController.updateLevelID(UID, LevelID, currentDate, username_current);
                         AccountController.updatestatus(UID, Status, currentDate, username_current);
                         AccountController.UpdateRole(UID, RoleID, currentDate, username_current);
                         AccountController.UpdateSaleID(UID, SaleID, currentDate, username_current);
@@ -230,7 +264,7 @@ namespace NHST.manager
                         string rp = AccountController.UpdatePassword(UID, pass);
                         string r = AccountInfoController.Update(UID, txtFirstName.Text.Trim(), txtLastName.Text.Trim(), txtEmail.Text.Trim(), txtPhone.Text.Trim(), txtAddress.Text.Trim(),
                                     DateTime.ParseExact(txtBirthday.Text, "dd/MM/yyyy HH:mm", null), ddlGender.SelectedValue.ToInt(), "", "", currentDate, username_current);
-                        if(u.Deposit != Convert.ToDouble(rDeposit.Text))
+                        if (u.Deposit != Convert.ToDouble(rDeposit.Text))
                         {
                             var Mainorder = MainOrderController.GetAllByUID(UID).Where(x => x.Status == 0).ToList();
                             foreach (var item in Mainorder)
@@ -244,7 +278,7 @@ namespace NHST.manager
                             PJUtils.ShowMessageBoxSwAlert("Cập nhật thành công", "s", true, Page);
                         }
                         else if (r == "1" && rp == "0")
-                        {                            
+                        {
                             PJUtils.ShowMessageBoxSwAlert("Mật khẩu mới trùng với mật khẩu cũ", "e", true, Page);
                         }
                         else
@@ -253,13 +287,13 @@ namespace NHST.manager
                         }
                     }
                     else
-                    {                        
+                    {
                         PJUtils.ShowMessageBoxSwAlert("Mật khẩu mới không trùng với mật khẩu cũ", "e", false, Page);
                     }
                 }
                 else
                 {
-                    PJUtils.ShowMessageBoxSwAlert("Không để trống xác nhận mật khẩu", "e", false, Page);                    
+                    PJUtils.ShowMessageBoxSwAlert("Không để trống xác nhận mật khẩu", "e", false, Page);
                 }
             }
             else

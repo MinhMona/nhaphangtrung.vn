@@ -87,7 +87,7 @@
                                     <th style="min-width: 100px;">ID mua hộ</th>
                                     <th style="min-width: 100px;">ID ký gửi</th>
                                     <th style="min-width: 100px;">Cân thực tế</th>
-                                    <th style="min-width: 100px;">Cân qui đổi</th>
+                                    <th style="min-width: 100px;">Số khối</th>
                                     <th style="min-width: 100px;">Ghi chú kiểm hàng</th>
                                     <th style="min-width: 100px;">Ghi chú</th>
                                     <th style="min-width: 130px;">Trạng thái</th>

@@ -361,6 +361,7 @@
     <Property Name="OrderShopCode" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
     <Property Name="TypeComplain" Type="Int32" />
     <Property Name="AdminStatus" Type="Int32" />
+    <Property Name="CSKHID" Type="Int32" />
   </EntityType>
   <EntityType Name="tbl_Configuration">
     <Key>

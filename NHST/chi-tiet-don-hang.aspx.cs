@@ -626,7 +626,7 @@ namespace NHST
                                 ltrSmallPackages.Text += "<tr class=\"slide-up\">";
                                 ltrSmallPackages.Text += "<td>" + s.OrderTransactionCode + "</td>";
                                 ltrSmallPackages.Text += "<td>" + s.Length + " x " + s.Width + " x " + s.Height + "</td>";
-                                ltrSmallPackages.Text += "<td>" + Math.Round(s.Volume ?? 0, 3) + "</td>";
+                                ltrSmallPackages.Text += "<td>" + Math.Round(s.Volume ?? 0, 5) + "</td>";
                                 ltrSmallPackages.Text += "<td>" + Math.Round(Convert.ToDouble(s.Weight), 1) + "</td>";
                                 ltrSmallPackages.Text += "<td><span>" + s.Description + "</span></td>";
                                 ltrSmallPackages.Text += "<td>" + PJUtils.IntToStringStatusSmallPackageWithBGNew(Convert.ToInt32(s.Status)) + "</td>";

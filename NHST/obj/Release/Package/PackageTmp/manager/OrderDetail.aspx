@@ -603,7 +603,7 @@
                                             <tr>
                                                 <th>Mã vận đơn</th>
                                                 <th>Cân nặng</th>
-                                                <th>Cân quy đổi</th>
+                                                <th>Số khối</th>
                                                 <th>Mã đơn hàng</th>
                                                 <th>Trạng thái</th>
                                                 <th class="tb-date">Ghi chú</th>
@@ -838,9 +838,7 @@
                                             <div class="order-row">
                                                 <div class="left-fixed">
                                                     <p class="txt">
-                                                        Phí vận chuyển TQ-VN (CK
-                                                    <asp:Label ID="lblCKFeeWeight" runat="server"></asp:Label>%: 
-                                                        <asp:Label ID="lblCKFeeweightPrice" runat="server"></asp:Label>)
+                                                        Cân nặng - khối
                                                     </p>
                                                 </div>
                                                 <div class="right-content">
@@ -850,6 +848,23 @@
                                                             <label>Cân nặng (Kg)</label>
                                                         </div>
                                                         <div class="input-field col s12 m6">
+                                                            <asp:TextBox runat="server" ID="pVolume" placeholder="0" type="text" onkeyup="returnWeightFee()" value=""></asp:TextBox>
+                                                            <label>Khối</label>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="order-row">
+                                                <div class="left-fixed">
+                                                    <p class="txt">
+                                                        Phí vận chuyển TQ-VN (CK
+                                                    <asp:Label ID="lblCKFeeWeight" runat="server"></asp:Label>%: 
+                                                        <asp:Label ID="lblCKFeeweightPrice" runat="server"></asp:Label>)
+                                                    </p>
+                                                </div>
+                                                <div class="right-content">
+                                                    <div class="row">
+                                                        <div class="input-field col s12">
                                                             <asp:TextBox runat="server" ID="pWeight" placeholder="0" type="text" onkeyup="returnWeightFee()" value=""></asp:TextBox>
                                                             <label>Việt Nam Đồng (VNĐ)</label>
                                                         </div>

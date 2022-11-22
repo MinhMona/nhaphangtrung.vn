@@ -405,16 +405,37 @@ namespace NHST.manager
                         else
                             LevelID = Convert.ToInt32(usercreate.LevelID);
 
-                        double totalweight = weight;
                         double FeeWeight = 0;
                         double FeeWeightDiscount = 0;
-                        double returnprice = 0;
                         double pricePerWeight = 0;
                         double pricePerVolume = 0;
                         double finalPriceOfPackage = 0;
                         double cannangdonggo = 0;
                         double TongCanNang = 0;
                         double TongKhoi = 0;
+
+                        //Phí vận chuyển /kg và /m3
+                        var fee = FeeBuyProController.GetFeeLevelID(LevelID);
+                        if (fee != null)
+                        {
+                            if (warehouse == 1)
+                            {
+                                pricePerWeight = Convert.ToDouble(fee.FeeWeightHN);
+                                pricePerVolume = Convert.ToDouble(fee.FeeVolumeHN);
+                            }
+                            else
+                            {
+                                pricePerWeight = Convert.ToDouble(fee.FeeWeightSG);
+                                pricePerVolume = Convert.ToDouble(fee.FeeVolumeSG);
+                            }
+                        }
+                        if (!string.IsNullOrEmpty(usercreate.FeeTQVNPerWeight))
+                        {
+                            if (usercreate.FeeTQVNPerWeight.ToFloat(0) > 0)
+                            {
+                                pricePerWeight = Convert.ToDouble(usercreate.FeeTQVNPerWeight);
+                            }
+                        }
 
                         var smallpackage = SmallPackageController.GetByMainOrderID(orderID);
                         if (smallpackage.Count > 0)
@@ -426,7 +447,7 @@ namespace NHST.manager
                             foreach (var item in smallpackage)
                             {
                                 double smWeight = Math.Round(Convert.ToDouble(item.Weight), 5);
-                                totalWeight += smWeight;
+                                totalWeight = totalWeight + smWeight;
                                 double pDai = Convert.ToDouble(item.Length);
                                 double pRong = Convert.ToDouble(item.Width);
                                 double pCao = Convert.ToDouble(item.Height);
@@ -434,14 +455,22 @@ namespace NHST.manager
                                 if (pDai > 0 && pRong > 0 && pCao > 0)
                                 {
                                     smVolume = (pDai * pRong * pCao) / 1000000;
-                                    totalVolume += smVolume;
+                                    totalVolume = totalVolume + smVolume;
                                 }
                                 double smPriceWeight = smWeight * pricePerWeight;
                                 double smPriceVolume = smVolume * pricePerVolume;
-                                double smPriceTT = smPriceWeight < smPriceVolume ? smPriceVolume : smPriceWeight;
+                                double smPriceTT = 0;
+                                if (smPriceWeight > smPriceVolume)
+                                {
+                                    smPriceTT = smPriceWeight;
+                                }
+                                else
+                                {
+                                    smPriceTT = smPriceVolume;
+                                }
                                 smPriceTT = Math.Round(smPriceTT, 5);
                                 SmallPackageController.UpdateTotalPrice(item.ID, smPriceTT);
-                                finalPriceOfPackage += smPriceTT;
+                                finalPriceOfPackage = finalPriceOfPackage + smPriceTT;
                             }
 
                             cannangdonggo = totalWeight;
@@ -449,7 +478,7 @@ namespace NHST.manager
                             TongKhoi = totalVolume;
                         }
 
-                        FeeWeight = Math.Round(returnprice, 0);
+                        FeeWeight = Math.Round(finalPriceOfPackage, 0);
                         FeeWeightDiscount = FeeWeight * ckFeeWeight / 100;
                         FeeWeightDiscount = Math.Round(FeeWeightDiscount, 0);
                         FeeWeight = FeeWeight - FeeWeightDiscount;
@@ -526,7 +555,7 @@ namespace NHST.manager
                         MainOrderController.UpdateFee(mainorder.ID, Deposit.ToString(), FeeShipCN.ToString(), FeeBuyPro.ToString(), FeeWeight.ToString(),
                         IsCheckProductPrice.ToString(), IsPackedPrice.ToString(), IsFastDeliveryPrice.ToString(), TotalPriceVND.ToString(), IsPriceSepcial.ToString());
                         MainOrderController.UpdateFeeWeightCK(mainorder.ID, FeeWeightDiscount.ToString());
-                        MainOrderController.UpdateTotalWeightandTongCanNang(mainorder.ID, totalweight.ToString(), totalweight.ToString(), TongCanNang.ToString());
+                        MainOrderController.UpdateTotalWeightandTongCanNang(mainorder.ID, TongCanNang.ToString(), TongCanNang.ToString(), TongCanNang.ToString());
                         MainOrderController.UpdateVolume(mainorder.ID, TongKhoi.ToString());
                         var accChangeData = AccountController.GetByUsername(username_current);
                         if (accChangeData != null)

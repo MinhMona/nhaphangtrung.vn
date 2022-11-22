@@ -245,6 +245,7 @@
     <EntitySetMapping Name="tbl_Complain">
       <EntityTypeMapping TypeName="NHSTModel.tbl_Complain">
         <MappingFragment StoreEntitySet="tbl_Complain">
+          <ScalarProperty Name="CSKHID" ColumnName="CSKHID" />
           <ScalarProperty Name="AdminStatus" ColumnName="AdminStatus" />
           <ScalarProperty Name="TypeComplain" ColumnName="TypeComplain" />
           <ScalarProperty Name="OrderShopCode" ColumnName="OrderShopCode" />
@@ -504,6 +505,8 @@
     <EntitySetMapping Name="tbl_FeeOrder">
       <EntityTypeMapping TypeName="NHSTModel.tbl_FeeOrder">
         <MappingFragment StoreEntitySet="tbl_FeeOrder">
+          <ScalarProperty Name="FeeVolumeSG" ColumnName="FeeVolumeSG" />
+          <ScalarProperty Name="FeeVolumeHN" ColumnName="FeeVolumeHN" />
           <ScalarProperty Name="PercentDeposit" ColumnName="PercentDeposit" />
           <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
           <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />

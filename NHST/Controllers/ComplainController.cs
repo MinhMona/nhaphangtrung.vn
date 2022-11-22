@@ -34,6 +34,27 @@ namespace NHST.Controllers
                 return kq;
             }
         }
+        public static string InsertCSKH(int UID, int OrderID, string Amount, string IMG, string ComplainText, int Status, DateTime CreatedDate, string CreatedBy, int TypeComplain, int SCKHID)
+        {
+            using (var dbe = new NHSTEntities())
+            {
+                tbl_Complain c = new tbl_Complain();
+                c.UID = UID;
+                c.OrderID = OrderID;
+                c.Amount = Amount;
+                c.IMG = IMG;
+                c.ComplainText = ComplainText;
+                c.Status = Status;
+                c.CreatedDate = CreatedDate;
+                c.CreatedBy = CreatedBy;
+                c.CSKHID = SCKHID;
+                c.TypeComplain = TypeComplain;
+                dbe.tbl_Complain.Add(c);
+                dbe.SaveChanges();
+                string kq = c.ID.ToString();
+                return kq;
+            }
+        }
         public static string Update(int ID, string Amount, int Status, DateTime ModifiedDate, string ModifiedBy, string ComplainText)
         {
             using (var dbe = new NHSTEntities())
@@ -281,7 +302,44 @@ namespace NHST.Controllers
             reader.Close();
             return a;
         }
-        
+        public static int GetTotalForCSKH(string s, string fd, string td, int Status, int dathangID, int cskhUsername)
+        {
+            var sql = @"select Total=Count(*) ";
+            sql += " from tbl_Complain as cp ";
+            sql += " left outer join tbl_MainOder as mo ON mo.ID = cp.OrderID ";
+            sql += " left outer join tbl_Account as dathang ON mo.DathangID = dathang.ID ";
+            sql += " left outer join  tbl_Account as cskh ON mo.CSID = cskh.ID ";
+            sql += " Where cp.CreatedBy LIKE N'%" + s + $"%' AND cp.CSKHID = {cskhUsername}";
+            if (Status > -1)
+            {
+                sql += " AND cp.Status=" + Status + " ";
+            }
+            if (dathangID > 0)
+            {
+                sql += " AND dathang.ID=" + dathangID + " ";
+            }
+            if (!string.IsNullOrEmpty(fd))
+            {
+                var df = DateTime.ParseExact(fd, "dd/MM/yyyy HH:mm", null);
+                sql += " AND cp.CreatedDate >= CONVERT(VARCHAR(24),'" + df + "',113) ";
+            }
+            if (!string.IsNullOrEmpty(td))
+            {
+                var dt = DateTime.ParseExact(td, "dd/MM/yyyy HH:mm", null);
+                sql += " AND cp.CreatedDate <= CONVERT(VARCHAR(24),'" + dt + "',113) ";
+            }
+            var reader = (IDataReader)SqlHelper.ExecuteDataReader(sql);
+            int a = 0;
+            while (reader.Read())
+            {
+                if (reader["Total"] != DBNull.Value)
+                    a = reader["Total"].ToString().ToInt(0);
+
+            }
+            reader.Close();
+            return a;
+        }
+
         public static List<ListComplain> GetAllBySQLAdmin(string s, int pageIndex, int pageSize, string fd, string td, int dathangID, int cskhID)
         {
             var sql = @"select cp.*, dathang.Username as DathangName, cskh.Username as CskhName ";
@@ -471,12 +529,108 @@ namespace NHST.Controllers
                 entity.TypeString = PJUtils.ReturnTypeCompalint(type);
 
                 double Amount = 0;
-                if (reader["Amount"] != DBNull.Value)               
-                    Amount = Convert.ToDouble(reader["Amount"].ToString());                                  
+                if (reader["Amount"] != DBNull.Value)
+                    Amount = Convert.ToDouble(reader["Amount"].ToString());
                 entity.Amount = string.Format("{0:N0}", Convert.ToDouble(Amount));
 
-                if (reader["CreatedDate"] != DBNull.Value)               
-                    entity.CreatedDate = Convert.ToDateTime(reader["CreatedDate"].ToString());                       
+                if (reader["CreatedDate"] != DBNull.Value)
+                    entity.CreatedDate = Convert.ToDateTime(reader["CreatedDate"].ToString());
+
+                a.Add(entity);
+            }
+            reader.Close();
+            return a;
+        }
+        public static List<ListComplain> GetAllBySQLForCSHK(string s, int pageIndex, int pageSize, string fd, string td, int Status, int dathangID, int cskhUsername)
+        {
+            var sql = @"select cp.*, dathang.Username as DathangName, cskh.Username as CskhName ";
+            sql += " from tbl_Complain as cp ";
+            sql += " left outer join tbl_MainOder as mo ON mo.ID = cp.OrderID ";
+            sql += " left outer join tbl_Account as dathang ON mo.DathangID = dathang.ID ";
+            sql += " left outer join  tbl_Account as cskh ON mo.CSID = cskh.ID ";
+            sql += " Where cp.CreatedBy LIKE N'%" + s + $"%' AND cp.CSKHID = {cskhUsername}";
+            if (Status > -1)
+            {
+                sql += " AND cp.Status=" + Status + " ";
+            }
+            if (dathangID > 0)
+            {
+                sql += " AND dathang.ID=" + dathangID + " ";
+            }
+
+            if (!string.IsNullOrEmpty(fd))
+            {
+                var df = DateTime.ParseExact(fd, "dd/MM/yyyy HH:mm", null);
+                sql += " AND cp.CreatedDate >= CONVERT(VARCHAR(24),'" + df + "',113) ";
+            }
+            if (!string.IsNullOrEmpty(td))
+            {
+                var dt = DateTime.ParseExact(td, "dd/MM/yyyy HH:mm", null);
+                sql += " AND cp.CreatedDate <= CONVERT(VARCHAR(24),'" + dt + "',113) ";
+            }
+            sql += "order by cp.ID DESC OFFSET " + pageIndex + "*" + pageSize + " ROWS FETCH NEXT " + pageSize + " ROWS ONLY";
+            var reader = (IDataReader)SqlHelper.ExecuteDataReader(sql);
+            List<ListComplain> a = new List<ListComplain>();
+            while (reader.Read())
+            {
+                var entity = new ListComplain();
+
+                if (reader["ID"] != DBNull.Value)
+                    entity.ID = reader["ID"].ToString().ToInt(0);
+
+                int count = 0;
+                int MainOrderID = 0;
+                if (reader["OrderID"] != DBNull.Value)
+                    MainOrderID = reader["OrderID"].ToString().ToInt(0);
+                entity.MainOrderID = MainOrderID;
+
+                if (MainOrderID > 0)
+                {
+                    var com = ComplainController.GetAllByOrderShopCode(Convert.ToInt32(MainOrderID));
+                    if (com != null)
+                    {
+                        if (com.Count > 0)
+                        {
+                            count = com.Count;
+                        }
+                    }
+                }
+                entity.Quantity = count;
+
+                if (reader["UID"] != DBNull.Value)
+                    entity.UID = reader["UID"].ToString().ToInt(0);
+
+                if (reader["CreatedBy"] != DBNull.Value)
+                    entity.Username = reader["CreatedBy"].ToString();
+
+                if (reader["DathangName"] != DBNull.Value)
+                    entity.DathangName = reader["DathangName"].ToString();
+
+                if (reader["CskhName"] != DBNull.Value)
+                    entity.CskhName = reader["CskhName"].ToString();
+
+                if (reader["ComplainText"] != DBNull.Value)
+                    entity.ComplainText = reader["ComplainText"].ToString();
+
+                int stt = 0;
+                if (reader["Status"] != DBNull.Value)
+                    stt = Convert.ToInt32(reader["Status"].ToString());
+                entity.Status = stt;
+                entity.StatusString = PJUtils.ReturnStatusCompalint(stt);
+
+                int type = 0;
+                if (reader["TypeComplain"] != DBNull.Value)
+                    type = Convert.ToInt32(reader["TypeComplain"].ToString());
+                entity.TypeComplain = type;
+                entity.TypeString = PJUtils.ReturnTypeCompalint(type);
+
+                double Amount = 0;
+                if (reader["Amount"] != DBNull.Value)
+                    Amount = Convert.ToDouble(reader["Amount"].ToString());
+                entity.Amount = string.Format("{0:N0}", Convert.ToDouble(Amount));
+
+                if (reader["CreatedDate"] != DBNull.Value)
+                    entity.CreatedDate = Convert.ToDateTime(reader["CreatedDate"].ToString());
 
                 a.Add(entity);
             }
@@ -491,7 +645,7 @@ namespace NHST.Controllers
             public string Username { get; set; }
             public string DathangName { get; set; }
             public string CskhName { get; set; }
-            public int MainOrderID { get; set; }    
+            public int MainOrderID { get; set; }
             public int Status { get; set; }
             public int AdminStatus { get; set; }
             public string AdminStatusString { get; set; }
@@ -501,7 +655,7 @@ namespace NHST.Controllers
             public string TypeString { get; set; }
             public string Amount { get; set; }
             public string ComplainText { get; set; }
-            public DateTime CreatedDate { get; set; }           
+            public DateTime CreatedDate { get; set; }
         }
 
     }

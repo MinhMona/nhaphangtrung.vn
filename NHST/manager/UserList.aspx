@@ -16,7 +16,7 @@
                 <div class="card-panel">
                     <h4 class="title no-margin" style="display: inline-block;">Danh sách khách hàng</h4>
                     <div class="right-action">
-                        <a href="#addStaff" class="btn modal-trigger waves-effect">Thêm khách hàng</a>
+                        <asp:Literal ID="ltrAddStaff" runat="server"></asp:Literal>
                         <%-- <a href="javascript:;" class="btn btn-excel">Xuất Excel</a>--%>
                         <asp:Literal ID="ltrExcel" runat="server"></asp:Literal>
                     </div>

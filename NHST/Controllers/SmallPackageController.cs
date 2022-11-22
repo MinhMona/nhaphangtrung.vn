@@ -7,6 +7,7 @@ using NHST.Bussiness;
 using System.Data;
 using WebUI.Business;
 using MB.Extensions;
+using Telerik.Web.UI.ExportInfrastructure;
 
 namespace NHST.Controllers
 {
@@ -517,7 +518,7 @@ namespace NHST.Controllers
                     a.Length = Length;
                     a.Width = Width;
                     a.Height = Height;
-                    a.Volume = Math.Round((Length * Width * Height) / 1000000, 3);
+                    a.Volume = Math.Round((Length * Width * Height) / 1000000, 5);
                     dbe.Configuration.ValidateOnSaveEnabled = false;
                     string kq = dbe.SaveChanges().ToString();
                     return kq;
@@ -642,7 +643,7 @@ namespace NHST.Controllers
                     a.Length = Length;
                     a.Width = Width;
                     a.Height = Height;
-                    a.Volume = Math.Round((Length * Width * Height) / 1000000, 3);
+                    a.Volume = Math.Round((Length * Width * Height) / 1000000, 5);
                     dbe.Configuration.ValidateOnSaveEnabled = false;
                     string kq = dbe.SaveChanges().ToString();
                     return kq;
@@ -1264,7 +1265,7 @@ namespace NHST.Controllers
                     entity.Weight = Convert.ToDouble(reader["Weight"].ToString());
 
                 if (reader["Volume"] != DBNull.Value)
-                    entity.Volume = Convert.ToDouble(reader["Volume"].ToString());
+                    entity.Volume = Math.Round(Convert.ToDouble(reader["Volume"].ToString()), 5);
 
                 if (reader["CreatedDate"] != DBNull.Value)
                     entity.CreatedDateString = Convert.ToDateTime(reader["CreatedDate"]).ToString("dd/MM/yyyy HH:mm");
@@ -1502,11 +1503,13 @@ namespace NHST.Controllers
                     Height = reader["Height"].ToString().ToFloat(0);
 
                 double Volume = 0;
-                if (Length > 0 && Width > 0 && Height > 0)
-                {
-                    Volume = Length * Width * Height / 6000;
-                }
-                entity.Volume = Volume;
+                //if (Length > 0 && Width > 0 && Height > 0)
+                //{
+                //    Volume = Length * Width * Height / 6000;
+                //}
+                if (reader["Volume"] != DBNull.Value)
+                    Volume = reader["Volume"].ToString().ToFloat(0);
+                entity.Volume = Math.Round(Volume, 5);
 
                 double weight = 0;
                 if (reader["Weight"] != DBNull.Value)
@@ -1647,11 +1650,14 @@ namespace NHST.Controllers
                     Height = reader["Height"].ToString().ToFloat(0);
 
                 double Volume = 0;
-                if (Length > 0 && Width > 0 && Height > 0)
-                {
-                    Volume = Length * Width * Height / 6000;
-                }
-                entity.Volume = Volume;
+                //if (Length > 0 && Width > 0 && Height > 0)
+                //{
+                //    Volume = Length * Width * Height / 6000;
+                //}
+                //entity.Volume = Volume;
+                if (reader["Volume"] != DBNull.Value)
+                    Volume = reader["Volume"].ToString().ToFloat(0);
+                entity.Volume = Math.Round(Volume, 5);
 
                 double weight = 0;
                 if (reader["Weight"] != DBNull.Value)
@@ -1718,7 +1724,7 @@ namespace NHST.Controllers
                     entity.Weight = Convert.ToDouble(reader["Weight"].ToString());
 
                 if (reader["Volume"] != DBNull.Value)
-                    entity.Volume = Convert.ToDouble(reader["Volume"].ToString());
+                    entity.Volume = Math.Round(Convert.ToDouble(reader["Volume"].ToString()), 5);
 
                 if (reader["Description"] != DBNull.Value)
                     entity.Description = reader["Description"].ToString();
@@ -1800,7 +1806,7 @@ namespace NHST.Controllers
                     entity.Weight = Convert.ToDouble(reader["Weight"].ToString());
 
                 if (reader["Volume"] != DBNull.Value)
-                    entity.Volume = Convert.ToDouble(reader["Volume"].ToString());
+                    entity.Volume = Math.Round(Convert.ToDouble(reader["Volume"].ToString()), 5);
 
                 if (reader["Status"] != DBNull.Value)
                     entity.Status = reader["Status"].ToString().ToInt(0);

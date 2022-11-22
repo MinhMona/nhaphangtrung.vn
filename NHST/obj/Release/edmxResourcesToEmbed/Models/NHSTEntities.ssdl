@@ -248,6 +248,7 @@
     <Property Name="OrderShopCode" Type="nvarchar(max)" />
     <Property Name="TypeComplain" Type="int" />
     <Property Name="AdminStatus" Type="int" />
+    <Property Name="CSKHID" Type="int" />
   </EntityType>
   <EntityType Name="tbl_Configuration">
     <Key>
@@ -493,6 +494,8 @@
     <Property Name="ModifiedBy" Type="nvarchar(max)" />
     <Property Name="ModifiedDate" Type="datetime" />
     <Property Name="PercentDeposit" Type="float" />
+    <Property Name="FeeVolumeHN" Type="float" />
+    <Property Name="FeeVolumeSG" Type="float" />
   </EntityType>
   <EntityType Name="tbl_FeePackaged">
     <Key>

@@ -141,10 +141,6 @@
                                 <span>In phiếu</span>
                             </a>
                         </li>
-                        <li class="item">
-                            <a href="#"><i>
-                                <img src="/App_Themes/nhapsichina/images/chrome.png" alt=""></i><span>Công cụ đặt hàng</span></a>
-                        </li>
                         <%--<li class="item">
                             <a href="https://chrome.google.com/webstore/detail/c%C3%B4ng-c%E1%BB%A5-%C4%91%E1%BA%B7t-h%C3%A0ng-c%E1%BB%A7a-nh%E1%BA%ADp/elfmiplccfnohmbbpdehiflablbfeijh"><i>
                                 <img src="/App_Themes/nhapsichina/images/coccoc.png" alt=""></i> <span>Công cụ Cốc cốc</span></a>
@@ -160,10 +156,15 @@
             </asp:ContentPlaceHolder>
 
             <footer>
-                <div class="status-bar" style="display:flex;">
-                    <div class="mar-text" style="margin:auto">
-                        <span style="font-size: 20px; font-weight: bold; color: #03eb03; padding-left: 40px;">Nếu đơn hàng có tiền hàng trên web trên 10.000.000 (VNĐ) tương ứng cấp Kim Cương</span>
-                        <%-- <marquee width="100%" direction="right" height="auto" style="font-size: 20px; font-weight: bold; color: #366136;">Lưu ý: Nếu đơn hàng có tiền hàng trên web trên 10.000.000 (VNĐ) tương ứng cấp Kim Cương</marquee>--%>
+                <div class="status-bar" style="display: flex;">
+                    <div class="mar-text" style="margin: auto">
+                        <span style="font-size: 20px; font-weight: bold; color: #03eb03; padding-left: 40px; padding-right: 100px;">Nếu đơn hàng có tiền hàng trên web trên 10.000.000 (VNĐ) tương ứng cấp Kim Cương</span>
+                        <a href="https://chrome.google.com/webstore/detail/nh%E1%BA%ADp-h%C3%A0ng-trung/mckcapompkdhecmlbjfojmgffolkpipk">
+                            <span>
+                                <span style="font-size: 20px; color: #fff; text-transform:uppercase">Công cụ</span>
+                                <img src="/App_Themes/nhapsichina/images/chrome.png" alt=""></>
+                            </span>
+                        </a>
                     </div>
                 </div>
             </footer>
@@ -179,7 +180,7 @@
         <script src="/signalr/hubs"></script>
         <script src="/App_Themes/UserNew45/assets/datepicker/jquery.datetimepicker.full.js"></script>
         <script src="/App_Themes/AdminNew45/assets/pushdesktop/CreateDevice.js"></script>
-       <%-- <script>
+        <%-- <script>
             $(function () {
                 var chat = $.connection.chatHub;
                 chat.client.broadcastLogin = function (id, loginStatus) {

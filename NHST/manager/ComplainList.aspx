@@ -262,7 +262,8 @@
                         $('#<%=hdfUserName.ClientID%>').val(data.UserName);
                         $('#<%=txtShopID.ClientID%>').val(data.ShopID);
                         $('#<%=txtAmountVND.ClientID%>').val(data.AmountVND);
-                       <%-- $('#<%=txtAmountCYN.ClientID%>').val(data.AmountCNY);--%>                        $('#<%=txtCurrence.ClientID%>').val(data.TiGia);
+                       <%-- $('#<%=txtAmountCYN.ClientID%>').val(data.AmountCNY);--%>
+                        $('#<%=txtCurrence.ClientID%>').val(data.TiGia);
                         $('#<%=txtComplainText.ClientID%>').val(data.ComplainText);
                         $('#<%=hdfID.ClientID%>').val(ID);
                         $('#<%=lbStatus.ClientID%>').val(data.Status);
