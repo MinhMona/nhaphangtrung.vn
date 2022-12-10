@@ -548,7 +548,7 @@ namespace NHST.Controllers
             sql += " left outer join tbl_MainOder as mo ON mo.ID = cp.OrderID ";
             sql += " left outer join tbl_Account as dathang ON mo.DathangID = dathang.ID ";
             sql += " left outer join  tbl_Account as cskh ON mo.CSID = cskh.ID ";
-            sql += " Where cp.CreatedBy LIKE N'%" + s + $"%' AND cp.CSKHID = {cskhUsername}";
+            sql += " Where cp.CreatedBy LIKE N'%" + s + $"%' AND mo.CSID = {cskhUsername}";
             if (Status > -1)
             {
                 sql += " AND cp.Status=" + Status + " ";

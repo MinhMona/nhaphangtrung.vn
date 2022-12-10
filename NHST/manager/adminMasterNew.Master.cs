@@ -584,6 +584,7 @@ namespace NHST.manager
                         html.Append("</li>");
 
                         html.Append("<li class=\"bold\"><a class=\"waves-effect waves-cyan \" href=\"/manager/ComplainList\"><i class=\"material-icons\">report</i><span class=\"menu-title\">Xử lý khiếu nại</span></a>");
+                        html.Append("<li class=\"bold\"><a class=\"waves-effect waves-cyan \" href=\"/manager/OutStock.aspx\"><i class=\"material-icons\">rv_hookup</i><span class=\"menu-title\">Xuất kho</span></a></li>");
 
                         //html.Append("<li class=\"bold\"><a class=\"collapsible-header waves-effect waves-cyan \" href=\"javascript:;\"><i class=\"material-icons\">library_books</i><span class=\"menu-title\">Đơn hàng</span></a>");
                         //html.Append("<div class=\"collapsible-body\">");

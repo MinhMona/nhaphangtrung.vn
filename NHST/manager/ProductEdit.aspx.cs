@@ -10,6 +10,7 @@ using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using static NHST.manager.OutStock1;
 
 namespace NHST.manager
 {
@@ -24,7 +25,7 @@ namespace NHST.manager
                     Response.Redirect("/trang-chu");
                 }
                 else
-                {                   
+                {
                     Loaddata();
                 }
 
@@ -33,7 +34,7 @@ namespace NHST.manager
         }
 
         public void Loaddata()
-        {           
+        {
             var id = Request.QueryString["id"].ToInt(0);
             if (id > 0)
             {
@@ -118,7 +119,7 @@ namespace NHST.manager
                         ddlStatus.SelectedValue = "1";
 
                     string urlName = Request.UrlReferrer.ToString();
-                    ltrback.Text = "<a href=\"" + urlName + "\" class=\"btn primary-btn\">Trở về</a>";                   
+                    ltrback.Text = "<a href=\"" + urlName + "\" class=\"btn primary-btn\">Trở về</a>";
                 }
             }
         }
@@ -127,7 +128,7 @@ namespace NHST.manager
         {
             DateTime currentDate = DateTime.Now;
             string username = Session["userLoginSystem"].ToString();
-            var obj_user = AccountController.GetByUsername(username);           
+            var obj_user = AccountController.GetByUsername(username);
             int status = ddlStatus.SelectedValue.ToString().ToInt(1);
 
             //Update lại giá sản phẩm
@@ -165,7 +166,7 @@ namespace NHST.manager
                     {
                         price = priceorigin;
                     }
-                    price = Math.Round(price, 2);                   
+                    price = Math.Round(price, 2);
 
                     double quantity = 0;
                     if (status == 2)
@@ -280,24 +281,24 @@ namespace NHST.manager
                             {
                                 pricecyn += originprice;
                                 oprice = originprice * Convert.ToDouble(item.quantity) * current;
-                            }                            
+                            }
                             pricevnd += oprice;
                         }
                         pricevnd = Math.Round(pricevnd, 0);
-                        pricecyn = Math.Round(pricecyn, 2);       
+                        pricecyn = Math.Round(pricecyn, 2);
 
                         MainOrderController.UpdatePriceNotFee(MainOrderID, pricevnd.ToString());
                         MainOrderController.UpdatePriceCYN(MainOrderID, pricecyn.ToString());
 
                         double Deposit = Math.Round(Convert.ToDouble(mainorder.Deposit), 0);
-                        double FeeShipCN = Math.Round(Convert.ToDouble(mainorder.FeeShipCN), 0);                      
+                        double FeeShipCN = Math.Round(Convert.ToDouble(mainorder.FeeShipCN), 0);
                         double FeeWeight = Math.Round(Convert.ToDouble(mainorder.FeeWeight), 0);
                         double FeeSupport = Math.Round(Convert.ToDouble(mainorder.TotalFeeSupport), 0);
 
                         double IsPackedPrice = 0;
                         IsPackedPrice = Math.Round(Convert.ToDouble(mainorder.IsPackedPrice), 0);
                         double IsSpecial = 0;
-                        IsSpecial = Math.Round(Convert.ToDouble(mainorder.IsCheckPriceSpecial), 0);                       
+                        IsSpecial = Math.Round(Convert.ToDouble(mainorder.IsCheckPriceSpecial), 0);
 
 
                         var ui = AccountController.GetByID(mainorder.UID.ToString().ToInt());
@@ -344,39 +345,133 @@ namespace NHST.manager
                         double FeeBuyPro = feebp;
                         double AmountDeposit = Math.Round((pricepro * percentdeposit) / 100, 0);
 
+                        //Cập nhật lại số tiền phải cọc
+                        MainOrderController.UpdateAmountDeposit(mainorder.ID, AmountDeposit.ToString());
+
                         double TotalPriceVND = pricepro + FeeBuyPro + FeeWeight + IsPackedPrice + IsSpecial + FeeShipCN + FeeSupport;
                         TotalPriceVND = Math.Round(TotalPriceVND, 0);
+                        double newdeposit = AmountDeposit;
 
-                        if (Deposit > TotalPriceVND)
+                        if (Deposit > 0)
                         {
-                            double drefund = Math.Round(Deposit - TotalPriceVND, 0);
-                            double userwallet = 0;
-                            if (ui.Wallet.ToString() != null)
-                                userwallet = Math.Round(Convert.ToDouble(ui.Wallet.ToString()), 0);
+                            if (Deposit > newdeposit)
+                            {
+                                #region refund
+                                double drefund = Math.Round(Deposit - newdeposit, 0);
 
-                            double wallet = Math.Round(userwallet + drefund, 0);
-                           
-                            AccountController.updateWallet(ui.ID, wallet, currentDate, obj_user.Username);
-                            PayOrderHistoryController.Insert(MainOrderID, obj_user.ID, 12, drefund, 2, currentDate, obj_user.Username);
+                                double userwallet = 0;
+                                if (ui.Wallet.ToString() != null)
+                                    userwallet = Math.Round(Convert.ToDouble(ui.Wallet.ToString()), 0);
 
-                            if (status == 2)
-                                HistoryPayWalletController.Insert(ui.ID, ui.Username, mainorder.ID, drefund, "Sản phẩm đơn hàng: " + mainorder.ID + " hết hàng.", wallet, 2, 2, currentDate, obj_user.Username);
+                                double wallet = userwallet + drefund;
+                                wallet = Math.Round(wallet, 0);
+                                AccountController.updateWallet(ui.ID, wallet, currentDate, obj_user.Username);
+                                PayOrderHistoryController.Insert(MainOrderID, obj_user.ID, 12, drefund, 2, currentDate, obj_user.Username);
+                                if (status == 2)
+                                    HistoryPayWalletController.Insert(ui.ID, ui.Username, mainorder.ID, drefund, "Sản phẩm đơn hàng: " + mainorder.ID + " hết hàng.", wallet, 2, 2, currentDate, obj_user.Username);
+                                else
+                                    HistoryPayWalletController.Insert(ui.ID, ui.Username, mainorder.ID, drefund, "Sản phẩm đơn hàng: " + mainorder.ID + " giảm giá.", wallet, 2, 2, currentDate, obj_user.Username);
+                                #endregion
+
+                                NotificationController.Inser(obj_user.ID, obj_user.Username, Convert.ToInt32(mainorder.UID),
+                                AccountController.GetByID(Convert.ToInt32(mainorder.UID)).Username, id,
+                                "Đã có cập nhật mới về sản phẩm cho đơn hàng #" + id + " của bạn. CLick vào để xem", 0, 1, currentDate, obj_user.Username, true);
+
+                                var hubContext = GlobalHost.ConnectionManager.GetHubContext<ChatHub>();
+                                hubContext.Clients.All.addNewMessageToPage("", "");
+
+                                var setNoti = SendNotiEmailController.GetByID(19);
+                                if (setNoti != null)
+                                {
+                                    if (setNoti.IsSentNotiUser == true)
+                                    {
+                                        NotificationsController.Inser(Convert.ToInt32(mainorder.UID),
+                                        AccountController.GetByID(Convert.ToInt32(mainorder.UID)).Username, mainorder.ID,
+                                        "Đã có cập nhật mới về sản phẩm cho đơn hàng #" + mainorder.ID + " của bạn. CLick vào để xem", 1, currentDate, obj_user.Username, true);
+                                    }
+                                    //if (setNoti.IsSendEmailUser == true)
+                                    //{
+                                    //    try
+                                    //    {
+                                    //        PJUtils.SendMailGmail("cskh.thuonghai@gmail.com.vn.net",
+                                    //            "jrbhnznozmlrmwvy", AccountInfoController.GetByUserID(Convert.ToInt32(mainorder.UID)).Email,
+                                    //            "Thông báo tại NHAPSICHINA.COM",
+                                    //            "Đã có cập nhật mới về đơn hàng #" + mainorder.ID
+                                    //            + " của bạn. CLick vào để xem", "");
+                                    //    }
+                                    //    catch
+                                    //    {
+
+                                    //    }
+                                    //}
+                                }
+                                //try
+                                //{
+                                //    PJUtils.SendMailGmail("cskh@1688pgs.vn", "1688pegasus", AccountInfoController.GetByUserID(Convert.ToInt32(mainorder.UID)).Email,
+                                //        "Thông báo tại 1688PGS", "Đã có cập nhật mới về cân nặng cho đơn hàng #" + id + " của bạn. CLick vào để xem", "");
+                                //}
+                                //catch
+                                //{
+
+                                //}
+                                //newdeposit = Deposit;
+                                //MainOrderController.UpdateStatus(mainorder.ID, ui.ID, 2);
+                            }
                             else
-                                HistoryPayWalletController.Insert(ui.ID, ui.Username, mainorder.ID, drefund, "Sản phẩm đơn hàng: " + mainorder.ID + " giảm giá.", wallet, 2, 2, currentDate, obj_user.Username);
+                            {
+                                if (Deposit < newdeposit)
+                                {
+                                    //MainOrderController.UpdateStatus(mainorder.ID, ui.ID, 0);
+                                }
+                                else if (Deposit == newdeposit)
+                                {
+                                    //MainOrderController.UpdateStatus(mainorder.ID, ui.ID, 2);
+                                }
+                                //newdeposit = Deposit;
+                            }
+                            //if (Deposit > TotalPriceVND)
+                            //{
+                            //    double drefund = Math.Round(Deposit - TotalPriceVND, 0);
+                            //    double userwallet = 0;
+                            //    if (ui.Wallet.ToString() != null)
+                            //        userwallet = Math.Round(Convert.ToDouble(ui.Wallet.ToString()), 0);
 
-                            NewDeposit = TotalPriceVND;
+                            //    double wallet = Math.Round(userwallet + drefund, 0);
+
+                            //    AccountController.updateWallet(ui.ID, wallet, currentDate, obj_user.Username);
+                            //    PayOrderHistoryController.Insert(MainOrderID, obj_user.ID, 12, drefund, 2, currentDate, obj_user.Username);
+
+                            //    if (status == 2)
+                            //        HistoryPayWalletController.Insert(ui.ID, ui.Username, mainorder.ID, drefund, "Sản phẩm đơn hàng: " + mainorder.ID + " hết hàng.", wallet, 2, 2, currentDate, obj_user.Username);
+                            //    else
+                            //        HistoryPayWalletController.Insert(ui.ID, ui.Username, mainorder.ID, drefund, "Sản phẩm đơn hàng: " + mainorder.ID + " giảm giá.", wallet, 2, 2, currentDate, obj_user.Username);
+
+                            //    NewDeposit = TotalPriceVND;
+                            //}
+                            //else
+                            //{
+                            //    NewDeposit = Deposit;
+                            //}    
+
+                            MainOrderController.UpdateProduct(MainOrderID, AmountDeposit.ToString(), NewDeposit.ToString(), FeeBuyPro.ToString(), TotalPriceVND.ToString());
+                            MainOrderController.UpdatePercentDeposit(MainOrderID, percentdeposit.ToString());
                         }
                         else
                         {
-                            NewDeposit = Deposit;
-                        }    
+                            MainOrderController.UpdateStatus(mainorder.ID, ui.ID, 0);
+                            newdeposit = 0;
+                        }
+                        if (TotalPriceVND == 0)
+                        {
+                            MainOrderController.UpdateStatus(mainorder.ID, ui.ID, 0);
+                        }
 
-                        MainOrderController.UpdateProduct(MainOrderID, AmountDeposit.ToString(), NewDeposit.ToString(), FeeBuyPro.ToString(), TotalPriceVND.ToString());
-                        MainOrderController.UpdatePercentDeposit(MainOrderID, percentdeposit.ToString());
+                         MainOrderController.UpdateFeeInclueFeeSupport(MainOrderID, newdeposit.ToString(), FeeShipCN.ToString(), FeeBuyPro.ToString(), FeeWeight.ToString(),
+                        IsPackedPrice.ToString(), FeeSupport.ToString(), TotalPriceVND.ToString(), IsSpecial.ToString());
                     }
+                    Response.Redirect("/manager/OrderDetail.aspx?id=" + MainOrderID);
                 }
-                Response.Redirect("/manager/OrderDetail.aspx?id=" + MainOrderID);                
-            }            
+            }
         }
     }
 }

@@ -382,6 +382,7 @@
                                                                         <th>Kích thước (cm)</th>
                                                                         <th>Số khối</th>
                                                                         <th>Cân nặng (kg)</th>
+                                                                        <th>Phí vận chuyển</th>
                                                                         <th>Ghi chú</th>
                                                                         <th>Trạng thái</th>
                                                                     </tr>

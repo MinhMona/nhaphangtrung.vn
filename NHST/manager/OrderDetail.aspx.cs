@@ -2812,11 +2812,11 @@ namespace NHST.manager
                         {
                             foreach (var s in smallpackages)
                             {
-                                //double canquydoi = 0;
-                                //if (s.Height > 0 && s.Width > 0 && s.Length > 0)
-                                //{
-                                //    canquydoi = Convert.ToDouble(s.Height) * Convert.ToDouble(s.Width) * Convert.ToDouble(s.Length) / 1000000;
-                                //}
+                                double sokhoi = 0;
+                                if (s.Height > 0 && s.Width > 0 && s.Length > 0)
+                                {
+                                    sokhoi = Convert.ToDouble(s.Height) * Convert.ToDouble(s.Width) * Convert.ToDouble(s.Length) / 1000000;
+                                }
                                 int status = Convert.ToInt32(s.Status);
                                 ltrMavandon.Text += "<tr>";
                                 ltrMavandon.Text += "   <td>" + s.OrderTransactionCode + "</td>";
@@ -2844,13 +2844,15 @@ namespace NHST.manager
 
                                         spsList.Append("                <td>");
                                         spsList.Append("                    <input class=\"transactionWeight\" onkeyup=\"returnWeightFee()\" data-type=\"text\" type=\"text\" value=\"" + s.Weight + "\"></td>");
-                                        spsList.Append("<td style=\"pointer-events: none\"> <input  class=\"transactionWeight\" onkeyup=\"returnWeightFee()\" data-type=\"text\" type=\"text\" value=\"" + Math.Round(s.Volume ?? 0, 5) + "\"></td>");
+                                        spsList.Append("<td style=\"pointer-events: none\"> <input  class=\"transactionWeight\" onkeyup=\"returnWeightFee()\" data-type=\"text\" type=\"text\" value=\"" + Math.Round(sokhoi, 5) + "\"></td>");
+                                        spsList.Append("<td style=\"pointer-events: none\"> <input  class=\"transactionWeight\" onkeyup=\"returnWeightFee()\" data-type=\"text\" type=\"text\" value=\"" + $"{s.Length}x{s.Width}x{s.Height}" + "\"></td>");
                                     }
                                     else
                                     {
                                         spsList.Append("                <td style=\"pointer-events: none;\" >");
                                         spsList.Append("                    <input class=\"transactionWeight\" onkeyup=\"returnWeightFee()\" data-type=\"text\" type=\"text\" value=\"" + s.Weight + "\"></td>");
-                                        spsList.Append("<td style=\"pointer-events: none\"> <input class=\"transactionWeight\" onkeyup=\"returnWeightFee()\" data-type=\"text\" type=\"text\" value=\"" + Math.Round(s.Volume ?? 0, 5) + "\"></td>");
+                                        spsList.Append("<td style=\"pointer-events: none\"> <input class=\"transactionWeight\" onkeyup=\"returnWeightFee()\" data-type=\"text\" type=\"text\" value=\"" + Math.Round(sokhoi, 5) + "\"></td>");
+                                        spsList.Append("<td style=\"pointer-events: none\"> <input class=\"transactionWeight\" onkeyup=\"returnWeightFee()\" data-type=\"text\" type=\"text\" value=\"" + $"{s.Length}x{s.Width}x{s.Height}" + "\"></td>");
                                     }
 
 

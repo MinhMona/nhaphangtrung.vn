@@ -13,6 +13,7 @@ using System.Web.Script.Serialization;
 using System.Web.Services;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using static Telerik.Web.UI.OrgChartStyles;
 
 namespace NHST
 {
@@ -619,15 +620,63 @@ namespace NHST
                         {
                             foreach (var s in smallpackages)
                             {
-                                double WeightChange = 0;
+                                double sokhoi = 0;
                                 if (s.Height > 0 && s.Width > 0 && s.Length > 0)
-                                    WeightChange = Convert.ToDouble(s.Height) * Convert.ToDouble(s.Width) * Convert.ToDouble(s.Length) / 6000;
+                                    sokhoi = Convert.ToDouble(s.Height) * Convert.ToDouble(s.Width) * Convert.ToDouble(s.Length) / 1000000;
+
+                                var usercreate = AccountController.GetByID(uid);
+
+                                int LevelID = 0;
+                                if (Convert.ToDouble(o.PriceVND) > 10000000)
+                                    LevelID = 4;
+                                else
+                                    LevelID = Convert.ToInt32(usercreate.LevelID);
+
+                                double pricePerWeight = 0;
+                                double pricePerVolume = 0;
+                                int warehouse = o.ReceivePlace.ToInt(1);
+                                //Phí vận chuyển /kg và /m3
+                                var fee = FeeBuyProController.GetFeeLevelID(LevelID);
+                                if (fee != null)
+                                {
+                                    if (warehouse == 1)
+                                    {
+                                        pricePerWeight = Convert.ToDouble(fee.FeeWeightHN);
+                                        pricePerVolume = Convert.ToDouble(fee.FeeVolumeHN);
+                                    }
+                                    else
+                                    {
+                                        pricePerWeight = Convert.ToDouble(fee.FeeWeightSG);
+                                        pricePerVolume = Convert.ToDouble(fee.FeeVolumeSG);
+                                    }
+                                }
+                                if (!string.IsNullOrEmpty(usercreate.FeeTQVNPerWeight))
+                                {
+                                    if (usercreate.FeeTQVNPerWeight.ToFloat(0) > 0)
+                                    {
+                                        pricePerWeight = Convert.ToDouble(usercreate.FeeTQVNPerWeight);
+                                    }
+                                }
+
+                                double smPriceWeight = (s.Weight ?? 0) * pricePerWeight;
+                                double smPriceVolume = sokhoi * pricePerVolume;
+                                double smPriceTT = 0;
 
                                 ltrSmallPackages.Text += "<tr class=\"slide-up\">";
                                 ltrSmallPackages.Text += "<td>" + s.OrderTransactionCode + "</td>";
                                 ltrSmallPackages.Text += "<td>" + s.Length + " x " + s.Width + " x " + s.Height + "</td>";
-                                ltrSmallPackages.Text += "<td>" + Math.Round(s.Volume ?? 0, 5) + "</td>";
-                                ltrSmallPackages.Text += "<td>" + Math.Round(Convert.ToDouble(s.Weight), 1) + "</td>";
+                                if (smPriceWeight > smPriceVolume)
+                                {
+                                    ltrSmallPackages.Text += "<td>" + Math.Round(sokhoi, 5) + "</td>";
+                                    ltrSmallPackages.Text += "<td style=\" font-weight: bold; \">" + Math.Round(Convert.ToDouble(s.Weight), 1) + "</td>";
+                                }
+                                else
+                                {
+                                    ltrSmallPackages.Text += "<td style=\" font-weight: bold; \">" + Math.Round(sokhoi, 5) + "</td>";
+                                    ltrSmallPackages.Text += "<td>" + Math.Round(Convert.ToDouble(s.Weight), 1) + "</td>";
+                                }
+
+                                ltrSmallPackages.Text += "<td>" + string.Format("{0:N0}", s.TotalPrice) + "</td>";
                                 ltrSmallPackages.Text += "<td><span>" + s.Description + "</span></td>";
                                 ltrSmallPackages.Text += "<td>" + PJUtils.IntToStringStatusSmallPackageWithBGNew(Convert.ToInt32(s.Status)) + "</td>";
                                 ltrSmallPackages.Text += "</tr>";
@@ -739,6 +788,8 @@ namespace NHST
                                 ltrProducts.Text += "<p class=\"grey-text font-weight-500\">¥" + string.Format("{0:0.##}", price) + "</p>";
                                 ltrProducts.Text += "<p class=\"grey-text font-weight-500\">" + string.Format("{0:N0}", vndprice) + " VNĐ</p>";
                                 ltrProducts.Text += "</div>";
+                                ltrProducts.Text += "<div class=\"item-num column\"><span class=\"black-text\"><strong>Tổng tệ</strong></span><p>" + string.Format("{0:N0}", price * Convert.ToInt32(item.quantity)) + " ¥</p><p></p></div>";
+                                ltrProducts.Text += "<div class=\"item-num column\"><span class=\"black-text\"><strong>Tổng tiền</strong></span><p>" + string.Format("{0:N0}", vndprice * Convert.ToInt32(item.quantity)) + " VNĐ</p><p></p></div>";
                                 ltrProducts.Text += "<div class=\"item-status column\"><span class=\"black-text\"><strong>Trạng thái</strong></span>";
                                 if (!string.IsNullOrEmpty(item.ProductStatus.ToString()))
                                 {
@@ -801,8 +852,8 @@ namespace NHST
                         else
                             ltrService.Text += "<li><span class=\"lbl\">Phí ship nội địa TQ</span><span class=\"value\">Đang cập nhật</span></li>";
 
-                        ltrService.Text += "<li><span class=\"lbl\">Cân nặng</span><span class=\"value\">" + o.TQVNWeight + " kg</span></li>";
-                        ltrService.Text += "<li><span class=\"lbl\">Số khối</span><span class=\"value\">" + o.TQVNVolume + " khối</span></li>";
+                        ltrService.Text += "<li style=\" display: none; \"><span class=\"lbl\">Cân nặng</span><span class=\"value\">" + o.TQVNWeight + " kg</span></li>";
+                        ltrService.Text += "<li style=\" display: none; \"><span class=\"lbl\">Số khối</span><span class=\"value\">" + o.TQVNVolume + " khối</span></li>";
 
                         //if (UL_CKFeeWeight > 0)
                         //{

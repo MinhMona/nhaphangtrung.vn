@@ -18,7 +18,13 @@ namespace NHST.manager
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-
+            btnXuatKho.Text = "<a href=\"javascript:;\" id=\"xuatkhotatca\" style=\"display: none\" onclick=\"xuatkhotatcakien();\" class=\"btn waves-effect modal-trigger mt-1\">Xuất kho tất cả kiện</a>\r\n";
+            string username_current = Session["userLoginSystem"].ToString();
+            tbl_Account ac = AccountController.GetByUsername(username_current);
+            if(ac.RoleID == 9)
+            {
+                btnXuatKho.Visible = false;
+            }
         }
 
         #region Webservice mới

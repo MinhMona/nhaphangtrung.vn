@@ -1650,6 +1650,30 @@ namespace NHST.Controllers
                     return null;
             }
         }
+        public static string UpdateFeeInclueFeeSupport(int ID, string Deposit, string FeeShipCN, string FeeBuyPro, string FeeWeight,
+            string IsPackedPrice, string FeeSupport, string TotalPriceVND, string IsCheckPriceSpecial)
+        {
+            using (var dbe = new NHSTEntities())
+            {
+                var or = dbe.tbl_MainOder.Where(o => o.ID == ID).FirstOrDefault();
+                if (or != null)
+                {
+                    or.Deposit = Deposit;
+                    or.FeeShipCN = FeeShipCN;
+                    or.FeeBuyPro = FeeBuyPro;
+                    or.FeeWeight = FeeWeight;
+                    or.IsPackedPrice = IsPackedPrice;
+                    or.TotalFeeSupport = FeeSupport;
+                    or.TotalPriceVND = TotalPriceVND;
+                    or.IsCheckPriceSpecial = IsCheckPriceSpecial;
+                    dbe.Configuration.ValidateOnSaveEnabled = false;
+                    dbe.SaveChanges();
+                    return "ok";
+                }
+                else
+                    return null;
+            }
+        }
         public static string UpdateFee_OrderDetail(int ID, string Deposit, string FeeShipCN, string FeeBuyPro, string FeeWeight,
            string IsCheckProductPrice, string IsPackedPrice, string IsFastDeliveryPrice, string TotalPriceVND, string FeeShipCNReal, string IsCheckPriceSpecial)
         {

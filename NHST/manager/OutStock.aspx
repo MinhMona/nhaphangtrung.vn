@@ -45,7 +45,7 @@
                             <div class="bg-barcode"></div>
                             <%-- <span class="material-icons search-action">search</span>--%>
                         </div>
-                        <a href="javascript:;" id="xuatkhotatca" style="display: none" onclick="xuatkhotatcakien();" class="btn waves-effect modal-trigger mt-1">Xuất kho tất cả kiện</a>
+                        <asp:Literal runat="server" ID="btnXuatKho"></asp:Literal>
 
                     </div>
                     <div class="row">

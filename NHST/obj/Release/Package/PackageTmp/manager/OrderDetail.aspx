@@ -604,6 +604,7 @@
                                                 <th>Mã vận đơn</th>
                                                 <th>Cân nặng</th>
                                                 <th>Số khối</th>
+                                                <th>Kích thước</th>
                                                 <th>Mã đơn hàng</th>
                                                 <th>Trạng thái</th>
                                                 <th class="tb-date">Ghi chú</th>
