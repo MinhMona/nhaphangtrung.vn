@@ -48,7 +48,7 @@ namespace NHST.manager
                     }
                 }
                 //UpdatePrice();
-                checkOrderStaff();
+                //checkOrderStaff();
                 LoadDDL();
                 loaddata();
             }

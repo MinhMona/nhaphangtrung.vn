@@ -19,9 +19,9 @@
                 <div class="list-table card-panel">
                     <div class="filter">
                         <div class="search-name input-field no-margin">
-                            <asp:TextBox runat="server" placeholder="Nhập mã bao hàng" id="search_name" type="text"></asp:TextBox>
+                            <asp:TextBox runat="server" placeholder="Nhập mã bao hàng" ID="search_name" type="text"></asp:TextBox>
                             <span class="material-icons search-action">search</span>
-                            <asp:Button runat="server" ID="btnSearch" style="display:none" OnClick="btnSearch_Click"/>
+                            <asp:Button runat="server" ID="btnSearch" Style="display: none" OnClick="btnSearch_Click" />
                         </div>
                         <asp:HyperLink runat="server" href="#addBadge" ID="hyperAdd" class="btn waves-effect modal-trigger mt-1">Thêm bao hàng</asp:HyperLink>
                     </div>
@@ -36,6 +36,7 @@
                                                     <tr>
                                                         <th>ID</th>
                                                         <th>Mã bao hàng</th>
+                                                        <th>Số kiện</th>
                                                         <th>Cân nặng (kg)</th>
                                                         <th>Khối (m<sup>3</sup>)</th>
                                                         <th>Trạng thái</th>
@@ -49,7 +50,7 @@
                                             </table>
                                         </div>
                                         <div class="pagi-table float-right mt-2">
-                                          <%this.DisplayHtmlStringPaging1();%>
+                                            <%this.DisplayHtmlStringPaging1();%>
                                         </div>
                                         <div class="clearfix"></div>
                                     </div>
@@ -70,25 +71,25 @@
         <div class="modal-bd">
             <div class="row">
                 <div class="input-field col s12">
-                    <asp:TextBox runat="server"  id="package_id" type="text" class="validate"></asp:TextBox>
+                    <asp:TextBox runat="server" ID="package_id" type="text" class="validate"></asp:TextBox>
                     <label for="kg_weight">Mã bao hàng</label>
                     <span class="error-info-show">
-                                            <asp:RequiredFieldValidator ID="RequiredFieldValidator1" runat="server" ControlToValidate="package_id" Display="Dynamic"
-                                                 ErrorMessage="Không để trống" SetFocusOnError="true"></asp:RequiredFieldValidator>
-                                        </span>
+                        <asp:RequiredFieldValidator ID="RequiredFieldValidator1" runat="server" ControlToValidate="package_id" Display="Dynamic"
+                            ErrorMessage="Không để trống" SetFocusOnError="true"></asp:RequiredFieldValidator>
+                    </span>
                 </div>
                 <div class="input-field col s6">
-                    <telerik:RadNumericTextBox  runat="server" CssClass="validate" Skin="MetroTouch" BorderColor="Black"
-                                            ID="pWeight" MinValue="0" NumberFormat-DecimalDigits="2"
-                                            NumberFormat-GroupSizes="3" Width="100%" Value="0">
-                    </telerik:RadNumericTextBox>                   
+                    <telerik:RadNumericTextBox runat="server" CssClass="validate" Skin="MetroTouch" BorderColor="Black"
+                        ID="pWeight" MinValue="0" NumberFormat-DecimalDigits="2"
+                        NumberFormat-GroupSizes="3" Width="100%" Value="0">
+                    </telerik:RadNumericTextBox>
                     <label for="kg_weight" class="active">Cân nặng (kg)</label>
                 </div>
                 <div class="input-field col s6">
                     <telerik:RadNumericTextBox runat="server" CssClass="validate" Skin="MetroTouch" BorderColor="Black"
-                                            ID="pVolume" MinValue="0" NumberFormat-DecimalDigits="2"
-                                            NumberFormat-GroupSizes="3" Width="100%" Value="0">
-                                        </telerik:RadNumericTextBox>                  
+                        ID="pVolume" MinValue="0" NumberFormat-DecimalDigits="2"
+                        NumberFormat-GroupSizes="3" Width="100%" Value="0">
+                    </telerik:RadNumericTextBox>
                     <label for="m2_weigth" class="active">Khối (m<sup>3</sup>)</label>
                 </div>
             </div>
@@ -102,18 +103,18 @@
     </div>
     <script src="assets/js/lightgallery/js/lightgallery-all.min.js" type="text/javascript"></script>
     <script>
-     
+
         function myFunction() {
             if (event.which == 13 || event.keyCode == 13) {
                 console.log($('#<%=search_name.ClientID%>').val());
-                    $('#<%=btnSearch.ClientID%>').click();
+                $('#<%=btnSearch.ClientID%>').click();
             }
         }
         $('.search-action').click(function () {
             console.log('dkm ngon');
             console.log($('#<%=search_name.ClientID%>').val());
-                $('#<%=btnSearch.ClientID%>').click();
-            })
+            $('#<%=btnSearch.ClientID%>').click();
+        })
         $(document).ready(function () {
             $('.view-gallery').on('click', function () {
                 var $this = $(this);

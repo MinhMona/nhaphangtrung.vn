@@ -955,6 +955,15 @@ namespace NHST.Controllers
                 return ps;
             }
         }
+        public static List<tbl_SmallPackage> GetAllBuyBigPackageID(int BigPackageID)
+        {
+            using (var dbe = new NHSTEntities())
+            {
+                List<tbl_SmallPackage> ps = new List<tbl_SmallPackage>();
+                ps = dbe.tbl_SmallPackage.Where(p => p.BigPackageID == BigPackageID).OrderByDescending(p => p.ID).ToList();
+                return ps;
+            }
+        }
         public static List<tbl_SmallPackage> GetByTransportationOrderID(int TransportationOrderID)
         {
             using (var dbe = new NHSTEntities())

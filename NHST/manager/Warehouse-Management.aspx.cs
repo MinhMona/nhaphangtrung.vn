@@ -145,10 +145,12 @@ namespace NHST.manager
                 for (int i = 0; i < acs.Count; i++)
                 {
                     var item = acs[i];
-
+                    var smallPackages = SmallPackageController.GetAllBuyBigPackageID(item.ID);
+                    var countSmallPackages = smallPackages != null ? smallPackages.Count : 0;
                     hcm.Append("<tr>");
                     hcm.Append("<td>" + item.ID + "</td>");
                     hcm.Append("<td>" + item.PackageCode + "</td>");
+                    hcm.Append("<td>" + countSmallPackages + "</td>");
                     hcm.Append("<td>" + item.Weight + "</td>");
                     hcm.Append("<td>" + item.Volume + "</td>");
                     hcm.Append("<td>" + item.StatusString + "</td>");
